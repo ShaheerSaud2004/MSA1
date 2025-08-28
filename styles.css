@@ -1948,12 +1948,61 @@ section {
     }
     
     .calendar-container {
-        padding: 25px;
+        padding: 20px;
         margin-bottom: 40px;
+        border-radius: 15px;
     }
     
     #currentMonth {
         font-size: 1.5rem;
+    }
+    
+    /* Mobile calendar improvements */
+    .calendar-grid {
+        gap: 1px;
+        border-radius: 10px;
+    }
+    
+    .calendar-day {
+        padding: 12px 4px;
+        font-size: 0.9rem;
+        min-height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .calendar-header {
+        margin-bottom: 20px;
+    }
+    
+    .calendar-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .calendar-nav {
+        padding: 8px 12px;
+        font-size: 1rem;
+    }
+    
+    /* Mobile legend adjustments */
+    .calendar-legend {
+        margin-top: 20px;
+    }
+    
+    .legend-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .legend-item {
+        font-size: 0.8rem;
+    }
+    
+    .legend-color {
+        width: 12px;
+        height: 12px;
     }
     
     .events-list h3::before,
@@ -2151,6 +2200,49 @@ section {
         line-height: 1.4;
         padding: 0 10px;
     }
+    
+    /* Enhanced mobile calendar for small screens */
+    .calendar-container {
+        padding: 15px;
+        margin: 20px 10px 30px 10px;
+    }
+    
+    .calendar-day {
+        padding: 8px 2px;
+        font-size: 0.85rem;
+        min-height: 40px;
+        font-weight: 500;
+    }
+    
+    .calendar-header h3 {
+        font-size: 1.3rem;
+        margin: 0;
+    }
+    
+    .calendar-nav {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+        min-width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .legend-items {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+    
+    .legend-item {
+        font-size: 0.75rem;
+        padding: 4px 0;
+    }
+    
+    .legend-color {
+        width: 10px;
+        height: 10px;
+    }
 
     /* Further reduce photo collage on very small screens */
     .hero-photos-collage {
@@ -2222,5 +2314,49 @@ section {
         line-height: 1.5 !important;
         padding: 0 15px;
         white-space: normal;
+    }
+    
+    /* Ultra-compact calendar for very small screens */
+    .calendar-container {
+        padding: 10px !important;
+        margin: 15px 5px 25px 5px !important;
+        border-radius: 10px;
+    }
+    
+    .calendar-day {
+        padding: 6px 1px !important;
+        font-size: 0.8rem !important;
+        min-height: 35px !important;
+        font-weight: 600;
+    }
+    
+    .calendar-header h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    .calendar-nav {
+        padding: 4px 8px !important;
+        font-size: 0.8rem !important;
+        min-width: 30px !important;
+        height: 30px !important;
+    }
+    
+    .calendar-legend {
+        margin-top: 15px !important;
+    }
+    
+    .calendar-legend h4 {
+        font-size: 0.9rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .legend-item {
+        font-size: 0.7rem !important;
+        padding: 2px 0 !important;
+    }
+    
+    .legend-color {
+        width: 8px !important;
+        height: 8px !important;
     }
 }
