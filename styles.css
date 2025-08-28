@@ -830,7 +830,7 @@ section {
     border-radius: 25px;
     padding: 40px;
     margin: 0 auto 60px auto;
-    max-width: 900px;
+    max-width: 1200px; /* Make calendar wider on desktop */
     box-shadow: 0 15px 40px rgba(44, 85, 48, 0.1);
     border: 1px solid rgba(44, 85, 48, 0.1);
     position: relative;
@@ -927,36 +927,43 @@ section {
 
 /* Event type specific colors */
 .calendar-day.event-general {
-    background: #2c5530;
+    background: #90EE90; /* Light green for MSA */
+    color: #2c5530;
 }
 
 .calendar-day.event-ladders {
-    background: #4a7c59;
+    background: #FFA07A; /* Light salmon for Ladders */
+    color: #2c5530;
 }
 
 .calendar-day.event-sisters-social {
-    background: #9b59b6;
+    background: #DDA0DD; /* Plum for Sisters' Social */
+    color: #2c5530;
 }
 
 .calendar-day.event-brothers-social {
-    background: #3498db;
+    background: #87CEEB; /* Sky blue for Brothers' Social */
+    color: #2c5530;
 }
 
 .calendar-day.event-hope {
-    background: #FFD700;
+    background: #FFDAB9; /* Peach puff for HOPE */
     color: #2c5530;
 }
 
 .calendar-day.event-iaw {
-    background: #8B4513;
+    background: #B0C4DE; /* Light steel blue for IAW */
+    color: #2c5530;
 }
 
 .calendar-day.event-r2r {
-    background: #9370DB;
+    background: #F0E68C; /* Khaki for R2R */
+    color: #2c5530;
 }
 
 .calendar-day.event-submissions {
-    background: #FF6B6B;
+    background: #DDA0DD; /* Plum for Submissions */
+    color: #2c5530;
 }
 
 .event-dot {
@@ -1035,19 +1042,19 @@ section {
 }
 
 .legend-color.event-general {
-    background: #2c5530;
+    background: #90EE90; /* Light green for MSA */
 }
 
 .legend-color.event-ladders {
-    background: #4a7c59;
+    background: #FFA07A; /* Light salmon for Ladders */
 }
 
 .legend-color.event-hope {
-    background: #FFD700;
+    background: #FFDAB9; /* Peach puff for HOPE */
 }
 
 .legend-color.event-iaw {
-    background: #8B4513;
+    background: #B0C4DE; /* Light steel blue for IAW */
 }
 
 .legend-color.event-r2r {
@@ -1055,15 +1062,19 @@ section {
 }
 
 .legend-color.event-submissions {
-    background: #FF6B6B;
+    background: #DDA0DD; /* Plum for Submissions */
 }
 
 .legend-color.event-sisters-social {
-    background: #9b59b6;
+    background: #DDA0DD; /* Plum for Sisters' Social */
 }
 
 .legend-color.event-brothers-social {
-    background: #3498db;
+    background: #87CEEB; /* Sky blue for Brothers' Social */
+}
+
+.legend-color.event-r2r {
+    background: #F0E68C; /* Khaki for R2R */
 }
 
 /* Event Modal */
@@ -1203,52 +1214,57 @@ section {
 
 /* Modal event type styling */
 .modal-event.event-general {
-    border-left-color: #2c5530;
+    border-left-color: #90EE90;
 }
 
 .modal-event.event-general .modal-event-type {
-    background: #2c5530;
+    background: #90EE90;
+    color: #2c5530;
 }
 
 .modal-event.event-ladders {
-    border-left-color: #4a7c59;
+    border-left-color: #FFA07A;
 }
 
 .modal-event.event-ladders .modal-event-type {
-    background: #4a7c59;
+    background: #FFA07A;
+    color: #2c5530;
 }
 
 .modal-event.event-sisters-social {
-    border-left-color: #9b59b6;
+    border-left-color: #DDA0DD;
 }
 
 .modal-event.event-sisters-social .modal-event-type {
-    background: #9b59b6;
+    background: #DDA0DD;
+    color: #2c5530;
 }
 
 .modal-event.event-brothers-social {
-    border-left-color: #3498db;
+    border-left-color: #87CEEB;
 }
 
 .modal-event.event-brothers-social .modal-event-type {
-    background: #3498db;
+    background: #87CEEB;
+    color: #2c5530;
 }
 
 .modal-event.event-hope {
-    border-left-color: #FFD700;
+    border-left-color: #FFDAB9;
 }
 
 .modal-event.event-hope .modal-event-type {
-    background: #FFD700;
+    background: #FFDAB9;
     color: #2c5530;
 }
 
 .modal-event.event-iaw {
-    border-left-color: #8B4513;
+    border-left-color: #B0C4DE;
 }
 
 .modal-event.event-iaw .modal-event-type {
-    background: #8B4513;
+    background: #B0C4DE;
+    color: #2c5530;
 }
 
 .modal-event.event-r2r {
@@ -1260,11 +1276,12 @@ section {
 }
 
 .modal-event.event-submissions {
-    border-left-color: #FF6B6B;
+    border-left-color: #DDA0DD;
 }
 
 .modal-event.event-submissions .modal-event-type {
-    background: #FF6B6B;
+    background: #DDA0DD;
+    color: #2c5530;
 }
 
 .calendar-day.other-month {
@@ -1305,6 +1322,9 @@ section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     gap: 35px;
+    max-width: 900px; /* Limit width to prevent cards from being too wide with only 2 events */
+    margin: 0 auto; /* Center the grid */
+    justify-content: center;
 }
 
 .event-card {
@@ -1402,33 +1422,33 @@ section {
 }
 
 .event-card.event-general .event-type {
-    background: #2c5530;
-    color: white;
+    background: #90EE90;
+    color: #2c5530;
 }
 
 .event-card.event-ladders .event-type {
-    background: #4a7c59;
-    color: white;
+    background: #FFA07A;
+    color: #2c5530;
 }
 
 .event-card.event-sisters-social .event-type {
-    background: #9b59b6;
-    color: white;
+    background: #DDA0DD;
+    color: #2c5530;
 }
 
 .event-card.event-brothers-social .event-type {
-    background: #3498db;
-    color: white;
+    background: #87CEEB;
+    color: #2c5530;
 }
 
 .event-card.event-hope .event-type {
-    background: #FFD700;
+    background: #FFDAB9;
     color: #2c5530;
 }
 
 .event-card.event-iaw .event-type {
-    background: #8B4513;
-    color: white;
+    background: #B0C4DE;
+    color: #2c5530;
 }
 
 .event-card.event-r2r .event-type {
@@ -1437,33 +1457,33 @@ section {
 }
 
 .event-card.event-submissions .event-type {
-    background: #FF6B6B;
-    color: white;
+    background: #DDA0DD;
+    color: #2c5530;
 }
 
 /* Enhanced event cards with type-specific borders */
 .event-card.event-general {
-    border-left: 4px solid #2c5530;
+    border-left: 4px solid #90EE90;
 }
 
 .event-card.event-ladders {
-    border-left: 4px solid #4a7c59;
+    border-left: 4px solid #FFA07A;
 }
 
 .event-card.event-sisters-social {
-    border-left: 4px solid #9b59b6;
+    border-left: 4px solid #DDA0DD;
 }
 
 .event-card.event-brothers-social {
-    border-left: 4px solid #3498db;
+    border-left: 4px solid #87CEEB;
 }
 
 .event-card.event-hope {
-    border-left: 4px solid #FFD700;
+    border-left: 4px solid #FFDAB9;
 }
 
 .event-card.event-iaw {
-    border-left: 4px solid #8B4513;
+    border-left: 4px solid #B0C4DE;
 }
 
 .event-card.event-r2r {
@@ -1471,7 +1491,7 @@ section {
 }
 
 .event-card.event-submissions {
-    border-left: 4px solid #FF6B6B;
+    border-left: 4px solid #DDA0DD;
 }
 
 /* Gallery Section */
