@@ -324,14 +324,36 @@ class GalleryFilter {
     }
 
     filterGallery(filter) {
-        this.galleryItems.forEach(item => {
-            if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                item.style.display = 'block';
-                item.style.animation = 'fadeInUp 0.5s ease forwards';
+        const galleryGrid = document.querySelector('.gallery-grid');
+        const isExpanded = galleryGrid.classList.contains('expanded');
+        let visibleCount = 0;
+        
+        this.galleryItems.forEach((item, index) => {
+            const shouldShow = filter === 'all' || item.getAttribute('data-category') === filter;
+            
+            if (shouldShow) {
+                // Check if we should hide this item due to the 3-item limit
+                if (!isExpanded && visibleCount >= 3) {
+                    item.style.display = 'none';
+                } else {
+                    item.style.display = 'block';
+                    item.style.animation = 'fadeInUp 0.5s ease forwards';
+                }
+                visibleCount++;
             } else {
                 item.style.display = 'none';
             }
         });
+        
+        // Update toggle button visibility based on filtered results
+        const toggleBtn = document.getElementById('galleryToggleBtn');
+        if (toggleBtn) {
+            if (visibleCount > 3) {
+                toggleBtn.style.display = 'block';
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+        }
     }
 }
 
@@ -553,10 +575,56 @@ function createPlaceholderImages() {
     });
 }
 
+// Gallery Toggle Handler
+class GalleryToggle {
+    constructor() {
+        this.galleryGrid = document.querySelector('.gallery-grid');
+        this.toggleBtn = document.getElementById('galleryToggleBtn');
+        this.toggleText = this.toggleBtn?.querySelector('.toggle-text');
+        this.toggleIcon = this.toggleBtn?.querySelector('.toggle-icon');
+        this.init();
+    }
+
+    init() {
+        if (this.toggleBtn) {
+            this.toggleBtn.addEventListener('click', () => {
+                this.toggleGallery();
+            });
+        }
+    }
+
+    toggleGallery() {
+        const isExpanded = this.galleryGrid.classList.contains('expanded');
+        
+        if (isExpanded) {
+            // Collapse gallery
+            this.galleryGrid.classList.remove('expanded');
+            this.toggleText.textContent = 'Show More Photos';
+            this.toggleIcon.classList.remove('fa-chevron-up');
+            this.toggleIcon.classList.add('fa-chevron-down');
+        } else {
+            // Expand gallery
+            this.galleryGrid.classList.add('expanded');
+            this.toggleText.textContent = 'Show Less Photos';
+            this.toggleIcon.classList.remove('fa-chevron-down');
+            this.toggleIcon.classList.add('fa-chevron-up');
+        }
+        
+        // Re-apply current filter to update visibility
+        const activeFilter = document.querySelector('.filter-btn.active');
+        if (activeFilter) {
+            const filter = activeFilter.getAttribute('data-filter');
+            const galleryFilter = new GalleryFilter();
+            galleryFilter.filterGallery(filter);
+        }
+    }
+}
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new EventCalendar();
     new GalleryFilter();
+    new GalleryToggle();
     new ContactForm();
     new ScrollAnimations();
     new CounterAnimation();

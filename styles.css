@@ -19,7 +19,7 @@ html {
 /* Arabic Calligraphy Styles */
 .arabic-calligraphy {
     text-align: center;
-    margin: 25px 0;
+    margin: 25px auto;
     padding: 25px 30px;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(15px);
@@ -28,6 +28,10 @@ html {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     transform: scale(1.02);
     transition: all 0.3s ease;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .arabic-calligraphy:hover {
@@ -47,6 +51,11 @@ html {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     direction: rtl;
     unicode-bidi: bidi-override;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    text-align: center;
 }
 
 .arabic-translation {
@@ -424,7 +433,7 @@ html {
     position: relative;
     z-index: 2;
     max-width: 800px;
-    padding: 0 20px;
+    padding: 90px 20px 20px 20px; /* Add top padding to account for fixed navbar */
 }
 
 .hero-title {
@@ -1467,6 +1476,45 @@ section {
     gap: 20px;
 }
 
+/* Initially show only 3 items */
+.gallery-grid:not(.expanded) .gallery-item:nth-child(n+4) {
+    display: none;
+}
+
+/* Show More/Less button */
+.gallery-toggle {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.gallery-toggle-btn {
+    background: linear-gradient(135deg, #2c5530, #4a7c59);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(44, 85, 48, 0.3);
+}
+
+.gallery-toggle-btn:hover {
+    background: linear-gradient(135deg, #4a7c59, #6b9474);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(44, 85, 48, 0.4);
+}
+
+.toggle-icon {
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-toggle-btn:hover .toggle-icon {
+    transform: translateY(2px);
+}
+
 .gallery-item {
     position: relative;
     border-radius: 15px;
@@ -1741,6 +1789,12 @@ section {
         display: flex;
     }
     
+    /* Hide Arabic calligraphy on mobile */
+    .hero-arabic,
+    .section-arabic {
+        display: none;
+    }
+    
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -1764,6 +1818,10 @@ section {
     
     .hero-title {
         font-size: 2.5rem;
+    }
+    
+    .hero-content {
+        padding: 80px 15px 20px 15px; /* Reduced padding since Arabic box is hidden */
     }
     
     .instagram-handle {
@@ -1911,6 +1969,10 @@ section {
         font-size: 2rem;
     }
     
+    .hero-content {
+        padding: 90px 10px 20px 10px; /* Reduced padding since Arabic box is hidden */
+    }
+    
     .section-title {
         font-size: 2rem;
     }
@@ -1956,6 +2018,10 @@ section {
         font-size: 2rem;
     }
     
+    .hero-content {
+        padding: 90px 10px 20px 10px; /* Reduced padding since Arabic box is hidden */
+    }
+    
     .section-title {
         font-size: 2rem;
     }
@@ -1988,24 +2054,41 @@ section {
     
     /* Further Arabic text adjustments for small screens */
     .arabic-text {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        line-height: 1.6;
+        word-spacing: 0.1em;
+        padding: 0 10px;
     }
     
     .hero-arabic .arabic-text {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.5;
     }
     
     .section-arabic .arabic-text {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        line-height: 1.7;
     }
     
     .arabic-text-small {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     
     .arabic-calligraphy {
-        padding: 10px;
-        margin: 15px 0;
+        padding: 15px 10px;
+        margin: 15px 5px;
+        border-radius: 10px;
+        transform: none; /* Remove scaling on mobile */
+    }
+    
+    .arabic-calligraphy:hover {
+        transform: none; /* Remove hover scaling on mobile */
+    }
+    
+    .arabic-translation {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        padding: 0 10px;
     }
 
     /* Further reduce photo collage on very small screens */
@@ -2039,5 +2122,44 @@ section {
     
     .collage-photo-5, .collage-photo-6 {
         display: none;
+    }
+}
+
+/* Extra small screens - Arabic text optimization */
+@media (max-width: 360px) {
+    .hero-content {
+        padding: 100px 8px 15px 8px !important; /* Reduced padding since Arabic box is hidden */
+    }
+    
+    .arabic-text {
+        font-size: 1.1rem !important;
+        line-height: 1.8 !important;
+        word-spacing: 0.15em;
+        padding: 0 15px;
+        white-space: normal;
+    }
+    
+    .hero-arabic .arabic-text {
+        font-size: 1.5rem !important;
+        line-height: 1.6 !important;
+    }
+    
+    .section-arabic .arabic-text {
+        font-size: 1rem !important;
+        line-height: 1.8 !important;
+    }
+    
+    .arabic-calligraphy {
+        padding: 10px 8px !important;
+        margin: 10px 2px !important;
+        border-radius: 8px;
+        min-height: auto;
+    }
+    
+    .arabic-translation {
+        font-size: 0.8rem !important;
+        line-height: 1.5 !important;
+        padding: 0 15px;
+        white-space: normal;
     }
 }
