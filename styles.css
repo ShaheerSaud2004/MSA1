@@ -93,38 +93,72 @@ html {
     background: rgba(255, 255, 255, 0.25);
 }
 
-.hero-instagram {
+.hero-social {
     margin: 20px 0;
     opacity: 0;
     animation: fadeInUp 1s ease forwards 0.8s;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.instagram-handle {
+.social-handle {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    padding: 12px 20px;
+    padding: 10px 16px;
     border-radius: 25px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 500;
     transition: all 0.3s ease;
     text-decoration: none;
     cursor: pointer;
+    white-space: nowrap;
 }
 
-.instagram-handle:hover {
+.social-handle:hover {
     background: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-.instagram-handle i {
-    font-size: 1.3rem;
+.social-handle i {
+    font-size: 1.2rem;
+}
+
+/* Platform-specific icon colors */
+.social-handle i.fa-instagram {
     color: #E4405F;
+}
+
+.social-handle i.fa-youtube {
+    color: #FF0000;
+}
+
+.social-handle i.fa-tiktok {
+    color: #000000;
+}
+
+/* Contact and footer icon colors */
+.contact-item i.fa-youtube {
+    color: #FF0000;
+}
+
+.contact-item i.fa-tiktok {
+    color: #000000;
+}
+
+.social-link i.fa-youtube {
+    color: #FF0000;
+}
+
+.social-link i.fa-tiktok {
+    color: #000000;
 }
 
 .section-arabic .arabic-text {
@@ -1824,9 +1858,16 @@ section {
         padding: 80px 15px 20px 15px; /* Reduced padding since Arabic box is hidden */
     }
     
-    .instagram-handle {
-        font-size: 1rem;
-        padding: 10px 16px;
+    .social-handle {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        gap: 6px;
+    }
+    
+    .hero-social {
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
     }
     
     .hero-buttons {
