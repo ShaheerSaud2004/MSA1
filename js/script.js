@@ -1946,6 +1946,19 @@ class PhotoNotificationHandler {
         // Log for verification
         console.log('Notification signup successful:', contactData);
         console.log('Total subscribers:', this.getStoredNotifications().length);
+        
+        // Close modal and refresh page after success
+        setTimeout(() => {
+            // Close the notification modal
+            const modal = document.getElementById('notificationModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            // Refresh the page
+            window.location.reload();
+        }, 2000);
     }
 
     isValidEmail(email) {
