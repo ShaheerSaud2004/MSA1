@@ -3332,23 +3332,100 @@ img.event-logo[src*="hope.jpg"],
 }
 
 .event-sponsors {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 15px 20px;
-    border-radius: 15px;
     margin-top: 15px;
-    border-left: 4px solid #FFD700;
 }
 
-.sponsor-text {
-    color: #666;
+.boba-highlight {
+    background: linear-gradient(135deg, #E8F5E8 0%, #F0FFF0 50%, #E8F5E8 100%);
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 2px solid #90EE90;
+    box-shadow: 0 8px 25px rgba(144, 238, 144, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: bobaPulse 3s ease-in-out infinite;
+}
+
+.boba-highlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: bobaShine 4s ease-in-out infinite;
+}
+
+.boba-icon {
+    font-size: 2.5rem;
+    animation: bobaFloat 2s ease-in-out infinite;
+}
+
+.boba-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.free-text {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #2c5530;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(44, 85, 48, 0.1);
+}
+
+.sponsor-info {
     font-size: 0.9rem;
-    margin-right: 8px;
+    color: #666;
 }
 
 .sponsor-handle {
     color: #2c5530;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #90EE90, #32CD32);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.boba-sparkle {
+    font-size: 1.5rem;
+    animation: sparkleRotate 3s linear infinite;
+}
+
+/* Boba Animations */
+@keyframes bobaPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(144, 238, 144, 0.3);
+    }
+    50% { 
+        transform: scale(1.02);
+        box-shadow: 0 12px 35px rgba(144, 238, 144, 0.5);
+    }
+}
+
+@keyframes bobaFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+@keyframes sparkleRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes bobaShine {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
 }
 
 .event-actions {
@@ -4475,6 +4552,24 @@ img.event-logo[src*="hope.jpg"],
     
     .event-actions {
         flex-direction: column;
+    }
+    
+    /* Mobile Boba Section */
+    .boba-highlight {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .boba-icon {
+        font-size: 2rem;
+    }
+    
+    .free-text {
+        font-size: 1rem;
+    }
+    
+    .boba-sparkle {
+        font-size: 1.2rem;
     }
     
     .gallery-filters {
