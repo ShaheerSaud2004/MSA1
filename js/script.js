@@ -1879,7 +1879,9 @@ class PhotoNotificationHandler {
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             this.handleSubmission(emailInput, phoneInput, messageDiv);
+            return false;
         });
 
         // Clear other input when user types in one
