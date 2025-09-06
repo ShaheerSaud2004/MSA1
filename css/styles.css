@@ -3323,7 +3323,7 @@ img.event-logo[src*="hope.jpg"],
     transform: scale(1.05);
 }
 
-.event-overlay {
+.featured-event-card .event-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -5081,7 +5081,7 @@ img.event-logo[src*="hope.jpg"],
     background: #2c5a7d;
 }
 
-.event-overlay {
+.events-gallery-grid .event-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
