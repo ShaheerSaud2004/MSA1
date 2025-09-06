@@ -2254,7 +2254,40 @@ class HeroSlideshow {
 document.addEventListener('DOMContentLoaded', () => {
     new HeroSlideshow();
     initializeFlipCards();
+    initializeNotificationModal();
 });
+
+// Initialize notification modal functionality
+function initializeNotificationModal() {
+    const floatingBtn = document.getElementById('floatingNotificationBtn');
+    const modal = document.getElementById('notificationModal');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    const overlay = document.querySelector('.notification-modal-overlay');
+    
+    if (!floatingBtn || !modal) return;
+    
+    // Open modal
+    floatingBtn.addEventListener('click', function() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+    
+    // Close modal functions
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+}
 
 // Flip Cards Mobile Touch Support
 function initializeFlipCards() {

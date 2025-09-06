@@ -698,67 +698,42 @@
                 </div>
             </div>
             
-            <!-- Enhanced Photo Update Notification Section -->
-            <div class="photo-notification-section">
-                <div class="notification-container">
-                    <div class="notification-card">
-                        <div class="notification-background">
-                            <div class="photo-icons">
-                                <div class="floating-icon icon-1">📸</div>
-                                <div class="floating-icon icon-2">✨</div>
-                                <div class="floating-icon icon-3">🔔</div>
-                                <div class="floating-icon icon-4">📱</div>
-                            </div>
+            <!-- Floating Notification Button -->
+            <div class="floating-notification-btn" id="floatingNotificationBtn">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="notification-text">Get Updates</div>
+            </div>
+
+            <!-- Notification Popup Modal -->
+            <div class="notification-modal" id="notificationModal">
+                <div class="notification-modal-overlay"></div>
+                <div class="notification-modal-content">
+                    <button class="modal-close-btn" id="modalCloseBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div class="modal-header">
+                        <div class="modal-icon">📸</div>
+                        <h3>Want to be updated?</h3>
+                        <p>Get notified when we upload new event photos!</p>
+                    </div>
+                    
+                    <form class="notification-form" id="photoNotificationForm" action="javascript:void(0);" method="post">
+                        <div class="form-group">
+                            <input type="email" id="emailInput" placeholder="Enter your email" class="notification-input">
+                            <span class="input-divider">OR</span>
+                            <input type="tel" id="phoneInput" placeholder="Enter your phone number" class="notification-input">
                         </div>
                         
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <div class="header-icon">
-                                    <div class="camera-pulse">📸</div>
-                                </div>
-                                <h3>Never Miss a Moment!</h3>
-                                <p>Get instant notifications when we upload fresh photos from MSA events</p>
-                            </div>
-                            
-                            <form class="modern-notification-form" id="photoNotificationForm" action="javascript:void(0);" method="post">
-                                <div class="form-layout">
-                                    <div class="input-row">
-                                        <div class="input-field">
-                                            <div class="input-icon">📧</div>
-                                            <input type="email" id="emailInput" placeholder="your.email@rutgers.edu" class="modern-input">
-                                            <div class="input-highlight"></div>
-                                        </div>
-                                        
-                                        <div class="divider-container">
-                                            <span class="or-divider">OR</span>
-                                        </div>
-                                        
-                                        <div class="input-field">
-                                            <div class="input-icon">📱</div>
-                                            <input type="tel" id="phoneInput" placeholder="(123) 456-7890" class="modern-input">
-                                            <div class="input-highlight"></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <button type="submit" class="modern-notify-btn">
-                                        <div class="btn-content">
-                                            <div class="btn-icon">🔔</div>
-                                            <span>Notify Me!</span>
-                                            <div class="btn-sparkle">✨</div>
-                                        </div>
-                                        <div class="btn-glow"></div>
-                                    </button>
-                                </div>
-                                
-                                <div class="form-message" id="formMessage"></div>
-                                
-                                <div class="privacy-note">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span>We respect your privacy. No spam, just event photos!</span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                        <button type="submit" class="notification-submit-btn">
+                            <i class="fas fa-bell"></i>
+                            Notify Me!
+                        </button>
+                        
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
                 </div>
             </div>
 
