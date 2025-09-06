@@ -110,27 +110,6 @@
                                 <h3>Our Mission</h3>
                             </div>
                             <p>We're the official Muslim Student Association at <span class="rutgers-red">Rutgers University-New Brunswick</span>, serving as a home away from home for Muslim students. We connect, inspire, and empower our community through faith, education, and service.</p>
-                            
-                            <div class="mission-highlights">
-                                <div class="highlight-item">
-                                    <div class="highlight-icon">🤝</div>
-                                    <div class="highlight-text">
-                                        <strong>Connect</strong> - Building lasting friendships and brotherhood/sisterhood
-                                    </div>
-                                </div>
-                                <div class="highlight-item">
-                                    <div class="highlight-icon">💡</div>
-                                    <div class="highlight-text">
-                                        <strong>Inspire</strong> - Growing in faith and Islamic knowledge together
-                                    </div>
-                                </div>
-                                <div class="highlight-item">
-                                    <div class="highlight-icon">🎯</div>
-                                    <div class="highlight-text">
-                                        <strong>Empower</strong> - Making positive impact in our community
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         
                         <div class="quick-stats">
@@ -149,16 +128,39 @@
                         </div>
                     </div>
                     
-                    <div class="about-visual">
-                        <div class="photo-collage">
-                            <div class="photo-item photo-large">
-                                <img src="images/gallery/Photos/487219155_1073545171477509_1858677282454781252_n.jpg" alt="MSA Community Event" loading="lazy">
+                    <div class="about-right">
+                        <div class="about-visual">
+                            <div class="photo-collage">
+                                <div class="photo-item photo-large">
+                                    <img src="images/gallery/Photos/487219155_1073545171477509_1858677282454781252_n.jpg" alt="MSA Community Event" loading="lazy">
+                                </div>
+                                <div class="photo-item photo-medium">
+                                    <img src="images/gallery/Photos/486757109_1070247085140651_6001288308616007056_n.jpg" alt="MSA Gathering" loading="lazy">
+                                </div>
+                                <div class="photo-item photo-small">
+                                    <img src="images/gallery/Photos/486812992_1070247221807304_3832815687186870024_n.jpg" alt="MSA Members" loading="lazy">
+                                </div>
                             </div>
-                            <div class="photo-item photo-medium">
-                                <img src="images/gallery/Photos/486757109_1070247085140651_6001288308616007056_n.jpg" alt="MSA Gathering" loading="lazy">
+                        </div>
+                        
+                        <div class="mission-highlights">
+                            <div class="highlight-item">
+                                <div class="highlight-icon">🤝</div>
+                                <div class="highlight-text">
+                                    <strong>Connect</strong> - Building lasting friendships and brotherhood/sisterhood
+                                </div>
                             </div>
-                            <div class="photo-item photo-small">
-                                <img src="images/gallery/Photos/486812992_1070247221807304_3832815687186870024_n.jpg" alt="MSA Members" loading="lazy">
+                            <div class="highlight-item">
+                                <div class="highlight-icon">💡</div>
+                                <div class="highlight-text">
+                                    <strong>Inspire</strong> - Growing in faith and Islamic knowledge together
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">🎯</div>
+                                <div class="highlight-text">
+                                    <strong>Empower</strong> - Making positive impact in our community
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -696,29 +698,67 @@
                 </div>
             </div>
             
-            <!-- Photo Update Notification Section -->
+            <!-- Enhanced Photo Update Notification Section -->
             <div class="photo-notification-section">
                 <div class="notification-container">
-                    <div class="notification-header">
-                        <h3>📸 Want to be updated when new photos drop?</h3>
-                        <p>Enter your email or phone number below to get notified when we upload new event photos!</p>
-                    </div>
-                    
-                    <form class="notification-form" id="photoNotificationForm" action="javascript:void(0);" method="post">
-                        <div class="form-group">
-                            <div class="input-container">
-                                <input type="email" id="emailInput" placeholder="Enter your email address" class="notification-input">
-                                <span class="input-divider">OR</span>
-                                <input type="tel" id="phoneInput" placeholder="Enter your phone number" class="notification-input">
+                    <div class="notification-card">
+                        <div class="notification-background">
+                            <div class="photo-icons">
+                                <div class="floating-icon icon-1">📸</div>
+                                <div class="floating-icon icon-2">✨</div>
+                                <div class="floating-icon icon-3">🔔</div>
+                                <div class="floating-icon icon-4">📱</div>
                             </div>
-                            <button type="submit" class="notification-btn">
-                                <i class="fas fa-bell"></i>
-                                Notify Me!
-                            </button>
                         </div>
-                        <div class="form-message" id="formMessage"></div>
-                    </form>
-                    
+                        
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <div class="header-icon">
+                                    <div class="camera-pulse">📸</div>
+                                </div>
+                                <h3>Never Miss a Moment!</h3>
+                                <p>Get instant notifications when we upload fresh photos from MSA events</p>
+                            </div>
+                            
+                            <form class="modern-notification-form" id="photoNotificationForm" action="javascript:void(0);" method="post">
+                                <div class="form-layout">
+                                    <div class="input-row">
+                                        <div class="input-field">
+                                            <div class="input-icon">📧</div>
+                                            <input type="email" id="emailInput" placeholder="your.email@rutgers.edu" class="modern-input">
+                                            <div class="input-highlight"></div>
+                                        </div>
+                                        
+                                        <div class="divider-container">
+                                            <span class="or-divider">OR</span>
+                                        </div>
+                                        
+                                        <div class="input-field">
+                                            <div class="input-icon">📱</div>
+                                            <input type="tel" id="phoneInput" placeholder="(123) 456-7890" class="modern-input">
+                                            <div class="input-highlight"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" class="modern-notify-btn">
+                                        <div class="btn-content">
+                                            <div class="btn-icon">🔔</div>
+                                            <span>Notify Me!</span>
+                                            <div class="btn-sparkle">✨</div>
+                                        </div>
+                                        <div class="btn-glow"></div>
+                                    </button>
+                                </div>
+                                
+                                <div class="form-message" id="formMessage"></div>
+                                
+                                <div class="privacy-note">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>We respect your privacy. No spam, just event photos!</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
