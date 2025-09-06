@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rutgers MSA - Muslim Student Association</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/logos/msa-logo.svg" type="image/svg+xml">
+    <link rel="icon" href="images/logos/MSA.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="images/logos/MSA.png" sizes="16x16" type="image/png">
+    <link rel="apple-touch-icon" href="images/logos/MSA.png" sizes="180x180">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -14,7 +18,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="MSA.png" alt="Rutgers MSA Logo" class="logo-img">
+                <img src="images/logos/MSA.png" alt="Rutgers MSA Logo" class="logo-img">
                 <span class="logo-text">Rutgers MSA</span>
             </div>
             <ul class="nav-menu">
@@ -35,20 +39,19 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-photos-collage">
-            <div class="collage-photo collage-photo-1"><img src="Photos/486757109_1070247085140651_6001288308616007056_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-2"><img src="Photos/486774984_1070246865140673_7017109050438695084_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-3"><img src="Photos/487219155_1073545171477509_1858677282454781252_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-4"><img src="Photos/487424456_1073545334810826_6230589184875073630_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-5"><img src="Photos/487756285_1073545261477500_518423250158846283_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-6"><img src="Photos/499834288_1117566240408735_8176664535719322355_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-7"><img src="Photos/500355807_1117576790407680_4117713919233091797_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-8"><img src="Photos/501201901_1117540907077935_6926909662689115422_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-9"><img src="Photos/536282753_1190543493111009_209829640578721676_n.jpg" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-10"><img src="Photos/C1.png" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-11"><img src="Photos/C2.png" alt="MSA Event"></div>
-            <div class="collage-photo collage-photo-12"><img src="Photos/C3.png" alt="MSA Event"></div>
+        <div class="hero-slideshow">
+            <div class="slide active" style="background-image: url('images/gallery/Photos/487219155_1073545171477509_1858677282454781252_n.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/486757109_1070247085140651_6001288308616007056_n.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/486812992_1070247221807304_3832815687186870024_n.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/487424456_1073545334810826_6230589184875073630_n.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/487756285_1073545261477500_518423250158846283_n.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/Fall Kickoff/Thumbnails/Brothers/1-IMG_6431.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/Fall Kickoff/Thumbnails/Brothers/50-IMG_6483.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/Fall Kickoff/Thumbnails/Sisters/1-IMG_4264.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/Fall Kickoff/Thumbnails/Sisters/50-IMG_4259.jpg')"></div>
+            <div class="slide" style="background-image: url('images/gallery/Photos/499834288_1117566240408735_8176664535719322355_n.jpg')"></div>
         </div>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="arabic-calligraphy hero-arabic">
                 <p class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
@@ -86,49 +89,85 @@
         <div class="container">
             <div class="section-header">
                 <div class="about-logos">
-                    <img src="MSA.png" alt="MSA Logo" class="about-logo msa-logo">
-                    <img src="RUTGERS.png" alt="Rutgers University Logo" class="about-logo rutgers-logo">
+                    <img src="images/logos/MSA.png" alt="MSA Logo" class="about-logo msa-logo">
+                    <img src="images/logos/RUTGERS.png" alt="Rutgers University Logo" class="about-logo rutgers-logo">
                 </div>
                 <h2 class="section-title">About Rutgers MSA</h2>
-                <p class="section-subtitle">The official Muslim Student Association of Rutgers University-New Brunswick</p>
+                <p class="section-subtitle">Building community, growing faith, making impact</p>
             </div>
             
             <div class="about-content">
-                <div class="about-text">
-                    <div class="arabic-calligraphy section-arabic">
-                        <p class="arabic-text">وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ</p>
-                        <p class="arabic-translation">"And I did not create the jinn and mankind except to worship Me" - Quran 51:56</p>
+                <div class="about-main">
+                    <div class="about-text">
+                        <div class="arabic-calligraphy section-arabic">
+                            <p class="arabic-text">وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ</p>
+                            <p class="arabic-translation">"I did not create jinn and mankind except to worship Me" - Quran 51:56</p>
+                        </div>
+                        
+                        <div class="mission-statement">
+                            <h3>Our Mission</h3>
+                            <p>We're the official Muslim Student Association at Rutgers University-New Brunswick, serving as a home away from home for Muslim students. We connect, inspire, and empower our community through faith, education, and service.</p>
+                        </div>
+                        
+                        <div class="quick-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">5.2K+</div>
+                                <div class="stat-label">Followers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">20+</div>
+                                <div class="stat-label">Annual Events</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">7</div>
+                                <div class="stat-label">Active Teams</div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Our Mission</h3>
-                    <p>The Rutgers Muslim Student Association (MSA) serves as a spiritual, educational, and social hub for Muslim students at Rutgers University-New Brunswick. We strive to create an inclusive environment where students can grow in their faith, excel academically, and contribute positively to the broader community.</p>
                     
-                    <h3>What We Do</h3>
-                    <ul class="about-list">
-                        <li><i class="fas fa-pray"></i> Provide prayer spaces and Islamic education</li>
-                        <li><i class="fas fa-users"></i> Foster community through social events and gatherings</li>
-                        <li><i class="fas fa-heart"></i> Organize charity drives and community service</li>
-                        <li><i class="fas fa-graduation-cap"></i> Support academic and professional development</li>
-                        <li><i class="fas fa-mosque"></i> Host religious observances and celebrations</li>
-                        <li><i class="fas fa-handshake"></i> Build bridges with interfaith communities</li>
-                    </ul>
+                    <div class="about-visual">
+                        <div class="photo-collage">
+                            <div class="photo-item photo-large">
+                                <img src="images/gallery/Photos/487219155_1073545171477509_1858677282454781252_n.jpg" alt="MSA Community Event" loading="lazy">
+                            </div>
+                            <div class="photo-item photo-medium">
+                                <img src="images/gallery/Photos/486757109_1070247085140651_6001288308616007056_n.jpg" alt="MSA Gathering" loading="lazy">
+                            </div>
+                            <div class="photo-item photo-small">
+                                <img src="images/gallery/Photos/486812992_1070247221807304_3832815687186870024_n.jpg" alt="MSA Members" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <div class="stat-number">5,208</div>
-                        <div class="stat-label">Followers</div>
+                <div class="about-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Community</h4>
+                        <p>Weekly events, social gatherings, and lifelong friendships</p>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">1,118</div>
-                        <div class="stat-label">Posts</div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Service</h4>
+                        <p>Charity drives, volunteering, and community outreach</p>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label">Events Yearly</div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Growth</h4>
+                        <p>Academic support, professional development, and Islamic learning</p>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label">Committee Teams</div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mosque"></i>
+                        </div>
+                        <h4>Faith</h4>
+                        <p>Islamic education, spiritual development, and religious observances</p>
                     </div>
                 </div>
             </div>
@@ -152,122 +191,246 @@
                 <p class="section-subtitle">Meet the dedicated committees that make MSA possible</p>
             </div>
             
-            <div class="teams-grid">
+            <!-- Interactive Flip Card Gallery -->
+            <div class="flip-cards-gallery">
+                
+                <!-- Ladders Flip Card -->
+                <div class="flip-card ladders-card">
+                    <div class="flip-card-inner">
+                        <!-- Front Side -->
+                        <div class="flip-card-front">
+                            <div class="card-logo">
+                                <img src="images/team/Lad.jpg" alt="Ladders Logo">
+                            </div>
+                            <h3 class="card-title">Ladders</h3>
+                            <p class="card-subtitle">Professional Development</p>
+                            <div class="hover-hint">
+                                <i class="fas fa-mouse-pointer"></i>
+                                Hover over me!
+                            </div>
+                        </div>
+                        <!-- Back Side -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <h3>Ladders</h3>
+                                <p class="description">Empowering professional growth through networking, skill development, and mentorship opportunities that prepare students for career success.</p>
+                                <div class="features">
+                                    <span class="feature"><i class="fas fa-briefcase"></i> Career Workshops</span>
+                                    <span class="feature"><i class="fas fa-users"></i> Networking Events</span>
+                                    <span class="feature"><i class="fas fa-graduation-cap"></i> Mentorship Program</span>
+                                </div>
+                                <a href="https://instagram.com/ladders.rumsa" target="_blank" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                    @ladders.rumsa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <a href="https://instagram.com/rumsahope" target="_blank" class="team-card team-card-link">
-                    <div class="team-icon">
-                        <i class="fas fa-heart"></i>
+                <!-- HOPE Flip Card -->
+                <div class="flip-card hope-card">
+                    <div class="flip-card-inner">
+                        <!-- Front Side -->
+                        <div class="flip-card-front">
+                            <div class="card-logo">
+                                <img src="images/team/hope.jpg" alt="HOPE Logo">
+                            </div>
+                            <h3 class="card-title">HOPE</h3>
+                            <p class="card-subtitle">Charity & Service</p>
+                            <div class="hover-hint">
+                                <i class="fas fa-mouse-pointer"></i>
+                                Hover over me!
+                            </div>
+                        </div>
+                        <!-- Back Side -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <h3>HOPE</h3>
+                                <p class="description">Leading charity and service initiatives that connect our community through meaningful volunteer work and outreach programs.</p>
+                                <div class="features">
+                                    <span class="feature"><i class="fas fa-heart"></i> Community Service</span>
+                                    <span class="feature"><i class="fas fa-hands-helping"></i> Volunteer Work</span>
+                                    <span class="feature"><i class="fas fa-globe"></i> Outreach Programs</span>
+                                </div>
+                                <a href="https://instagram.com/rumsa.hope" target="_blank" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                    @rumsa.hope
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="decorative-pattern">HOPE</h3>
-                    <div class="team-arabic">
-                        <span class="arabic-text-small">الأمَل</span>
-                        <span class="arabic-translation-small">Hope</span>
+                </div>
+
+                <!-- Road to Revival Flip Card -->
+                <div class="flip-card r2r-card">
+                    <div class="flip-card-inner">
+                        <!-- Front Side -->
+                        <div class="flip-card-front">
+                            <div class="card-logo">
+                                <img src="images/team/RR.jpg" alt="Road to Revival Logo">
+                            </div>
+                            <h3 class="card-title">Road to Revival</h3>
+                            <p class="card-subtitle">Spiritual Development</p>
+                            <div class="hover-hint">
+                                <i class="fas fa-mouse-pointer"></i>
+                                Hover over me!
+                            </div>
+                        </div>
+                        <!-- Back Side -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <h3>Road to Revival</h3>
+                                <p class="description">Fostering spiritual growth and Islamic education through study circles, lectures, and community discussions.</p>
+                                <div class="features">
+                                    <span class="feature"><i class="fas fa-book-open"></i> Study Circles</span>
+                                    <span class="feature"><i class="fas fa-mosque"></i> Islamic Education</span>
+                                    <span class="feature"><i class="fas fa-comments"></i> Discussions</span>
+                                </div>
+                                <a href="https://instagram.com/road2revival" target="_blank" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                    @road2revival
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <p>Charity and community service initiatives, including our annual Charity Week fundraising</p>
-                    <div class="team-instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>@rumsahope</span>
+                </div>
+
+                <!-- Submissions Flip Card -->
+                <div class="flip-card submissions-card">
+                    <div class="flip-card-inner">
+                        <!-- Front Side -->
+                        <div class="flip-card-front">
+                            <div class="card-logo">
+                                <img src="images/team/Sub.jpg" alt="Submissions Logo">
+                            </div>
+                            <h3 class="card-title">Submissions</h3>
+                            <p class="card-subtitle">Creative Content</p>
+                            <div class="hover-hint">
+                                <i class="fas fa-hand-pointer"></i>
+                                Tap to explore!
+                            </div>
+                        </div>
+                        <!-- Back Side -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <h3>Submissions</h3>
+                                <p class="description">Creating engaging digital content, graphics, and multimedia to showcase MSA events and community stories.</p>
+                                <div class="features">
+                                    <span class="feature"><i class="fas fa-camera"></i> Photography</span>
+                                    <span class="feature"><i class="fas fa-paint-brush"></i> Graphic Design</span>
+                                    <span class="feature"><i class="fas fa-video"></i> Video Content</span>
+                                </div>
+                                <a href="https://instagram.com/rusubmissions" target="_blank" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                    @rusubmissions
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </a>
-                
-                <a href="https://instagram.com/rumsaladders" target="_blank" class="team-card team-card-link">
-                    <div class="team-icon">
-                        <i class="fas fa-chart-line"></i>
+                </div>
+
+                <!-- IAW Flip Card -->
+                <div class="flip-card iaw-card">
+                    <div class="flip-card-inner">
+                        <!-- Front Side -->
+                        <div class="flip-card-front">
+                            <div class="card-logo">
+                                <img src="images/team/IAW.jpg" alt="IAW Logo">
+                            </div>
+                            <h3 class="card-title">Islamic Awareness Week</h3>
+                            <p class="card-subtitle">Education & Outreach</p>
+                            <div class="hover-hint">
+                                <i class="fas fa-mouse-pointer"></i>
+                                Hover over me!
+                            </div>
+                        </div>
+                        <!-- Back Side -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <h3>Islamic Awareness Week</h3>
+                                <p class="description">Promoting understanding and awareness of Islamic culture and values through educational events and campus outreach.</p>
+                                <div class="features">
+                                    <span class="feature"><i class="fas fa-chalkboard-teacher"></i> Educational Events</span>
+                                    <span class="feature"><i class="fas fa-university"></i> Campus Outreach</span>
+                                    <span class="feature"><i class="fas fa-handshake"></i> Interfaith Dialogue</span>
+                                </div>
+                                <a href="https://instagram.com/rutgersiaw" target="_blank" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                    @rutgersiaw
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="decorative-pattern">Ladders</h3>
-                    <div class="team-arabic">
-                        <span class="arabic-text-small">السَّلَالِم</span>
-                        <span class="arabic-translation-small">Ladders</span>
+                </div>
+
+                <!-- Sisters Social Flip Card -->
+                <div class="flip-card sisters-card">
+                    <div class="flip-card-inner">
+                        <!-- Front Side -->
+                        <div class="flip-card-front">
+                            <div class="card-logo">
+                                <img src="images/team/SS.jpg" alt="Sisters Social Logo">
+                            </div>
+                            <h3 class="card-title">Sisters Social</h3>
+                            <p class="card-subtitle">Women's Programs</p>
+                            <div class="hover-hint">
+                                <i class="fas fa-mouse-pointer"></i>
+                                Hover over me!
+                            </div>
+                        </div>
+                        <!-- Back Side -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <h3>Sisters Social</h3>
+                                <p class="description">Creating a supportive community for Muslim women through social events, workshops, and sisterhood activities.</p>
+                                <div class="features">
+                                    <span class="feature"><i class="fas fa-female"></i> Women's Events</span>
+                                    <span class="feature"><i class="fas fa-coffee"></i> Social Gatherings</span>
+                                    <span class="feature"><i class="fas fa-heart"></i> Sisterhood</span>
+                                </div>
+                                <a href="https://instagram.com/rumsa.sisterssocial" target="_blank" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                    @rumsa.sisterssocial
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <p>Alumni relations, professional development, and networking opportunities for career growth</p>
-                    <div class="team-instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>@rumsaladders</span>
+                </div>
+
+                <!-- Brothers Social Flip Card -->
+                <div class="flip-card brothers-card">
+                    <div class="flip-card-inner">
+                        <!-- Front Side -->
+                        <div class="flip-card-front">
+                            <div class="card-logo">
+                                <img src="images/team/BS.jpg" alt="Brothers Social Logo">
+                            </div>
+                            <h3 class="card-title">Brothers Social</h3>
+                            <p class="card-subtitle">Men's Programs</p>
+                            <div class="hover-hint">
+                                <i class="fas fa-mouse-pointer"></i>
+                                Hover over me!
+                            </div>
+                        </div>
+                        <!-- Back Side -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <h3>Brothers Social</h3>
+                                <p class="description">Building brotherhood through sports, social events, and community activities that strengthen bonds among Muslim men.</p>
+                                <div class="features">
+                                    <span class="feature"><i class="fas fa-male"></i> Men's Events</span>
+                                    <span class="feature"><i class="fas fa-futbol"></i> Sports Activities</span>
+                                    <span class="feature"><i class="fas fa-users"></i> Brotherhood</span>
+                                </div>
+                                <a href="https://instagram.com/rumsabrotherssocial" target="_blank" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                    @rumsabrotherssocial
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </a>
-                
-                <a href="https://instagram.com/rumsaiaw" target="_blank" class="team-card team-card-link">
-                    <div class="team-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3 class="decorative-pattern">IAW</h3>
-                    <div class="team-arabic">
-                        <span class="arabic-text-small">أسْبُوع التَّوْعِيَة الإسْلَامِيَّة</span>
-                        <span class="arabic-translation-small">Islamic Awareness Week</span>
-                    </div>
-                    <p>Annual Islamic Awareness Week promoting understanding and education about Islam on campus</p>
-                    <div class="team-instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>@rumsaiaw</span>
-                    </div>
-                </a>
-                
-                <a href="https://instagram.com/rumsar2r" target="_blank" class="team-card team-card-link">
-                    <div class="team-icon">
-                        <i class="fas fa-road"></i>
-                    </div>
-                    <h3 class="decorative-pattern">R2R</h3>
-                    <div class="team-arabic">
-                        <span class="arabic-text-small">الطَّرِيق إلَى رَاتْجَرْز</span>
-                        <span class="arabic-translation-small">Road to Rutgers</span>
-                    </div>
-                    <p>Annual conference for prospective students and families to learn about Rutgers and MSA</p>
-                    <div class="team-instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>@rumsar2r</span>
-                    </div>
-                </a>
-                
-                <a href="https://instagram.com/rumsasubmissions" target="_blank" class="team-card team-card-link">
-                    <div class="team-icon">
-                        <i class="fas fa-pen-fancy"></i>
-                    </div>
-                    <h3 class="decorative-pattern">Submissions</h3>
-                    <div class="team-arabic">
-                        <span class="arabic-text-small">المُسَاهَمَات</span>
-                        <span class="arabic-translation-small">Submissions</span>
-                    </div>
-                    <p>Creative content, art exhibitions, and multimedia projects showcasing Muslim talent and expression</p>
-                    <div class="team-instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>@rumsasubmissions</span>
-                    </div>
-                </a>
-                
-                <a href="https://instagram.com/rumsasisters" target="_blank" class="team-card team-card-link">
-                    <div class="team-icon">
-                        <i class="fas fa-female"></i>
-                    </div>
-                    <h3 class="decorative-pattern">Sisters Social</h3>
-                    <div class="team-arabic">
-                        <span class="arabic-text-small">اجْتِمَاعَات الأخَوَات</span>
-                        <span class="arabic-translation-small">Sisters Social</span>
-                    </div>
-                    <p>Dedicated social events and programs specifically designed for our female community members</p>
-                    <div class="team-instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>@rumsasisters</span>
-                    </div>
-                </a>
-            </div>
-            
-            <!-- Center the Brothers Social card -->
-            <div class="teams-grid-centered">
-                <a href="https://instagram.com/rumsabrothers" target="_blank" class="team-card team-card-link">
-                    <div class="team-icon">
-                        <i class="fas fa-male"></i>
-                    </div>
-                    <h3 class="decorative-pattern">Brothers Social</h3>
-                    <div class="team-arabic">
-                        <span class="arabic-text-small">اجْتِمَاعَات الإخْوَة</span>
-                        <span class="arabic-translation-small">Brothers Social</span>
-                    </div>
-                    <p>Social activities and brotherhood events specifically organized for our male community members</p>
-                    <div class="team-instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>@rumsabrothers</span>
-                    </div>
-                </a>
+                </div>
             </div>
         </div>
     </section>
@@ -302,36 +465,56 @@
                     <h4>Event Types</h4>
                     <div class="legend-items">
                         <div class="legend-item">
-                            <div class="legend-color event-general"></div>
-                            <span>Thursday Events</span>
+                            <div class="legend-logo">
+                                <img src="images/logos/MSA.png" alt="MSA" class="legend-logo-img">
+                            </div>
+                            <span>General Events</span>
                         </div>
                         <div class="legend-item">
-                            <div class="legend-color event-hope"></div>
+                            <div class="legend-logo">
+                                <img src="images/team/hope.jpg" alt="HOPE" class="legend-logo-img">
+                            </div>
                             <span>HOPE</span>
                         </div>
                         <div class="legend-item">
-                            <div class="legend-color event-ladders"></div>
+                            <div class="legend-logo">
+                                <img src="images/team/Lad.jpg" alt="Ladders" class="legend-logo-img">
+                            </div>
                             <span>Ladders</span>
                         </div>
                         <div class="legend-item">
-                            <div class="legend-color event-iaw"></div>
+                            <div class="legend-logo">
+                                <img src="images/team/IAW.jpg" alt="IAW" class="legend-logo-img">
+                            </div>
                             <span>IAW</span>
                         </div>
                         <div class="legend-item">
-                            <div class="legend-color event-r2r"></div>
+                            <div class="legend-logo">
+                                <img src="images/team/RR.jpg" alt="R2R" class="legend-logo-img">
+                            </div>
                             <span>R2R</span>
                         </div>
                         <div class="legend-item">
-                            <div class="legend-color event-submissions"></div>
+                            <div class="legend-logo">
+                                <img src="images/team/Sub.jpg" alt="Submissions" class="legend-logo-img">
+                            </div>
                             <span>Submissions</span>
                         </div>
                         <div class="legend-item">
-                            <div class="legend-color event-sisters-social"></div>
+                            <div class="legend-logo">
+                                <img src="images/team/SS.jpg" alt="Sisters Social" class="legend-logo-img">
+                            </div>
                             <span>Sisters Social</span>
                         </div>
                         <div class="legend-item">
-                            <div class="legend-color event-brothers-social"></div>
+                            <div class="legend-logo">
+                                <img src="images/team/BS.jpg" alt="Brothers Social" class="legend-logo-img">
+                            </div>
                             <span>Brothers Social</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color past-event-indicator">✕</div>
+                            <span>Past Events</span>
                         </div>
                     </div>
                 </div>
@@ -342,26 +525,26 @@
                 <div class="event-cards">
                     <div class="event-card event-general">
                         <div class="event-date">
-                            <span class="day">04</span>
-                            <span class="month">Sep</span>
+                            <span class="day">15</span>
+                            <span class="month">Feb</span>
                         </div>
                         <div class="event-details">
-                            <h4>Fall Kickoff</h4>
-                            <p><i class="fas fa-clock"></i> 4:30 PM - 11:45 PM</p>
-                            <p><i class="fas fa-map-marker-alt"></i> LSC MPR</p>
+                            <h4>Freshman Orientation</h4>
+                            <p><i class="fas fa-clock"></i> 6:00 PM - 9:00 PM</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Student Center</p>
                             <span class="event-type">General</span>
                         </div>
                     </div>
                     
                     <div class="event-card event-general">
                         <div class="event-date">
-                            <span class="day">02</span>
-                            <span class="month">Oct</span>
+                            <span class="day">28</span>
+                            <span class="month">Feb</span>
                         </div>
                         <div class="event-details">
-                            <h4>MSA Olympics</h4>
-                            <p><i class="fas fa-clock"></i> 6:00 PM - 10:00 PM</p>
-                            <p><i class="fas fa-map-marker-alt"></i> CASC MPR</p>
+                            <h4>Islamic Awareness Week</h4>
+                            <p><i class="fas fa-clock"></i> 12:00 PM - 8:00 PM</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Student Center Plaza</p>
                             <span class="event-type">General</span>
                         </div>
                     </div>
@@ -387,149 +570,117 @@
                 <p class="section-subtitle">Memories from our amazing events and activities</p>
             </div>
             
-            <div class="gallery-filters">
-                <button class="filter-btn active" data-filter="all">All Events</button>
-                <button class="filter-btn" data-filter="ramadan">Ramadan Challenge</button>
-                <button class="filter-btn" data-filter="nasheed">Nasheed Recs</button>
-                <button class="filter-btn" data-filter="social">Social Events</button>
-                <button class="filter-btn" data-filter="education">Education</button>
-            </div>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/486757109_1070247085140651_6001288308616007056_n.jpg" alt="MSA Community Event">
-                    <div class="gallery-overlay">
-                        <h4>Community Gathering</h4>
-                        <p>Building brotherhood and sisterhood</p>
+            <!-- Event Gallery Grid -->
+            <div class="events-gallery-grid">
+                <!-- Fall Kickoff Event Tile -->
+                <div class="event-tile" data-event="fall-kickoff">
+                    <div class="event-poster">
+                        <img src="images/posters/KickoffPoster.png" alt="MSA Fall Kickoff 2025">
+                        <div class="event-overlay">
+                            <div class="event-info">
+                                <h3>MSA Fall Kickoff 2025</h3>
+                                <p>424 photos • Brothers & Sisters</p>
+                                <button class="view-event-btn">View Photos</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/486774984_1070246865140673_7017109050438695084_n.jpg" alt="MSA Social Event">
-                    <div class="gallery-overlay">
-                        <h4>MSA Social Event</h4>
-                        <p>Connecting the Muslim community</p>
-                    </div>
-                </div>
-                
-                <div class="gallery-item" data-category="education">
-                    <img src="Photos/486812992_1070247221807304_3832815687186870024_n.jpg" alt="Educational Session">
-                    <div class="gallery-overlay">
-                        <h4>Educational Workshop</h4>
-                        <p>Learning and spiritual growth</p>
-                    </div>
-                </div>
-                
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/486874099_1070247248473968_7532948334202298201_n.jpg" alt="Community Building">
-                    <div class="gallery-overlay">
-                        <h4>Community Building</h4>
-                        <p>Strengthening bonds in faith</p>
-                    </div>
-                </div>
-                
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/487219155_1073545171477509_1858677282454781252_n.jpg" alt="MSA Gathering">
-                    <div class="gallery-overlay">
-                        <h4>MSA Fall Gathering</h4>
-                        <p>Celebrating our diverse community</p>
-                    </div>
-                </div>
-                
-                <div class="gallery-item" data-category="education">
-                    <img src="Photos/487333164_1070247045140655_613609281191131424_n.jpg" alt="Islamic Learning">
-                    <div class="gallery-overlay">
-                        <h4>Islamic Learning Session</h4>
-                        <p>Deepening our understanding</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/487424456_1073545334810826_6230589184875073630_n.jpg" alt="Community Event">
-                    <div class="gallery-overlay">
-                        <h4>Community Event</h4>
-                        <p>Together in service and fellowship</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="nasheed">
-                    <img src="Photos/487756285_1073545261477500_518423250158846283_n.jpg" alt="Cultural Night">
-                    <div class="gallery-overlay">
-                        <h4>Cultural Night</h4>
-                        <p>Celebrating Islamic arts and culture</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/488353260_1073545438144149_314184924455281267_n.jpg" alt="MSA Event">
-                    <div class="gallery-overlay">
-                        <h4>MSA Special Event</h4>
-                        <p>Creating lasting memories</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="ramadan">
-                    <img src="Photos/499834288_1117566240408735_8176664535719322355_n.jpg" alt="Ramadan Event">
-                    <div class="gallery-overlay">
-                        <h4>Ramadan Gathering</h4>
-                        <p>Breaking fast together in unity</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="education">
-                    <img src="Photos/500355807_1117576790407680_4117713919233091797_n.jpg" alt="Educational Program">
-                    <div class="gallery-overlay">
-                        <h4>Educational Program</h4>
-                        <p>Growing together in knowledge</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/501201901_1117540907077935_6926909662689115422_n.jpg" alt="Community Service">
-                    <div class="gallery-overlay">
-                        <h4>Community Service</h4>
-                        <p>Serving our broader community</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/536282753_1190543493111009_209829640578721676_n.jpg" alt="MSA Community">
-                    <div class="gallery-overlay">
-                        <h4>MSA Community</h4>
-                        <p>Our vibrant and diverse family</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="education">
-                    <img src="Photos/C1.png" alt="MSA Activities">
-                    <div class="gallery-overlay">
-                        <h4>MSA Activities</h4>
-                        <p>Engaging in meaningful programs</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="social">
-                    <img src="Photos/C2.png" alt="Student Life">
-                    <div class="gallery-overlay">
-                        <h4>Student Life</h4>
-                        <p>Balancing faith and academics</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="education">
-                    <img src="Photos/C3.png" alt="MSA Programs">
-                    <div class="gallery-overlay">
-                        <h4>MSA Programs</h4>
-                        <p>Enriching our spiritual journey</p>
+                <!-- Freshman Orientation Event Tile -->
+                <div class="event-tile freshman-orientation-tile" data-event="freshman-orientation">
+                    <div class="event-poster">
+                        <img src="images/posters/Freshman Orientation.JPG" alt="Freshman Orientation">
+                        <div class="event-overlay">
+                            <div class="event-info">
+                                <h3>Freshman Orientation</h3>
+                                <p>Event hasn't happened yet</p>
+                                <button class="view-event-btn" disabled>Coming Soon</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <div class="gallery-toggle">
-                <button class="gallery-toggle-btn" id="galleryToggleBtn">
-                    <span class="toggle-text">Show More Photos</span>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </button>
+            <!-- Photo Update Notification Section -->
+            <div class="photo-notification-section">
+                <div class="notification-container">
+                    <div class="notification-header">
+                        <h3>📸 Want to be updated when new photos drop?</h3>
+                        <p>Enter your email or phone number below to get notified when we upload new event photos!</p>
+                    </div>
+                    
+                    <form class="notification-form" id="photoNotificationForm">
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="email" id="emailInput" placeholder="Enter your email address" class="notification-input">
+                                <span class="input-divider">OR</span>
+                                <input type="tel" id="phoneInput" placeholder="Enter your phone number" class="notification-input">
+                            </div>
+                            <button type="submit" class="notification-btn">
+                                <i class="fas fa-bell"></i>
+                                Notify Me!
+                            </button>
+                        </div>
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
+                    
+                </div>
+            </div>
+
+            <!-- Event Albums Modal -->
+            <div class="event-modal" id="event-modal" style="display: none;">
+                <div class="modal-overlay"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="event-title">Event Title</h3>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="albums-selection">
+                            <!-- Albums will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Album Preview Modal -->
+            <div class="album-preview-modal" id="album-preview-modal" style="display: none;">
+                <div class="modal-overlay"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="album-modal-title">Album Title</h3>
+                        <p id="album-modal-count">0 photos</p>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="rotating-preview" id="rotating-preview">
+                            <!-- Rotating photos will be populated by JavaScript -->
+                        </div>
+                        <div class="album-actions">
+                            <button class="view-full-album-btn">View All Photos</button>
+                            <button class="download-album-btn">Download Album</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Album View Modal -->
+            <div class="full-album-modal" id="full-album-modal" style="display: none;">
+                <div class="modal-overlay"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="back-to-preview-btn">← Back to Preview</button>
+                        <h3 id="full-album-title">Album Title</h3>
+                        <p id="full-album-count">0 photos</p>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Grid View Only -->
+                        <div class="full-album-grid" id="full-album-grid">
+                            <!-- Full album photos will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -543,74 +694,28 @@
                     <p class="arabic-translation">"And say: My Lord, forgive and have mercy, for You are the best of the merciful" - Quran 23:118</p>
                 </div>
                 <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Connect with us and stay updated on all MSA activities</p>
+                <p class="section-subtitle">You can contact us on Instagram</p>
             </div>
             
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>Email</h4>
-                            <p>info@rutgersmsa.org</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
+            <div class="contact-content-simple">
+                <div class="contact-links">
+                    <a href="https://instagram.com/rutgersmsa" target="_blank" class="contact-link">
                         <i class="fab fa-instagram"></i>
                         <div>
                             <h4>Instagram</h4>
                             <p>@rutgersmsa</p>
                         </div>
-                    </div>
+                    </a>
                     
-                    <div class="contact-item">
-                        <i class="fab fa-youtube"></i>
-                        <div>
-                            <h4>YouTube</h4>
-                            <p>@rutgersmsa</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <i class="fab fa-tiktok"></i>
-                        <div>
-                            <h4>TikTok</h4>
-                            <p>@rutgersmsa</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
+                    <a href="https://linktr.ee/rumsamarketing" target="_blank" class="contact-link">
                         <i class="fas fa-link"></i>
                         <div>
                             <h4>LinkTree</h4>
                             <p>linktr.ee/rumsamarketing</p>
                         </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h4>Location</h4>
-                            <p>Rutgers University-New Brunswick<br>New Brunswick, NJ</p>
-                        </div>
-                    </div>
+                    </a>
                 </div>
                 
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
             </div>
         </div>
     </section>
@@ -620,7 +725,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="MSA.png" alt="Rutgers MSA Logo">
+                    <img src="images/logos/MSA.png" alt="Rutgers MSA Logo">
                     <h3>Rutgers MSA</h3>
                     <p>Muslim Student Association</p>
                 </div>
@@ -656,6 +761,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
