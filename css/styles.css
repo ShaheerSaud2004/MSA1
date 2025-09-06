@@ -1158,6 +1158,17 @@ section {
     justify-items: center;
 }
 
+/* Special centering for Brothers Social when it's alone in the last row */
+@media (min-width: 1200px) {
+    .flip-cards-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .flip-card.brothers-card {
+        grid-column: 2 / 3;
+    }
+}
+
 /* Flip Card Container */
 .flip-card {
     width: 100%;
