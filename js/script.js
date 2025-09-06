@@ -2255,6 +2255,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new HeroSlideshow();
     initializeFlipCards();
     initializeNotificationModal();
+    initializeRemindMeModal();
 });
 
 // Initialize notification modal functionality
@@ -2327,5 +2328,153 @@ function initializeFlipCards() {
             });
         }
     });
+}
+
+// Initialize Remind Me modal functionality
+function initializeRemindMeModal() {
+    const remindMeBtn = document.getElementById('remindMeBtn');
+    const modal = document.getElementById('remindMeModal');
+    const closeBtn = document.getElementById('remindMeCloseBtn');
+    const overlay = document.querySelector('.remind-me-modal-overlay');
+    const form = document.getElementById('remindMeForm');
+    const emailInput = document.getElementById('remindMeEmail');
+    const messageDiv = document.getElementById('remindMeMessage');
+    
+    if (!remindMeBtn || !modal) return;
+    
+    // Open modal
+    remindMeBtn.addEventListener('click', function() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        emailInput.focus();
+    });
+    
+    // Close modal functions
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        form.reset();
+        messageDiv.innerHTML = '';
+    }
+    
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+    
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const email = emailInput.value.trim();
+        
+        if (!email) {
+            showRemindMeMessage('Please enter your email address.', 'error');
+            return;
+        }
+        
+        if (!isValidEmail(email)) {
+            showRemindMeMessage('Please enter a valid email address.', 'error');
+            return;
+        }
+        
+        // Store email in localStorage
+        storeRemindMeEmail(email);
+        
+        showRemindMeMessage('🎉 Reminder set! You\'ll be notified about the Freshman Orientation event.', 'success');
+        
+        // Close modal after 2 seconds
+        setTimeout(() => {
+            closeModal();
+        }, 2000);
+        
+        return false;
+    });
+}
+
+// Store email in localStorage
+function storeRemindMeEmail(email) {
+    try {
+        // Get existing emails
+        let remindMeEmails = JSON.parse(localStorage.getItem('remindMeEmails') || '[]');
+        
+        // Check if email already exists
+        if (!remindMeEmails.includes(email)) {
+            remindMeEmails.push(email);
+            localStorage.setItem('remindMeEmails', JSON.stringify(remindMeEmails));
+        }
+        
+        // Also store with timestamp
+        const reminderData = {
+            email: email,
+            event: 'Freshman Orientation',
+            timestamp: new Date().toISOString(),
+            reminded: false
+        };
+        
+        let remindMeData = JSON.parse(localStorage.getItem('remindMeData') || '[]');
+        
+        // Check if this email/event combination already exists
+        const existingIndex = remindMeData.findIndex(item => 
+            item.email === email && item.event === 'Freshman Orientation'
+        );
+        
+        if (existingIndex === -1) {
+            remindMeData.push(reminderData);
+            localStorage.setItem('remindMeData', JSON.stringify(remindMeData));
+        }
+        
+        console.log('Remind Me email stored:', email);
+        console.log('All stored emails:', remindMeEmails);
+        console.log('All reminder data:', remindMeData);
+        
+    } catch (error) {
+        console.error('Error storing remind me email:', error);
+    }
+}
+
+// Show message in remind me modal
+function showRemindMeMessage(message, type) {
+    const messageDiv = document.getElementById('remindMeMessage');
+    if (!messageDiv) return;
+    
+    messageDiv.innerHTML = message;
+    messageDiv.className = 'form-message';
+    
+    if (type === 'success') {
+        messageDiv.style.backgroundColor = '#d4edda';
+        messageDiv.style.color = '#155724';
+        messageDiv.style.border = '1px solid #c3e6cb';
+    } else if (type === 'error') {
+        messageDiv.style.backgroundColor = '#f8d7da';
+        messageDiv.style.color = '#721c24';
+        messageDiv.style.border = '1px solid #f5c6cb';
+    }
+}
+
+// Get all stored remind me emails (for admin/development use)
+function getRemindMeEmails() {
+    try {
+        return JSON.parse(localStorage.getItem('remindMeEmails') || '[]');
+    } catch (error) {
+        console.error('Error retrieving remind me emails:', error);
+        return [];
+    }
+}
+
+// Get all stored remind me data (for admin/development use)
+function getRemindMeData() {
+    try {
+        return JSON.parse(localStorage.getItem('remindMeData') || '[]');
+    } catch (error) {
+        console.error('Error retrieving remind me data:', error);
+        return [];
+    }
 }
 
