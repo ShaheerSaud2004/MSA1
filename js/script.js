@@ -2355,11 +2355,19 @@ function initializeRemindMeModal() {
     
     if (!remindMeBtn || !modal) return;
     
-    // Open modal
+    // Open the notification modal instead of remind me modal
     remindMeBtn.addEventListener('click', function() {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        emailInput.focus();
+        const notificationModal = document.getElementById('notificationModal');
+        if (notificationModal) {
+            notificationModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus on email input in notification modal
+            const notificationEmailInput = document.getElementById('emailInput');
+            if (notificationEmailInput) {
+                setTimeout(() => notificationEmailInput.focus(), 100);
+            }
+        }
     });
     
     // Close modal functions
