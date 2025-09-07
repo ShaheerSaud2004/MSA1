@@ -1935,9 +1935,12 @@ class PhotoNotificationHandler {
         // Save the data
         this.saveNotificationData(contactData);
         
+        // Send confirmation email and SMS
+        this.sendConfirmationMessages(email, phone);
+        
         // Show success message with more details
         const contactInfo = email ? `email: ${email}` : `phone: ${phone}`;
-        this.showMessage(messageDiv, `🎉 Success! Your ${contactInfo} has been saved for photo notifications.`, 'success');
+        this.showMessage(messageDiv, `🎉 Success! Your ${contactInfo} has been saved for notifications. Check your ${email ? 'email' : 'phone'} for confirmation!`, 'success');
         
         // Clear the form
         emailInput.value = '';
@@ -1958,7 +1961,7 @@ class PhotoNotificationHandler {
             
             // Refresh the page
             window.location.reload();
-        }, 2000);
+        }, 3000); // Increased to 3 seconds to show the confirmation message
     }
 
     isValidEmail(email) {
@@ -2010,6 +2013,152 @@ class PhotoNotificationHandler {
                 messageDiv.className = 'form-message';
             }, 5000);
         }
+    }
+
+    // Send confirmation email and SMS
+    sendConfirmationMessages(email, phone) {
+        if (email) {
+            this.sendConfirmationEmail(email);
+        }
+        if (phone) {
+            this.sendConfirmationSMS(phone);
+        }
+    }
+
+    // Send confirmation email using EmailJS
+    sendConfirmationEmail(email) {
+        const templateParams = {
+            to_email: email,
+            to_name: email.split('@')[0], // Use part before @ as name
+            from_name: 'Rutgers MSA',
+            message: `Welcome to Rutgers MSA notifications! 🎉
+
+You've successfully signed up to receive updates about:
+• Upcoming MSA events
+• New event photos when we post them
+• Important announcements
+
+Thank you for staying connected with the Rutgers Muslim Student Association!
+
+Best regards,
+The Rutgers MSA Team
+
+---
+Follow us:
+Instagram: @rutgersmsa
+YouTube: @rutgersmsa
+TikTok: @rutgersmsa
+
+Website developed by Shaheer Saud at Cipher Consulting
+cipherconsulting.net`
+        };
+
+        // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your EmailJS IDs
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+            .then((response) => {
+                console.log('Email sent successfully!', response.status, response.text);
+            })
+            .catch((error) => {
+                console.error('Email sending failed:', error);
+            });
+    }
+
+    // Send confirmation SMS using Twilio (via your backend endpoint)
+    sendConfirmationSMS(phone) {
+        const message = `Welcome to Rutgers MSA! 🕌 You'll now receive updates about our events and photos. Thanks for joining our community! - Rutgers MSA Team`;
+
+        // This would call your backend endpoint that handles Twilio
+        fetch('/send-sms', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phone: phone,
+                message: message
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('SMS sent successfully:', data);
+        })
+        .catch(error => {
+            console.error('SMS sending failed:', error);
+        });
+    }
+
+    // Function to send event/photo updates to all subscribers
+    sendBulkNotifications(subject, message, type = 'both') {
+        const subscribers = this.getStoredNotifications();
+        
+        subscribers.forEach(subscriber => {
+            if (type === 'email' || type === 'both') {
+                if (subscriber.email) {
+                    this.sendUpdateEmail(subscriber.email, subject, message);
+                }
+            }
+            
+            if (type === 'sms' || type === 'both') {
+                if (subscriber.phone) {
+                    this.sendUpdateSMS(subscriber.phone, message);
+                }
+            }
+        });
+        
+        console.log(`Sent notifications to ${subscribers.length} subscribers`);
+    }
+
+    // Send update email
+    sendUpdateEmail(email, subject, message) {
+        const templateParams = {
+            to_email: email,
+            to_name: email.split('@')[0],
+            from_name: 'Rutgers MSA',
+            subject: subject,
+            message: `${message}
+
+Best regards,
+The Rutgers MSA Team
+
+---
+Follow us:
+Instagram: @rutgersmsa
+YouTube: @rutgersmsa
+TikTok: @rutgersmsa
+
+To unsubscribe, reply to this email with 'UNSUBSCRIBE'`
+        };
+
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_UPDATE_TEMPLATE_ID', templateParams)
+            .then((response) => {
+                console.log('Update email sent to:', email);
+            })
+            .catch((error) => {
+                console.error('Update email failed for:', email, error);
+            });
+    }
+
+    // Send update SMS
+    sendUpdateSMS(phone, message) {
+        const smsMessage = `${message} - Rutgers MSA. Reply STOP to unsubscribe.`;
+
+        fetch('/send-sms', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phone: phone,
+                message: smsMessage
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Update SMS sent to:', phone);
+        })
+        .catch(error => {
+            console.error('Update SMS failed for:', phone, error);
+        });
     }
 
     // Admin function to get all stored notifications
