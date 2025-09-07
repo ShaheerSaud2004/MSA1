@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{event_name}} - Rutgers MSA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c5530;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+        }
+        
+        .event-hero {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .event-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .event-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 30px;
+        }
+        
+        .event-date-badge {
+            background: #2c5530;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .event-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .event-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .event-details {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .detail-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            color: white;
+        }
+        
+        .detail-content h4 {
+            font-size: 16px;
+            color: #2c5530;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .detail-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .event-description {
+            margin: 30px 0;
+        }
+        
+        .event-description h3 {
+            font-size: 22px;
+            color: #2c5530;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .event-description p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        .highlights-section {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        .highlights-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .highlights-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .highlights-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        
+        .highlights-list li::before {
+            content: '✨';
+            font-size: 16px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+            border: 2px solid #2c5530;
+            padding: 35px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        .cta-title {
+            font-size: 24px;
+            color: #2c5530;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .cta-text {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 25px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-button.primary {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            color: white;
+        }
+        
+        .cta-button.secondary {
+            background: white;
+            color: #2c5530;
+            border: 2px solid #2c5530;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-link.instagram {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        }
+        
+        .social-link.linktree {
+            background: linear-gradient(135deg, #43e55e 0%, #3dd558 100%);
+        }
+        
+        .unsubscribe {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .unsubscribe a {
+            color: #2c5530;
+            text-decoration: none;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .event-title {
+                font-size: 24px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🕌</div>
+            <h1>Rutgers Muslim Students Association</h1>
+        </div>
+        
+        <!-- Event Hero Section -->
+        <div class="event-hero">
+            <img src="{{event_image_url}}" alt="{{event_name}}" class="event-image">
+            <div class="event-overlay">
+                <div class="event-date-badge">{{event_date}}</div>
+                <h2 class="event-title">{{event_name}}</h2>
+                <p class="event-subtitle">{{event_subtitle}}</p>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Event Details -->
+            <div class="event-details">
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-icon">📅</div>
+                        <div class="detail-content">
+                            <h4>Date & Time</h4>
+                            <p>{{event_datetime}}</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">📍</div>
+                        <div class="detail-content">
+                            <h4>Location</h4>
+                            <p>{{event_location}}</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">🎯</div>
+                        <div class="detail-content">
+                            <h4>Event Type</h4>
+                            <p>{{event_type}}</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">👥</div>
+                        <div class="detail-content">
+                            <h4>Who Can Attend</h4>
+                            <p>{{target_audience}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Event Description -->
+            <div class="event-description">
+                <h3>About This Event</h3>
+                <p>{{event_description}}</p>
+            </div>
+            
+            <!-- Event Highlights -->
+            <div class="highlights-section">
+                <h3 class="highlights-title">What to Expect</h3>
+                <ul class="highlights-list">
+                    <li>{{highlight_1}}</li>
+                    <li>{{highlight_2}}</li>
+                    <li>{{highlight_3}}</li>
+                    <li>{{highlight_4}}</li>
+                </ul>
+            </div>
+            
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <h3 class="cta-title">Ready to Join Us?</h3>
+                <p class="cta-text">Don't miss out on this amazing opportunity to connect with your Muslim community at Rutgers!</p>
+                <div class="cta-buttons">
+                    <a href="{{rsvp_link}}" class="cta-button primary">RSVP Now</a>
+                    <a href="{{more_info_link}}" class="cta-button secondary">More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p class="footer-text">
+                <strong>Rutgers Muslim Students Association</strong><br>
+                Building community, faith, and excellence at Rutgers University
+            </p>
+            <div class="social-links">
+                <a href="https://instagram.com/rutgersmsa" class="social-link instagram" target="_blank">📷</a>
+                <a href="#" class="social-link linktree" target="_blank">🔗</a>
+            </div>
+            <p class="unsubscribe">
+                Don't want these emails? <a href="#">Unsubscribe here</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
