@@ -905,11 +905,13 @@ section {
     text-shadow: 1px 1px 2px rgba(204, 0, 51, 0.1);
 }
 
-/* MSA White Styling */
+/* MSA White with Green Outline Styling */
 .msa-green {
     color: white;
     font-weight: 700;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    -webkit-text-stroke: 2px #2c5530;
+    text-stroke: 2px #2c5530;
 }
 
 /* Enhanced Mission Statement */
@@ -5620,7 +5622,7 @@ img.event-logo[src*="hope.jpg"],
         padding: 30px 20px;
         margin: 20px;
     }
-}
+    }
     
     .notification-header p {
         font-size: 0.9rem;
