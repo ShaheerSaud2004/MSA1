@@ -905,13 +905,11 @@ section {
     text-shadow: 1px 1px 2px rgba(204, 0, 51, 0.1);
 }
 
-/* MSA White with Green Outline Styling */
+/* MSA White Styling */
 .msa-green {
     color: white;
     font-weight: 700;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    -webkit-text-stroke: 2px #2c5530;
-    text-stroke: 2px #2c5530;
 }
 
 /* Enhanced Mission Statement */
@@ -4305,6 +4303,24 @@ img.event-logo[src*="hope.jpg"],
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.8);
     font-style: italic;
+}
+
+/* Developer Credit */
+.developer-credit {
+    font-size: 0.8rem !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    margin-top: 8px;
+}
+
+.developer-credit a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.developer-credit a:hover {
+    color: #4a7c59;
+    text-decoration: underline;
 }
 
 /* Animations */
