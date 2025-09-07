@@ -5127,15 +5127,17 @@ img.event-logo[src*="hope.jpg"],
     color: white;
 }
 
-.event-info h3 {
+.events-gallery-grid .event-info h3 {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
+    color: white;
 }
 
-.event-info p {
+.events-gallery-grid .event-info p {
     margin-bottom: 1rem;
     opacity: 0.9;
+    color: white;
 }
 
 .view-event-btn {
