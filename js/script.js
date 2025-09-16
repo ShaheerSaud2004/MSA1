@@ -330,6 +330,7 @@ class EventCalendar {
 
                 // Add click event listener
                 dayElement.addEventListener('click', () => {
+                    console.log('Clicked on day:', day, 'dateString:', dateString, 'events:', events);
                     this.showEventModal(dateString, events);
                 });
 
@@ -461,6 +462,7 @@ class EventCalendar {
         // Format date - parse correctly to avoid timezone issues
         const [year, month, day] = dateString.split('-').map(Number);
         const date = new Date(year, month - 1, day); // month - 1 because JavaScript months are 0-indexed
+        
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('modalDate').textContent = date.toLocaleDateString('en-US', options);
 
