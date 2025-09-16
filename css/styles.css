@@ -1708,16 +1708,16 @@ section {
 .heart-subtitle::before {
     content: '';
     position: absolute;
-    top: 50%;
+    top: 120%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     background-image: url('../images/heart.gif');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.3;
+    opacity: 0.4;
     animation: heartbeat 1.5s ease-in-out infinite;
     z-index: 2;
     pointer-events: none;
