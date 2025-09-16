@@ -102,14 +102,54 @@ class MSAAdmin {
         if (savedData) {
             try {
                 this.data = { ...this.data, ...JSON.parse(savedData) };
+                // Force update to Chai and Chats as featured event
+                this.updateToChaiAndChats();
             } catch (e) {
                 console.error('Error loading saved data:', e);
                 this.showAlert('Error loading saved data. Starting fresh.', 'error');
+                this.addDefaultEvents();
             }
         } else {
             // Add default events if no data exists
             this.addDefaultEvents();
         }
+    }
+
+    updateToChaiAndChats() {
+        // Update or add Chai and Chats event
+        const chaiAndChatsEvent = {
+            id: 'chai-and-chats-2025',
+            title: 'Chai and Chats',
+            date: '2025-09-18',
+            time: '6:00 PM',
+            location: 'Voorhees Mall',
+            type: 'general',
+            description: 'A talk on prophet characteristics - Join us for a meaningful discussion about the noble characteristics of our beloved Prophet (peace be upon him) over warm chai and good company.',
+            link: '',
+            poster: null,
+            createdAt: new Date().toISOString()
+        };
+
+        // Remove existing Chai and Chats if it exists and add the updated one
+        this.data.events = this.data.events.filter(e => e.id !== 'chai-and-chats-2025');
+        this.data.events.unshift(chaiAndChatsEvent); // Add to beginning
+
+        // Update Freshman Orientation to past date if it exists
+        const freshmanEvent = this.data.events.find(e => e.id === 'freshman-orientation-2025');
+        if (freshmanEvent) {
+            freshmanEvent.date = '2024-09-09'; // Set to past date
+        }
+
+        // Set Chai and Chats as featured event
+        this.data.featuredEvent = {
+            eventId: 'chai-and-chats-2025',
+            title: 'Chai and Chats',
+            description: 'A talk on prophet characteristics - Join us for a meaningful discussion about the noble characteristics of our beloved Prophet (peace be upon him) over warm chai and good company.',
+            poster: null,
+            updatedAt: new Date().toISOString()
+        };
+
+        this.saveData();
     }
 
     addDefaultEvents() {
