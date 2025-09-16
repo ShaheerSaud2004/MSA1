@@ -1671,6 +1671,7 @@ section {
     animation: heartbeat 1.5s ease-in-out infinite;
     z-index: 0;
     pointer-events: none;
+    filter: sepia(100%) saturate(200%) hue-rotate(330deg);
 }
 
 /* Ensure content is above the heart */
