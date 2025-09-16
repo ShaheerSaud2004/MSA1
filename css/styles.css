@@ -21,12 +21,11 @@ html {
     text-align: center;
     margin: 25px auto;
     padding: 25px 30px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     border-radius: 15px;
-    border: 2px solid rgba(255, 215, 0, 0.6);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    transform: scale(1.02);
+    border: 1px solid rgba(44, 85, 48, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     max-width: 100%;
     width: 100%;
@@ -35,10 +34,10 @@ html {
 }
 
 .arabic-calligraphy:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-    border-color: rgba(255, 215, 0, 0.8);
-    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: rgba(44, 85, 48, 0.3);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .arabic-text {
