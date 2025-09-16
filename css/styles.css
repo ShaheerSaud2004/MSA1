@@ -1720,7 +1720,7 @@ section {
     background-position: center;
     opacity: 0.3;
     animation: heartbeat 1.5s ease-in-out infinite;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
     filter: sepia(100%) saturate(200%) hue-rotate(330deg);
 }
@@ -1728,7 +1728,13 @@ section {
 /* Ensure content is above the background */
 #necessary-teams .container {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+}
+
+/* Ensure flip cards are above the heart */
+.flip-cards-gallery {
+    position: relative;
+    z-index: 3;
 }
 
 @keyframes heartbeat {
