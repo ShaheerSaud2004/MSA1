@@ -1649,6 +1649,11 @@ section {
     display: inline-block;
 }
 
+.red-heart {
+    color: #ff6b6b;
+    font-weight: 700;
+}
+
 /* Large background heart for the entire section */
 #necessary-teams {
     position: relative;
