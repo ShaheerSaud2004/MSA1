@@ -1706,7 +1706,7 @@ section {
 }
 
 /* Add the heart back on top of the gradient background */
-.heart-subtitle::before {
+#necessary-teams .heart-subtitle::before {
     content: '';
     position: absolute;
     top: 200%;
@@ -1718,9 +1718,9 @@ section {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.3;
+    opacity: 0.2;
     animation: heartbeat 1.5s ease-in-out infinite;
-    z-index: -1;
+    z-index: -2;
     pointer-events: none;
     filter: sepia(100%) saturate(200%) hue-rotate(330deg);
 }
@@ -1732,9 +1732,15 @@ section {
 }
 
 /* Ensure flip cards are above the heart */
-.flip-cards-gallery {
+#necessary-teams .flip-cards-gallery {
     position: relative;
-    z-index: 3;
+    z-index: 5;
+}
+
+/* Ensure individual flip cards are above everything */
+.flip-card {
+    position: relative;
+    z-index: 6;
 }
 
 @keyframes heartbeat {
