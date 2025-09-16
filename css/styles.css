@@ -1654,10 +1654,14 @@ section {
     font-weight: 700;
 }
 
-/* Large background heart for the entire section */
+/* Heart-themed background for the entire section */
 #necessary-teams {
     position: relative;
-    overflow: visible;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 50%, #fecaca 100%);
+    border-radius: 20px;
+    margin: 40px 0;
+    padding: 60px 0;
 }
 
 #necessary-teams::before {
@@ -1666,23 +1670,55 @@ section {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 800px;
-    height: 800px;
+    width: 600px;
+    height: 600px;
     background-image: url('../images/heart.gif');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.12;
+    opacity: 0.08;
     animation: heartbeat 1.5s ease-in-out infinite;
     z-index: 0;
     pointer-events: none;
     filter: sepia(100%) saturate(200%) hue-rotate(330deg);
 }
 
-/* Ensure content is above the heart */
+/* Veins pattern overlay */
+#necessary-teams::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(239, 68, 68, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(239, 68, 68, 0.06) 0%, transparent 50%),
+        linear-gradient(45deg, transparent 30%, rgba(239, 68, 68, 0.05) 50%, transparent 70%),
+        linear-gradient(-45deg, transparent 30%, rgba(239, 68, 68, 0.04) 50%, transparent 70%);
+    background-size: 200px 200px, 300px 300px, 150px 150px, 100px 100px, 120px 120px;
+    animation: veinPulse 3s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Ensure content is above the background */
 #necessary-teams .container {
     position: relative;
     z-index: 1;
+}
+
+/* Vein pulse animation */
+@keyframes veinPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.02);
+    }
 }
 
 @keyframes heartbeat {
