@@ -1711,8 +1711,8 @@ section {
     top: 120%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
+    width: 600px;
+    height: 600px;
     background-image: url('../images/heart.gif');
     background-size: contain;
     background-repeat: no-repeat;
