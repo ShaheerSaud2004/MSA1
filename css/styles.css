@@ -1169,6 +1169,19 @@ section {
     }
 }
 
+/* Special layout for Necessary Teams section (2 cards) */
+#necessary-teams .flip-cards-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    #necessary-teams .flip-cards-gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Flip Card Container */
 .flip-card {
     width: 100%;
@@ -1625,6 +1638,64 @@ section {
 
 .flip-card.brothers-card .feature i {
     color: #ffd700 !important;
+}
+
+/* Marketing Card */
+.flip-card.marketing-card .flip-card-front {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: white;
+}
+
+.flip-card.marketing-card .flip-card-back {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: white;
+}
+
+.flip-card.marketing-card .card-title,
+.flip-card.marketing-card .card-content h3 {
+    color: white;
+}
+
+.flip-card.marketing-card .card-subtitle,
+.flip-card.marketing-card .description {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.flip-card.marketing-card .feature {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.flip-card.marketing-card .feature i {
+    color: #fbbf24;
+}
+
+/* EPT Card */
+.flip-card.ept-card .flip-card-front {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    color: white;
+}
+
+.flip-card.ept-card .flip-card-back {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    color: white;
+}
+
+.flip-card.ept-card .card-title,
+.flip-card.ept-card .card-content h3 {
+    color: white;
+}
+
+.flip-card.ept-card .card-subtitle,
+.flip-card.ept-card .description {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.flip-card.ept-card .feature {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.flip-card.ept-card .feature i {
+    color: #10b981;
 }
 
 /* Mobile Touch Support */
