@@ -133,7 +133,7 @@ class MSAAdmin {
             {
                 id: 'freshman-orientation-2025',
                 title: 'Freshman Orientation',
-                date: '2025-09-09',
+                date: '2024-09-09', // Changed to past date
                 time: '6:30 PM',
                 location: 'Trayes Hall on Cook/Doug',
                 type: 'ladders',
@@ -157,6 +157,42 @@ class MSAAdmin {
         ];
 
         this.data.events = sampleEvents;
+        
+        // Add sample photos for Freshman Orientation (past event)
+        this.data.photos = {
+            'freshman-orientation-2025': {
+                'general': [
+                    {
+                        id: 'photo-1',
+                        url: 'images/gallery/Photos/487219155_1073545171477509_1858677282454781252_n.jpg',
+                        filename: 'freshman-orientation-1.jpg',
+                        uploadedAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'photo-2',
+                        url: 'images/gallery/Photos/486757109_1070247085140651_6001288308616007056_n.jpg',
+                        filename: 'freshman-orientation-2.jpg',
+                        uploadedAt: new Date().toISOString()
+                    }
+                ],
+                'brothers': [
+                    {
+                        id: 'photo-3',
+                        url: 'images/gallery/Photos/486812992_1070247221807304_3832815687186870024_n.jpg',
+                        filename: 'freshman-orientation-brothers-1.jpg',
+                        uploadedAt: new Date().toISOString()
+                    }
+                ],
+                'sisters': [
+                    {
+                        id: 'photo-4',
+                        url: 'images/gallery/Photos/487424456_1073545334810826_6230589184875073630_n.jpg',
+                        filename: 'freshman-orientation-sisters-1.jpg',
+                        uploadedAt: new Date().toISOString()
+                    }
+                ]
+            }
+        };
         
         // Set Chai and Chats as featured event
         this.data.featuredEvent = {
