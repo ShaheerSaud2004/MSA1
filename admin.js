@@ -806,9 +806,13 @@ class MSAAdmin {
 
         // Format date
         let formattedDate = '';
+        let monthName = '';
+        let dayNumber = '';
         if (date) {
             const eventDate = new Date(date);
             formattedDate = eventDate.toLocaleDateString();
+            monthName = eventDate.toLocaleDateString('en-US', { month: 'long' });
+            dayNumber = eventDate.getDate();
         }
 
         // Get poster preview
@@ -816,77 +820,111 @@ class MSAAdmin {
         const posterImg = posterPreview.querySelector('img');
         const posterSrc = posterImg ? posterImg.src : '';
 
-        // Create preview HTML
+        // Check if event is in the past
+        const isPast = date ? new Date(date) < new Date() : false;
+
+        // Create preview HTML that matches the main website styling
         let previewHTML = `
             <div style="
-                background: white;
-                border-radius: 10px;
+                background: #f8f9fa;
                 padding: 20px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                border: 2px solid #3b82f6;
-                position: relative;
+                border-radius: 15px;
+                font-family: 'Inter', sans-serif;
             ">
+                <h3 style="
+                    color: #1f2937;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    margin: 0 0 20px 0;
+                    text-align: center;
+                ">Featured Upcoming Events</h3>
+                
                 <div style="
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    background: #3b82f6;
-                    color: white;
-                    padding: 4px 8px;
-                    border-radius: 4px;
-                    font-size: 0.8rem;
-                    font-weight: 600;
+                    background: white;
+                    border-radius: 15px;
+                    padding: 25px;
+                    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+                    border: 2px solid #3b82f6;
+                    position: relative;
                 ">
-                    FEATURED
-                </div>
         `;
 
+        // Add featured badge
+        previewHTML += `
+            <div style="
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+                color: white;
+                padding: 6px 12px;
+                border-radius: 20px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+            ">
+                <i class="fas fa-star"></i> FEATURED
+            </div>
+        `;
+
+        // Add poster if available
         if (posterSrc) {
             previewHTML += `
-                <div style="margin-bottom: 15px;">
-                    <img src="${posterSrc}" style="width: 100%; max-width: 300px; border-radius: 8px;" alt="Event poster">
+                <div style="margin-bottom: 20px; text-align: center;">
+                    <img src="${posterSrc}" style="
+                        width: 100%; 
+                        max-width: 400px; 
+                        border-radius: 12px; 
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                    " alt="Event poster">
                 </div>
             `;
         }
 
+        // Event content
         previewHTML += `
-                <div style="margin-bottom: 15px;">
-                    <h4 style="margin: 0 0 10px 0; color: #1f2937; font-size: 1.2rem;">${title}</h4>
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <h4 style="
+                        margin: 0; 
+                        color: #1f2937; 
+                        font-size: 1.4rem; 
+                        font-weight: 700;
+                    ">${title}</h4>
                     <div style="
-                        display: inline-block;
                         background: #eff6ff;
                         color: #1e40af;
                         padding: 4px 12px;
                         border-radius: 20px;
                         font-size: 0.8rem;
                         font-weight: 600;
-                        margin-bottom: 10px;
                     ">
                         ${type.toUpperCase()}
                     </div>
                 </div>
                 
-                <div style="color: #374151; font-size: 0.9rem;">
+                <div style="color: #374151; font-size: 0.95rem; line-height: 1.6;">
         `;
 
         if (formattedDate) {
-            previewHTML += `<p style="margin: 5px 0;"><i class="fas fa-calendar-alt" style="color: #6b7280; margin-right: 8px;"></i>${formattedDate}</p>`;
+            previewHTML += `<p style="margin: 8px 0;"><i class="fas fa-calendar-alt" style="color: #6b7280; margin-right: 10px; width: 16px;"></i>${formattedDate}</p>`;
         }
         
         if (time) {
-            previewHTML += `<p style="margin: 5px 0;"><i class="fas fa-clock" style="color: #6b7280; margin-right: 8px;"></i>${time}</p>`;
+            previewHTML += `<p style="margin: 8px 0;"><i class="fas fa-clock" style="color: #6b7280; margin-right: 10px; width: 16px;"></i>${time}</p>`;
         }
         
-        previewHTML += `<p style="margin: 5px 0;"><i class="fas fa-map-marker-alt" style="color: #6b7280; margin-right: 8px;"></i>${location}</p>`;
+        previewHTML += `<p style="margin: 8px 0;"><i class="fas fa-map-marker-alt" style="color: #6b7280; margin-right: 10px; width: 16px;"></i>${location}</p>`;
         
         if (description) {
-            previewHTML += `<p style="margin: 10px 0 5px 0;"><i class="fas fa-info-circle" style="color: #6b7280; margin-right: 8px;"></i>${description}</p>`;
+            previewHTML += `<p style="margin: 15px 0 8px 0;"><i class="fas fa-info-circle" style="color: #6b7280; margin-right: 10px; width: 16px;"></i>${description}</p>`;
         }
 
         previewHTML += `
                 </div>
-                
-                <div style="margin-top: 15px; display: flex; gap: 10px;">
+            </div>
+            
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
         `;
 
         if (link) {
@@ -894,14 +932,16 @@ class MSAAdmin {
                 <a href="${link}" target="_blank" style="
                     display: inline-flex;
                     align-items: center;
-                    gap: 5px;
-                    background: #3b82f6;
+                    gap: 8px;
+                    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
                     color: white;
-                    padding: 8px 15px;
-                    border-radius: 6px;
+                    padding: 12px 20px;
+                    border-radius: 8px;
                     text-decoration: none;
                     font-size: 0.9rem;
-                    font-weight: 500;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
                 ">
                     <i class="fas fa-info-circle"></i>
                     Learn More
@@ -910,24 +950,82 @@ class MSAAdmin {
         }
 
         previewHTML += `
-                    <button style="
-                        display: inline-flex;
+                <button style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+                    color: white;
+                    border: none;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+                ">
+                    <i class="fas fa-bell"></i>
+                    Remind Me
+                </button>
+            </div>
+        `;
+
+        // Add mini events preview
+        previewHTML += `
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h5 style="
+                    color: #1f2937;
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    margin: 0 0 15px 0;
+                ">Other Upcoming Events</h5>
+                
+                <div style="
+                    background: white;
+                    border-radius: 10px;
+                    padding: 15px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                ">
+                    <div style="
+                        display: flex;
                         align-items: center;
-                        gap: 5px;
-                        background: #6b7280;
-                        color: white;
-                        border: none;
-                        padding: 8px 15px;
-                        border-radius: 6px;
-                        font-size: 0.9rem;
-                        font-weight: 500;
-                        cursor: pointer;
+                        gap: 15px;
+                        padding: 12px;
+                        border-radius: 8px;
+                        background: #f9fafb;
+                        margin-bottom: 10px;
                     ">
-                        <i class="fas fa-bell"></i>
-                        Remind Me
-                    </button>
+                        <div style="
+                            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                            color: white;
+                            padding: 8px 12px;
+                            border-radius: 8px;
+                            text-align: center;
+                            min-width: 60px;
+                        ">
+                            <div style="font-size: 1.1rem; font-weight: 700;">${dayNumber || '--'}</div>
+                            <div style="font-size: 0.7rem; font-weight: 600;">${monthName ? monthName.substring(0, 3).toUpperCase() : '---'}</div>
+                        </div>
+                        <div style="flex: 1;">
+                            <h6 style="margin: 0 0 5px 0; color: #1f2937; font-size: 0.95rem; font-weight: 600;">${title}</h6>
+                            <p style="margin: 2px 0; color: #6b7280; font-size: 0.8rem;"><i class="fas fa-clock" style="margin-right: 5px;"></i>${time || '--:--'}</p>
+                            <p style="margin: 2px 0; color: #6b7280; font-size: 0.8rem;"><i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i>${location}</p>
+                            <span style="
+                                background: #eff6ff;
+                                color: #1e40af;
+                                padding: 2px 8px;
+                                border-radius: 12px;
+                                font-size: 0.7rem;
+                                font-weight: 600;
+                            ">${type.toUpperCase()}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
         `;
 
         // Update preview container
