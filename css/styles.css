@@ -3115,20 +3115,7 @@ img.event-logo[src*="hope.jpg"],
     height: 100%;
 }
 
-.day-number-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.9);
-    color: #2c5530;
-    font-weight: bold;
-    font-size: 0.9rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 5;
-}
+/* Removed duplicate day-number-overlay rule - using the one above with better positioning */
 
 /* Past event indicator in legend */
 .legend-color.past-event-indicator {

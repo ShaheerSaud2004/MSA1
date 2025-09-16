@@ -207,15 +207,18 @@ class EventCalendar {
             dayElement.className = 'calendar-day';
             dayElement.textContent = day;
 
-            // Check if this day has passed (regardless of events)
+            // Check if this day has passed (only for actual past events, not future calendar dates)
             const currentDate = new Date(year, month, day);
             const today = new Date();
             today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
             currentDate.setHours(0, 0, 0, 0);
-            const isPastDay = currentDate < today;
+            
+            // Only mark as past if it's actually a past date AND has an event that already happened
+            const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const hasEvent = this.events[dateString];
+            const isPastDay = currentDate < today && hasEvent;
 
             // Check if this day has an event
-            const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             if (this.events[dateString]) {
                 const events = this.events[dateString];
                 dayElement.classList.add('has-event');
@@ -334,14 +337,7 @@ class EventCalendar {
                 dayElement.style.cursor = 'pointer';
             }
 
-            // Add X mark for any past day (both event and non-event days)
-            if (isPastDay && !this.events[dateString]) {
-                dayElement.classList.add('past-event');
-                const xMark = document.createElement('div');
-                xMark.className = 'past-event-x';
-                xMark.innerHTML = '✕';
-                dayElement.appendChild(xMark);
-            }
+            // Only add X mark for past days that have events (already handled above)
 
             // Highlight today
             const todayCheck = new Date();
