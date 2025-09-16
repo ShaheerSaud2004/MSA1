@@ -153,6 +153,9 @@ class MSAAdmin {
         // File uploads
         this.setupFileUploads();
 
+        // Live preview for events
+        this.setupLivePreview();
+
         // Settings
         document.getElementById('export-data').addEventListener('click', () => {
             this.exportData();
@@ -216,6 +219,29 @@ class MSAAdmin {
         photoFiles.addEventListener('change', (e) => {
             this.previewPhotos(e.target.files);
         });
+    }
+
+    setupLivePreview() {
+        // Add event listeners to all form inputs for live preview
+        const inputs = [
+            'event-title', 'event-date', 'event-time', 'event-location', 
+            'event-type', 'event-description', 'event-link'
+        ];
+
+        inputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.addEventListener('input', () => {
+                    this.updateEventPreview();
+                });
+                input.addEventListener('change', () => {
+                    this.updateEventPreview();
+                });
+            }
+        });
+
+        // Initial preview update
+        this.updateEventPreview();
     }
 
     showSection(sectionName) {
@@ -763,6 +789,149 @@ class MSAAdmin {
                 refreshBtn.disabled = false;
             }, 2000);
         }
+    }
+
+    updateEventPreview() {
+        const previewContainer = document.getElementById('event-preview');
+        if (!previewContainer) return;
+
+        // Get current form values
+        const title = document.getElementById('event-title').value || 'Event Title';
+        const date = document.getElementById('event-date').value;
+        const time = document.getElementById('event-time').value;
+        const location = document.getElementById('event-location').value || 'Location';
+        const type = document.getElementById('event-type').value;
+        const description = document.getElementById('event-description').value;
+        const link = document.getElementById('event-link').value;
+
+        // Format date
+        let formattedDate = '';
+        if (date) {
+            const eventDate = new Date(date);
+            formattedDate = eventDate.toLocaleDateString();
+        }
+
+        // Get poster preview
+        const posterPreview = document.getElementById('poster-preview');
+        const posterImg = posterPreview.querySelector('img');
+        const posterSrc = posterImg ? posterImg.src : '';
+
+        // Create preview HTML
+        let previewHTML = `
+            <div style="
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                border: 2px solid #3b82f6;
+                position: relative;
+            ">
+                <div style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background: #3b82f6;
+                    color: white;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                ">
+                    FEATURED
+                </div>
+        `;
+
+        if (posterSrc) {
+            previewHTML += `
+                <div style="margin-bottom: 15px;">
+                    <img src="${posterSrc}" style="width: 100%; max-width: 300px; border-radius: 8px;" alt="Event poster">
+                </div>
+            `;
+        }
+
+        previewHTML += `
+                <div style="margin-bottom: 15px;">
+                    <h4 style="margin: 0 0 10px 0; color: #1f2937; font-size: 1.2rem;">${title}</h4>
+                    <div style="
+                        display: inline-block;
+                        background: #eff6ff;
+                        color: #1e40af;
+                        padding: 4px 12px;
+                        border-radius: 20px;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        margin-bottom: 10px;
+                    ">
+                        ${type.toUpperCase()}
+                    </div>
+                </div>
+                
+                <div style="color: #374151; font-size: 0.9rem;">
+        `;
+
+        if (formattedDate) {
+            previewHTML += `<p style="margin: 5px 0;"><i class="fas fa-calendar-alt" style="color: #6b7280; margin-right: 8px;"></i>${formattedDate}</p>`;
+        }
+        
+        if (time) {
+            previewHTML += `<p style="margin: 5px 0;"><i class="fas fa-clock" style="color: #6b7280; margin-right: 8px;"></i>${time}</p>`;
+        }
+        
+        previewHTML += `<p style="margin: 5px 0;"><i class="fas fa-map-marker-alt" style="color: #6b7280; margin-right: 8px;"></i>${location}</p>`;
+        
+        if (description) {
+            previewHTML += `<p style="margin: 10px 0 5px 0;"><i class="fas fa-info-circle" style="color: #6b7280; margin-right: 8px;"></i>${description}</p>`;
+        }
+
+        previewHTML += `
+                </div>
+                
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+        `;
+
+        if (link) {
+            previewHTML += `
+                <a href="${link}" target="_blank" style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 5px;
+                    background: #3b82f6;
+                    color: white;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                ">
+                    <i class="fas fa-info-circle"></i>
+                    Learn More
+                </a>
+            `;
+        }
+
+        previewHTML += `
+                    <button style="
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 5px;
+                        background: #6b7280;
+                        color: white;
+                        border: none;
+                        padding: 8px 15px;
+                        border-radius: 6px;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                        cursor: pointer;
+                    ">
+                        <i class="fas fa-bell"></i>
+                        Remind Me
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Update preview container
+        previewContainer.innerHTML = previewHTML;
     }
 }
 
