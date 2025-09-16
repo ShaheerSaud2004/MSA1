@@ -423,6 +423,10 @@
                 <i class="fas fa-cog"></i>
                 Settings
             </button>
+            <button class="admin-nav-btn" data-section="preview">
+                <i class="fas fa-eye"></i>
+                Live Preview
+            </button>
         </div>
 
         <!-- Events Management Section -->
@@ -657,10 +661,52 @@
             </div>
         </div>
 
+        <!-- Live Preview Section -->
+        <div id="preview-section" class="admin-section">
+            <h2 class="section-title">
+                <i class="fas fa-eye"></i>
+                Live Preview
+            </h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Website Preview</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary" id="refresh-preview">
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh Preview
+                        </button>
+                        <button class="btn btn-secondary" id="open-main-site">
+                            <i class="fas fa-external-link-alt"></i>
+                            Open Main Site
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="border: 2px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                    <iframe id="preview-iframe" 
+                            src="index.html" 
+                            style="width: 100%; height: 800px; border: none;"
+                            title="Website Preview">
+                    </iframe>
+                </div>
+                
+                <div style="margin-top: 15px; padding: 15px; background: #f9fafb; border-radius: 8px;">
+                    <h4 style="margin: 0 0 10px 0; color: #374151;">Preview Controls:</h4>
+                    <ul style="margin: 0; color: #6b7280; font-size: 0.9rem;">
+                        <li>Changes made in the admin panel will appear in this preview</li>
+                        <li>Use "Refresh Preview" to update the preview after making changes</li>
+                        <li>The preview shows exactly how your changes will look on the main website</li>
+                        <li>You can scroll and interact with the preview to test functionality</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- Alert Container -->
         <div id="alert-container"></div>
     </div>
 
-    <script src="admin.js"></script>
+    <script src="admin/admin.js"></script>
 </body>
 </html>

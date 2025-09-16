@@ -113,6 +113,14 @@ class MSAAdmin {
         this.data.settings.lastUpdated = new Date().toISOString();
         localStorage.setItem('msa_admin_data', JSON.stringify(this.data));
         this.updateSystemInfo();
+        
+        // Auto-refresh preview if it's currently visible
+        const previewSection = document.getElementById('preview-section');
+        if (previewSection && previewSection.classList.contains('active')) {
+            setTimeout(() => {
+                this.refreshPreview();
+            }, 500);
+        }
     }
 
     setupEventListeners() {
@@ -156,6 +164,15 @@ class MSAAdmin {
 
         document.getElementById('clear-data').addEventListener('click', () => {
             this.clearAllData();
+        });
+
+        // Live Preview
+        document.getElementById('refresh-preview').addEventListener('click', () => {
+            this.refreshPreview();
+        });
+
+        document.getElementById('open-main-site').addEventListener('click', () => {
+            window.open('../index.html', '_blank');
         });
     }
 
@@ -227,6 +244,9 @@ class MSAAdmin {
                 break;
             case 'settings':
                 this.updateSystemInfo();
+                break;
+            case 'preview':
+                this.refreshPreview();
                 break;
         }
     }
@@ -721,6 +741,27 @@ class MSAAdmin {
                 this.updateSystemInfo();
                 this.showAlert('All data cleared successfully!', 'success');
             }
+        }
+    }
+
+    // Live Preview Methods
+    refreshPreview() {
+        const iframe = document.getElementById('preview-iframe');
+        if (iframe) {
+            // Force refresh the iframe
+            iframe.src = iframe.src;
+            
+            // Show loading indicator
+            const refreshBtn = document.getElementById('refresh-preview');
+            const originalText = refreshBtn.innerHTML;
+            refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+            refreshBtn.disabled = true;
+            
+            // Reset button after a short delay
+            setTimeout(() => {
+                refreshBtn.innerHTML = originalText;
+                refreshBtn.disabled = false;
+            }, 2000);
         }
     }
 }
