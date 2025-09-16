@@ -1640,62 +1640,121 @@ section {
     color: #ffd700 !important;
 }
 
+/* Heart Subtitle Animation */
+.heart-subtitle {
+    position: relative;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ff6b6b);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    font-weight: 600;
+}
+
+.heart-subtitle::before {
+    content: '❤️';
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.heart-subtitle::after {
+    content: '❤️';
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+        background-position: 0% 50%;
+    }
+    25% {
+        transform: scale(1.1);
+        background-position: 50% 0%;
+    }
+    50% {
+        transform: scale(1);
+        background-position: 100% 50%;
+    }
+    75% {
+        transform: scale(1.1);
+        background-position: 50% 100%;
+    }
+    100% {
+        transform: scale(1);
+        background-position: 0% 50%;
+    }
+}
+
 /* Marketing Card */
 .flip-card.marketing-card .flip-card-front {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-    color: white;
+    background: white;
+    color: #2c5530;
+    border: 2px solid #e5e7eb;
 }
 
 .flip-card.marketing-card .flip-card-back {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-    color: white;
+    background: white;
+    color: #2c5530;
+    border: 2px solid #e5e7eb;
 }
 
 .flip-card.marketing-card .card-title,
 .flip-card.marketing-card .card-content h3 {
-    color: white;
+    color: #2c5530;
 }
 
 .flip-card.marketing-card .card-subtitle,
 .flip-card.marketing-card .description {
-    color: rgba(255, 255, 255, 0.9);
+    color: #6b7280;
 }
 
 .flip-card.marketing-card .feature {
-    color: rgba(255, 255, 255, 0.8);
+    color: #6b7280;
 }
 
 .flip-card.marketing-card .feature i {
-    color: #fbbf24;
+    color: #3b82f6;
 }
 
 /* EPT Card */
 .flip-card.ept-card .flip-card-front {
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-    color: white;
+    background: white;
+    color: #2c5530;
+    border: 2px solid #e5e7eb;
 }
 
 .flip-card.ept-card .flip-card-back {
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-    color: white;
+    background: white;
+    color: #2c5530;
+    border: 2px solid #e5e7eb;
 }
 
 .flip-card.ept-card .card-title,
 .flip-card.ept-card .card-content h3 {
-    color: white;
+    color: #2c5530;
 }
 
 .flip-card.ept-card .card-subtitle,
 .flip-card.ept-card .description {
-    color: rgba(255, 255, 255, 0.9);
+    color: #6b7280;
 }
 
 .flip-card.ept-card .feature {
-    color: rgba(255, 255, 255, 0.8);
+    color: #6b7280;
 }
 
 .flip-card.ept-card .feature i {
-    color: #10b981;
+    color: #7c3aed;
 }
 
 /* Mobile Touch Support */
