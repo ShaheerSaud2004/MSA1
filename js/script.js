@@ -458,8 +458,9 @@ class EventCalendar {
             });
         }
 
-        // Format date
-        const date = new Date(dateString);
+        // Format date - parse correctly to avoid timezone issues
+        const [year, month, day] = dateString.split('-').map(Number);
+        const date = new Date(year, month - 1, day); // month - 1 because JavaScript months are 0-indexed
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('modalDate').textContent = date.toLocaleDateString('en-US', options);
 
