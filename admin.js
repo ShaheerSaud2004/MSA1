@@ -117,11 +117,11 @@ class MSAAdmin {
         const chaiAndChatsEvent = {
             id: 'chai-and-chats-2025',
             title: 'Chai and Chats',
-            date: '2025-01-25',
-            time: '7:00 PM',
-            location: 'Student Center MPR',
+            date: '2025-09-18',
+            time: '6:00 PM',
+            location: 'Voorhees Mall',
             type: 'general',
-            description: 'Join us for a cozy evening of warm chai, meaningful conversations, and building connections with fellow Muslim students. A perfect way to unwind and make new friends!',
+            description: 'A talk on prophet characteristics - Join us for a meaningful discussion about the noble characteristics of our beloved Prophet (peace be upon him) over warm chai and good company.',
             link: '',
             poster: null,
             createdAt: new Date().toISOString()
@@ -198,7 +198,7 @@ class MSAAdmin {
         this.data.featuredEvent = {
             eventId: 'chai-and-chats-2025',
             title: 'Chai and Chats',
-            description: 'Join us for a cozy evening of warm chai, meaningful conversations, and building connections with fellow Muslim students. A perfect way to unwind and make new friends!',
+            description: 'A talk on prophet characteristics - Join us for a meaningful discussion about the noble characteristics of our beloved Prophet (peace be upon him) over warm chai and good company.',
             poster: null,
             updatedAt: new Date().toISOString()
         };
