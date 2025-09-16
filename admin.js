@@ -106,7 +106,68 @@ class MSAAdmin {
                 console.error('Error loading saved data:', e);
                 this.showAlert('Error loading saved data. Starting fresh.', 'error');
             }
+        } else {
+            // Add default events if no data exists
+            this.addDefaultEvents();
         }
+    }
+
+    addDefaultEvents() {
+        // Add Chai and Chats event
+        const chaiAndChatsEvent = {
+            id: 'chai-and-chats-2025',
+            title: 'Chai and Chats',
+            date: '2025-01-25',
+            time: '7:00 PM',
+            location: 'Student Center MPR',
+            type: 'general',
+            description: 'Join us for a cozy evening of warm chai, meaningful conversations, and building connections with fellow Muslim students. A perfect way to unwind and make new friends!',
+            link: '',
+            poster: null,
+            createdAt: new Date().toISOString()
+        };
+
+        // Add other sample events
+        const sampleEvents = [
+            chaiAndChatsEvent,
+            {
+                id: 'freshman-orientation-2025',
+                title: 'Freshman Orientation',
+                date: '2025-09-09',
+                time: '6:30 PM',
+                location: 'Trayes Hall on Cook/Doug',
+                type: 'ladders',
+                description: 'Welcome new students to the MSA family! Learn about our community, meet your fellow students, and enjoy FREE boba from @trulyyogurtnj',
+                link: 'https://www.instagram.com/p/DOPSzv6DVWV/',
+                poster: null,
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'scavenger-hunt-2025',
+                title: 'Scavenger Hunt',
+                date: '2025-09-11',
+                time: '4:30 PM',
+                location: 'CA MPR',
+                type: 'general',
+                description: 'Team up with friends for an exciting scavenger hunt around campus!',
+                link: '',
+                poster: null,
+                createdAt: new Date().toISOString()
+            }
+        ];
+
+        this.data.events = sampleEvents;
+        
+        // Set Chai and Chats as featured event
+        this.data.featuredEvent = {
+            eventId: 'chai-and-chats-2025',
+            title: 'Chai and Chats',
+            description: 'Join us for a cozy evening of warm chai, meaningful conversations, and building connections with fellow Muslim students. A perfect way to unwind and make new friends!',
+            poster: null,
+            updatedAt: new Date().toISOString()
+        };
+
+        this.saveData();
     }
 
     saveData() {
