@@ -1712,15 +1712,15 @@ section {
     top: 200%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 1200px;
-    height: 1200px;
+    width: 1000px;
+    height: 1000px;
     background-image: url('../images/heart.gif');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.4;
+    opacity: 0.3;
     animation: heartbeat 1.5s ease-in-out infinite;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
     filter: sepia(100%) saturate(200%) hue-rotate(330deg);
 }
