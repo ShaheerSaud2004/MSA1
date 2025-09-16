@@ -1708,7 +1708,7 @@ section {
 .heart-subtitle::before {
     content: '';
     position: absolute;
-    top: 120%;
+    top: 150%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 600px;
