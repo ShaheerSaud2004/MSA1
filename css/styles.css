@@ -21,11 +21,12 @@ html {
     text-align: center;
     margin: 25px auto;
     padding: 25px 30px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
     border-radius: 15px;
-    border: 1px solid rgba(44, 85, 48, 0.2);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
     transition: all 0.3s ease;
     max-width: 100%;
     width: 100%;
@@ -34,10 +35,10 @@ html {
 }
 
 .arabic-calligraphy:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    border-color: rgba(44, 85, 48, 0.3);
-    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 215, 0, 0.8);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .arabic-text {
@@ -1657,7 +1658,12 @@ section {
 /* Beautiful background for The Heart of MSA section */
 #necessary-teams {
     position: relative;
-    background: transparent;
+    background: linear-gradient(135deg, 
+        rgba(255, 182, 193, 0.1) 0%, 
+        rgba(255, 192, 203, 0.15) 25%, 
+        rgba(255, 160, 160, 0.1) 50%, 
+        rgba(255, 182, 193, 0.15) 75%, 
+        rgba(255, 192, 203, 0.1) 100%);
     border-radius: 30px;
     margin: 40px 20px;
     padding: 60px 0;
@@ -1706,8 +1712,8 @@ section {
     top: 200%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 800px;
-    height: 800px;
+    width: 1000px;
+    height: 1000px;
     background-image: url('../images/heart.gif');
     background-size: contain;
     background-repeat: no-repeat;
