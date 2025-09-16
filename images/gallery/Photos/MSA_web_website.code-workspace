@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "MSA_web_website",
+			"path": "../../.."
+		},
+		{
+			"name": "MSA Fall Kickoff | Brothers",
+			"path": "../../../../Downloads/MSA Fall Kickoff | Brothers"
+		},
+		{
+			"name": "MSA Fall Kickoff | Sisters",
+			"path": "../../../../Downloads/MSA Fall Kickoff | Sisters"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "MSA_web_website",
+		"liveServer.settings.port": 5501
+	}
+}

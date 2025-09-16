@@ -92,3 +92,4 @@ This structure is optimized for deployment on:
 - ✅ Any static hosting platform
 
 The organized structure ensures fast loading and easy maintenance for your MSA website!
+
