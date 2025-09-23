@@ -1585,26 +1585,26 @@ section {
 /* Sisters Card */
 .flip-card.sisters-card .flip-card-front {
     background: linear-gradient(135deg, #f4e4d6 0%, #f8f0e3 50%, #f2e2c7 100%);
-    color: #2c5530;
+    color: white;
 }
 
 .flip-card.sisters-card .flip-card-back {
     background: linear-gradient(135deg, #f4e4d6 0%, #f8f0e3 50%, #f2e2c7 100%);
-    color: #2c5530;
+    color: white;
 }
 
 .flip-card.sisters-card .card-title,
 .flip-card.sisters-card .card-content h3 {
-    color: #2c5530 !important;
+    color: white !important;
 }
 
 .flip-card.sisters-card .card-subtitle,
 .flip-card.sisters-card .description {
-    color: rgba(44, 85, 48, 0.8) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .flip-card.sisters-card .feature {
-    color: rgba(44, 85, 48, 0.7) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .flip-card.sisters-card .feature i {
@@ -1712,8 +1712,8 @@ section {
     top: 200%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 1000px;
-    height: 1000px;
+    width: 600px;
+    height: 600px;
     background-image: url('../images/heart.gif');
     background-size: contain;
     background-repeat: no-repeat;
@@ -3492,9 +3492,9 @@ img.event-logo[src*="hope.jpg"],
 /* Modern Featured Events Grid */
 .featured-events-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
-    max-width: 1200px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    max-width: 1400px;
     margin: 0 auto;
     align-items: start;
 }
@@ -4860,7 +4860,20 @@ img.event-logo[src*="hope.jpg"],
     /* Featured Events Mobile */
     .featured-events-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 25px;
+    }
+}
+
+/* Tablet Responsiveness for Featured Events */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .featured-events-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+    
+    .upcoming-events-sidebar {
+        grid-column: 1 / -1;
+        margin-top: 20px;
     }
     
     .event-poster {
@@ -6252,8 +6265,10 @@ img.event-logo[src*="hope.jpg"],
 /* Albums Selection */
 .albums-selection {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 25px;
+    justify-items: center;
+    align-items: start;
 }
 
 .album-choice {
@@ -6264,6 +6279,9 @@ img.event-logo[src*="hope.jpg"],
     transition: all 0.3s ease;
     background: white;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 .album-choice:hover {
@@ -6280,6 +6298,8 @@ img.event-logo[src*="hope.jpg"],
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
     background: #f0f0f0;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
 .album-preview-thumb {
@@ -6287,6 +6307,9 @@ img.event-logo[src*="hope.jpg"],
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
 }
 
 .album-choice:hover .album-preview-thumb {

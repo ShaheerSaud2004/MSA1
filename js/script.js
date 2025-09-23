@@ -518,6 +518,22 @@ class EventGallery {
                         photos: this.generateSistersPhotos()
                     }
                 }
+            },
+            'scavenger-hunt': {
+                name: 'Scavenger Hunt',
+                poster: 'Scavenger Hunt.jpg',
+                albums: {
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 77,
+                        photos: this.generateScavengerHuntBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Sisters', 
+                        count: 100,
+                        photos: this.generateScavengerHuntSistersPhotos()
+                    }
+                }
             }
             // Future events can be easily added here
         };
@@ -620,6 +636,56 @@ class EventGallery {
         ];
         
         return sistersFiles.map(file => `images/gallery/Photos/Fall Kickoff/Sisters/${file}`);
+    }
+
+    generateScavengerHuntBrothersPhotos() {
+        const brothersFiles = [
+            '1-IMG_4373.jpg', '10-IMG_4379.jpg', '11-IMG_4380.jpg', '12-IMG_4372.jpg', '13-IMG_4383.jpg',
+            '14-IMG_4384.jpg', '15-IMG_4385.jpg', '16-IMG_4386.jpg', '17-IMG_4387.jpg', '18-IMG_4416.jpg',
+            '19-IMG_4388.jpg', '2-IMG_4377.jpg', '20-IMG_4389.jpg', '21-IMG_4417.jpg', '22-IMG_4390.jpg',
+            '23-IMG_4418.jpg', '24-IMG_4419.jpg', '25-IMG_4358.jpg', '26-IMG_4391.jpg', '27-IMG_4393.jpg',
+            '28-IMG_4394.jpg', '29-IMG_4395.jpg', '3-IMG_4356.jpg', '30-IMG_4397.jpg', '31-IMG_4398.jpg',
+            '32-IMG_4420.jpg', '33-IMG_4421.jpg', '34-IMG_4400.jpg', '35-IMG_4422.jpg', '36-IMG_4423.jpg',
+            '37-IMG_4359.jpg', '38-IMG_4361.jpg', '39-IMG_4425.jpg', '4-IMG_4370.jpg', '40-IMG_4426.jpg',
+            '41-IMG_4362.jpg', '42-IMG_4365.jpg', '43-IMG_4366.jpg', '44-IMG_4367.jpg', '45-IMG_4368.jpg',
+            '46-IMG_4403.jpg', '47-IMG_4404.jpg', '48-IMG_4405.jpg', '49-IMG_4406.jpg', '5-IMG_4357.jpg',
+            '50-IMG_4407.jpg', '51-IMG_4408.jpg', '52-IMG_4409.jpg', '53-IMG_4410.jpg', '54-IMG_4414.jpg',
+            '55-IMG_1951.jpg', '56-IMG_1952.jpg', '57-IMG_1954.jpg', '58-IMG_1955.jpg', '59-IMG_1956.jpg',
+            '6-IMG_4371.jpg', '60-IMG_1957.jpg', '61-IMG_1958.jpg', '62-IMG_1959.jpg', '63-IMG_1960.jpg',
+            '64-IMG_1961.jpg', '65-IMG_1962.jpg', '66-IMG_1963.jpg', '67-IMG_1965.jpg', '68-IMG_1966.jpg',
+            '69-IMG_1967.jpg', '7-IMG_4374.jpg', '70-IMG_1968.jpg', '71-IMG_1969.jpg', '72-IMG_1971.jpg',
+            '73-IMG_1973.jpg', '74-IMG_1974.jpg', '75-IMG_1975.jpg', '76-IMG_1976.jpg', '77-IMG_1977.jpg',
+            '8-IMG_4375.jpg', '9-IMG_4376.jpg'
+        ];
+        
+        return brothersFiles.map(file => `images/gallery/Photos/Scavenger Hunt | Brothers/${file}`);
+    }
+
+    generateScavengerHuntSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_0923.jpg', '10-IMG_0932.jpg', '100-IMG_6759.jpg', '11-IMG_0933.jpg', '12-IMG_0934.jpg',
+            '13-IMG_0935.jpg', '14-IMG_0936.jpg', '15-IMG_0939.jpg', '16-IMG_0940.jpg', '17-IMG_0941.jpg',
+            '18-IMG_0942.jpg', '19-IMG_0945.jpg', '2-IMG_0924.jpg', '20-IMG_0946.jpg', '21-IMG_0947.jpg',
+            '22-IMG_0948.jpg', '23-IMG_0949.jpg', '24-IMG_0950.jpg', '25-IMG_0951.jpg', '26-IMG_0952.jpg',
+            '27-IMG_0953.jpg', '28-IMG_0954.jpg', '29-IMG_0958.jpg', '3-IMG_0925.jpg', '30-IMG_0959.jpg',
+            '31-IMG_0960.jpg', '32-IMG_0961.jpg', '33-IMG_0962.jpg', '34-IMG_0963.jpg', '35-IMG_0965.jpg',
+            '36-IMG_0966.jpg', '37-IMG_0967.jpg', '38-IMG_0970.jpg', '39-IMG_0971.jpg', '4-IMG_0926.jpg',
+            '40-IMG_0972.jpg', '41-IMG_0973.jpg', '42-IMG_0974.jpg', '43-IMG_0975.jpg', '44-IMG_0976.jpg',
+            '45-IMG_0977.jpg', '46-IMG_0978.jpg', '47-IMG_0979.jpg', '48-IMG_0980.jpg', '49-IMG_0985.jpg',
+            '5-IMG_0927.jpg', '50-IMG_0986.jpg', '51-IMG_0987.jpg', '52-IMG_0989.jpg', '53-IMG_6694.jpg',
+            '54-IMG_6697.jpg', '55-IMG_6698.jpg', '56-IMG_6699.jpg', '57-IMG_6700.jpg', '58-IMG_6701.jpg',
+            '59-IMG_6702.jpg', '6-IMG_0928.jpg', '60-IMG_6705.jpg', '61-IMG_6706.jpg', '62-IMG_6707.jpg',
+            '63-IMG_6708.jpg', '64-IMG_6710.jpg', '65-IMG_6714.jpg', '66-IMG_6716.jpg', '67-IMG_6717.jpg',
+            '68-IMG_6718.jpg', '69-IMG_6719.jpg', '7-IMG_0929.jpg', '70-IMG_6720.jpg', '71-IMG_6721.jpg',
+            '72-IMG_6722.jpg', '73-IMG_6723.jpg', '74-IMG_6724.jpg', '75-IMG_6725.jpg', '76-IMG_6726.jpg',
+            '77-IMG_6727.jpg', '78-IMG_6728.jpg', '79-IMG_6730.jpg', '8-IMG_0930.jpg', '80-IMG_6734.jpg',
+            '81-IMG_6736.jpg', '82-IMG_6737.jpg', '83-IMG_6738.jpg', '84-IMG_6739.jpg', '85-IMG_6740.jpg',
+            '86-IMG_6741.jpg', '87-IMG_6742.jpg', '88-IMG_6745.jpg', '89-IMG_6746.jpg', '9-IMG_0931.jpg',
+            '90-IMG_6747.jpg', '91-IMG_6748.jpg', '92-IMG_6749.jpg', '93-IMG_6750.jpg', '94-IMG_6751.jpg',
+            '95-IMG_6752.jpg', '96-IMG_6753.jpg', '97-IMG_6754.jpg', '98-IMG_6756.jpg', '99-IMG_6758.jpg'
+        ];
+        
+        return sistersFiles.map(file => `images/gallery/Photos/Scavenger Hunt | Sisters/${file}`);
     }
 
     // Diagnostic function to test image loading
@@ -739,7 +805,7 @@ class EventGallery {
                 </div>
                 <div class="album-choice-content">
                     <h4>${album.name}</h4>
-                    <p>${album.count} photos from Fall Kickoff</p>
+                    <p>${album.count} photos from ${event.name}</p>
                     <button class="choose-album-btn">
                         <i class="fas fa-images"></i>
                         View Album
