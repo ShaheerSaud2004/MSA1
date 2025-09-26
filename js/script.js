@@ -1945,7 +1945,7 @@ class PhotoNotificationHandler {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            this.handleSubmission(emailInput, phoneInput, messageDiv);
+            this.showSuccessScreen(emailInput, phoneInput, messageDiv);
             return false;
         });
 
@@ -1963,40 +1963,13 @@ class PhotoNotificationHandler {
         });
     }
 
-    async handleSubmission(emailInput, phoneInput, messageDiv) {
-        console.log('Form submission started');
+    showSuccessScreen(emailInput, phoneInput, messageDiv) {
+        console.log('Button clicked - showing success screen');
+        
         const email = emailInput.value.trim();
         const phone = phoneInput.value.trim();
         
-        console.log('Email:', email, 'Phone:', phone);
-
-        // Validation
-        if (!email && !phone) {
-            console.log('Validation failed: no email or phone');
-            this.showMessage(messageDiv, 'Please enter either an email address or phone number.', 'error');
-            return;
-        }
-
-        if (email && !this.isValidEmail(email)) {
-            this.showMessage(messageDiv, 'Please enter a valid email address.', 'error');
-            return;
-        }
-
-        if (phone && !this.isValidPhone(phone)) {
-            this.showMessage(messageDiv, 'Please enter a valid phone number.', 'error');
-            return;
-        }
-
-        // Check if already subscribed
-        if (this.isAlreadySubscribed(email, phone)) {
-            this.showMessage(messageDiv, 'You are already subscribed for photo notifications!', 'error');
-            return;
-        }
-
-        // Show loading state
-        this.showMessage(messageDiv, 'Saving your information...', 'loading');
-
-        // Store the data
+        // Store the data (even if empty)
         const contactData = {
             email: email || null,
             phone: phone || null,
@@ -2009,7 +1982,6 @@ class PhotoNotificationHandler {
         console.log('Saved to localStorage:', contactData);
         
         // Show success message immediately
-        console.log('Showing success message');
         this.showMessage(messageDiv, `🎉 Success! You're now subscribed to photo notifications!`, 'success');
         
         // Clear the form
