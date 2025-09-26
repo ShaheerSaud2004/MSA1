@@ -5902,6 +5902,31 @@ img.event-logo[src*="hope.jpg"],
     border: 1px solid #f5c6cb;
 }
 
+.form-message.loading {
+    background: linear-gradient(135deg, #cce5ff 0%, #b3d7ff 100%);
+    color: #004085;
+    border: 1px solid #b3d7ff;
+    position: relative;
+}
+
+.form-message.loading::after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #004085;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 
 /* Enhanced Remind Me Modal */
 .remind-me-modal {
