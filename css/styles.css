@@ -1720,7 +1720,7 @@ section {
     background-position: center;
     opacity: 0.2;
     animation: heartbeat 1.5s ease-in-out infinite;
-    z-index: -2;
+    z-index: -10;
     pointer-events: none;
     filter: sepia(100%) saturate(200%) hue-rotate(330deg);
 }
@@ -1734,13 +1734,13 @@ section {
 /* Ensure flip cards are above the heart */
 #necessary-teams .flip-cards-gallery {
     position: relative;
-    z-index: 5;
+    z-index: 10;
 }
 
 /* Ensure individual flip cards are above everything */
 .flip-card {
     position: relative;
-    z-index: 6;
+    z-index: 15;
 }
 
 @keyframes heartbeat {
