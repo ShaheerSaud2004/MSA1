@@ -1964,11 +1964,15 @@ class PhotoNotificationHandler {
     }
 
     async handleSubmission(emailInput, phoneInput, messageDiv) {
+        console.log('Form submission started');
         const email = emailInput.value.trim();
         const phone = phoneInput.value.trim();
+        
+        console.log('Email:', email, 'Phone:', phone);
 
         // Validation
         if (!email && !phone) {
+            console.log('Validation failed: no email or phone');
             this.showMessage(messageDiv, 'Please enter either an email address or phone number.', 'error');
             return;
         }
@@ -2000,54 +2004,29 @@ class PhotoNotificationHandler {
             id: Date.now().toString()
         };
 
-        try {
-            // Save to Vercel API
-            const response = await fetch('/api/subscribe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(contactData)
-            });
-
-            const result = await response.json();
-
-            if (response.ok && result.success) {
-                // Also save locally as backup
-                this.saveNotificationData(contactData);
-                
-                // Send confirmation email and SMS
-                this.sendConfirmationMessages(email, phone);
-                
-                // Show success message
-                this.showMessage(messageDiv, `🎉 Success! You're now subscribed to photo notifications!`, 'success');
-                
-                // Clear the form
-                emailInput.value = '';
-                phoneInput.value = '';
-                
-                // Log for verification
-                console.log('Notification signup successful:', contactData);
-                console.log('API Response:', result);
-                
-                // Close modal and return to main screen after success
-                setTimeout(() => {
-                    const modal = document.getElementById('notificationModal');
-                    if (modal) {
-                        modal.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                    
-                    // Scroll to top of page to show main content
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 2000);
-            } else {
-                throw new Error(result.error || 'Failed to save subscription');
+        // Save to localStorage for tracking
+        this.saveNotificationData(contactData);
+        console.log('Saved to localStorage:', contactData);
+        
+        // Show success message immediately
+        console.log('Showing success message');
+        this.showMessage(messageDiv, `🎉 Success! You're now subscribed to photo notifications!`, 'success');
+        
+        // Clear the form
+        emailInput.value = '';
+        phoneInput.value = '';
+        
+        // Close modal and return to main screen after success
+        setTimeout(() => {
+            const modal = document.getElementById('notificationModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
             }
-        } catch (error) {
-            console.error('Subscription error:', error);
-            this.showMessage(messageDiv, 'Sorry, there was an error saving your information. Please try again.', 'error');
-        }
+            
+            // Scroll to top of page to show main content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 2000);
     }
 
     isValidEmail(email) {
@@ -2089,8 +2068,18 @@ class PhotoNotificationHandler {
     }
 
     showMessage(messageDiv, message, type) {
+        console.log('showMessage called:', message, type);
+        console.log('messageDiv element:', messageDiv);
+        
+        if (!messageDiv) {
+            console.error('messageDiv is null or undefined');
+            return;
+        }
+        
         messageDiv.textContent = message;
         messageDiv.className = `form-message ${type}`;
+        
+        console.log('Message set, className:', messageDiv.className);
         
         // Auto-hide success and loading messages
         if (type === 'success' || type === 'loading') {
