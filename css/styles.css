@@ -3492,11 +3492,61 @@ img.event-logo[src*="hope.jpg"],
 /* Modern Featured Events Grid */
 .featured-events-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
     max-width: 1400px;
     margin: 0 auto;
     align-items: start;
+}
+
+/* View All Events Button */
+.view-all-events-button {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.view-all-events-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #2c5530 0%, #3a6b3e 100%);
+    color: white;
+    text-decoration: none;
+    padding: 25px 40px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(44, 85, 48, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+.view-all-events-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(44, 85, 48, 0.3);
+    color: white;
+}
+
+.btn-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-content i {
+    font-size: 2.5rem;
+    opacity: 0.9;
+}
+
+.btn-text h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.btn-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    line-height: 1.4;
 }
 
 /* Featured Event Card (Main) */
@@ -4892,13 +4942,14 @@ img.event-logo[src*="hope.jpg"],
 /* Tablet Responsiveness for Featured Events */
 @media (max-width: 1024px) and (min-width: 769px) {
     .featured-events-grid {
-        grid-template-columns: 1.5fr 1fr;
-        gap: 25px;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
     }
     
-    .upcoming-events-sidebar {
+    .featured-event-card:last-child {
         grid-column: 1 / -1;
-        margin-top: 20px;
+        max-width: 500px;
+        margin: 0 auto;
     }
     
     .event-poster {

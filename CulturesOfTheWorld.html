@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultures of the World - Rutgers MSA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/logos/msa-logo.svg" type="image/svg+xml">
+    <link rel="icon" href="images/logos/MSA.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="images/logos/MSA.png" sizes="16x16" type="image/png">
+    <link rel="apple-touch-icon" href="images/logos/MSA.png" sizes="180x180">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .cultures-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px 20px;
+        }
+        
+        .cultures-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(44, 85, 48, 0.15);
+            overflow: hidden;
+        }
+        
+        .cultures-header {
+            background: linear-gradient(135deg, #2c5530 0%, #3a6b3e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .cultures-header h1 {
+            font-size: 3rem;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+        }
+        
+        .cultures-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .cultures-content {
+            padding: 40px;
+        }
+        
+        .cultures-poster {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .cultures-poster img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cultures-info {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .cultures-info h2 {
+            color: #2c5530;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .event-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .detail-item i {
+            font-size: 2rem;
+            color: #2c5530;
+            margin-bottom: 10px;
+        }
+        
+        .detail-item h3 {
+            color: #2c5530;
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .detail-item p {
+            color: #666;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        
+        .cultures-description {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2c5530;
+        }
+        
+        .cultures-description p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .cultures-description p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-section {
+            background: linear-gradient(135deg, #2c5530 0%, #3a6b3e 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .form-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .form-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .google-form-btn {
+            display: inline-block;
+            background: white;
+            color: #2c5530;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .google-form-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            color: #2c5530;
+        }
+        
+        .google-form-btn i {
+            margin-right: 10px;
+        }
+        
+        .important-notes {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .important-notes h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .important-notes ul {
+            color: #856404;
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .important-notes li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .contact-info {
+            background: #e3f2fd;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .contact-info h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info p {
+            color: #1976d2;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .back-to-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .back-to-home a {
+            color: #2c5530;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-to-home a:hover {
+            color: #3a6b3e;
+        }
+        
+        .back-to-home a i {
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .cultures-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .cultures-content {
+                padding: 20px;
+            }
+            
+            .event-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cultures-page">
+        <div class="cultures-container">
+            <div class="cultures-header">
+                <h1>Cultures of the World 🗺️</h1>
+                <p class="subtitle">Celebrating the Beautiful Diversity of the Global Muslim Community</p>
+            </div>
+            
+            <div class="cultures-content">
+                <div class="cultures-poster">
+                    <img src="CulturesOfTheWorld.jpg" alt="Cultures of the World Event Poster">
+                </div>
+                
+                <div class="cultures-info">
+                    <h2>Event Information</h2>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>Date</h3>
+                            <p>Thursday, October 16th, 2025</p>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <h3>Time</h3>
+                            <p>6:30 PM</p>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Location</h3>
+                            <p>Cook Student Center</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cultures-description">
+                    <p><strong>Assalamu Alaikum wa Rahmatullahi wa Barakatuh,</strong></p>
+                    <p>MSA is excited to invite you to our upcoming <strong>Cultures of the World</strong> event — a night dedicated to celebrating the beautiful diversity within the global Muslim community.</p>
+                    <p>This event will showcase the unique traditions, clothing, and histories of Islamic cultures from around the world. It's a chance to share your heritage and learn about others in an engaging and interactive space.</p>
+                </div>
+                
+                <div class="important-notes">
+                    <h3>📋 Important Notes</h3>
+                    <ul>
+                        <li>The event will be held in a <strong>gender-separated format</strong>, so each country will require <strong>two tables</strong> (one in the brothers' section and one in the sisters' section).</li>
+                        <li>Your table will only be confirmed once you receive a <strong>confirmation email</strong> from us.</li>
+                        <li><strong>Food is not allowed</strong> at the tables.</li>
+                    </ul>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Interested in Hosting a Table?</h2>
+                    <p>If you're interested in hosting a table to represent a country, please fill out the form below.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSct22nv7sh-5vO6V9zmmMlyOuaqke6cNOHk1VpgxUN-p1zZig/viewform" target="_blank" class="google-form-btn">
+                        <i class="fab fa-google"></i>
+                        Fill Out the Form
+                    </a>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Questions?</h3>
+                    <p>For any questions, please contact us at <strong>ru.msa.outreach@gmail.com</strong></p>
+                </div>
+                
+                <div class="back-to-home">
+                    <a href="index.html">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to MSA Homepage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -58,7 +58,7 @@ class EventCalendar {
             '2025-09-18': [{ title: 'Shama\'il', location: 'Voorhees Mall', type: 'General', time: '6:00 - 9:00' }],
             '2025-09-23': [{ title: 'Submissions Event', location: 'CA MPR', type: 'Submissions', time: '6:00 - 9:00' }],
             '2025-09-25': [{ title: 'Speed-Friending', location: 'CA MPR', type: 'General', time: '6:00 - 9:00' }],
-            '2025-09-30': [{ title: 'MSA General Meeting', location: 'CA MPR', type: 'HOPE', time: '6:00 - 9:00' }],
+            '2025-09-30': [{ title: 'HOPE Drive: Clothing & Hygiene', location: 'College Ave SC Multipurpose Room', type: 'HOPE', time: '5:00 - 9:00' }],
             '2025-10-02': [{ title: 'MSA Olympics', location: 'CA MPR', type: 'General', time: '6:00 - 9:00' }],
             '2025-10-09': [{ title: 'Racism/Classism Discussion', location: 'CA MPR', type: 'General', time: '6:00 - 9:00' }],
             '2025-10-14': [{ title: 'Ladders Event', location: 'Gathering Lounge', type: 'Ladders', time: '6:00 - 9:00' }],
