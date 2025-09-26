@@ -1462,24 +1462,24 @@ section {
 
 .flip-card.hope-card .flip-card-back {
     background: linear-gradient(135deg, #f4e4bc 0%, #fff7e6 100%);
-    color: white;
+    color: black;
 }
 
-.flip-card.hope-card .card-title,
-.flip-card.hope-card .card-content h3 {
-    color: white !important;
+.flip-card.hope-card .flip-card-back .card-title,
+.flip-card.hope-card .flip-card-back .card-content h3 {
+    color: black !important;
 }
 
-.flip-card.hope-card .card-subtitle,
-.flip-card.hope-card .description {
-    color: rgba(255, 255, 255, 0.9) !important;
+.flip-card.hope-card .flip-card-back .card-subtitle,
+.flip-card.hope-card .flip-card-back .description {
+    color: rgba(0, 0, 0, 0.8) !important;
 }
 
-.flip-card.hope-card .feature {
-    color: rgba(255, 255, 255, 0.8) !important;
+.flip-card.hope-card .flip-card-back .feature {
+    color: rgba(0, 0, 0, 0.7) !important;
 }
 
-.flip-card.hope-card .feature i {
+.flip-card.hope-card .flip-card-back .feature i {
     color: #e74c3c !important;
 }
 
@@ -1590,24 +1590,24 @@ section {
 
 .flip-card.sisters-card .flip-card-back {
     background: linear-gradient(135deg, #f4e4d6 0%, #f8f0e3 50%, #f2e2c7 100%);
-    color: white;
+    color: black;
 }
 
-.flip-card.sisters-card .card-title,
-.flip-card.sisters-card .card-content h3 {
-    color: white !important;
+.flip-card.sisters-card .flip-card-back .card-title,
+.flip-card.sisters-card .flip-card-back .card-content h3 {
+    color: black !important;
 }
 
-.flip-card.sisters-card .card-subtitle,
-.flip-card.sisters-card .description {
-    color: rgba(255, 255, 255, 0.9) !important;
+.flip-card.sisters-card .flip-card-back .card-subtitle,
+.flip-card.sisters-card .flip-card-back .description {
+    color: rgba(0, 0, 0, 0.8) !important;
 }
 
-.flip-card.sisters-card .feature {
-    color: rgba(255, 255, 255, 0.8) !important;
+.flip-card.sisters-card .flip-card-back .feature {
+    color: rgba(0, 0, 0, 0.7) !important;
 }
 
-.flip-card.sisters-card .feature i {
+.flip-card.sisters-card .flip-card-back .feature i {
     color: #d4af37 !important;
 }
 
@@ -3492,7 +3492,7 @@ img.event-logo[src*="hope.jpg"],
 /* Modern Featured Events Grid */
 .featured-events-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 30px;
     max-width: 1400px;
     margin: 0 auto;
@@ -3525,6 +3525,31 @@ img.event-logo[src*="hope.jpg"],
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
+}
+
+.event-poster-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2c5530 0%, #3a6b3e 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.event-poster-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.event-poster-placeholder p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.9;
 }
 
 .featured-event-card:hover .event-poster img {
@@ -4867,7 +4892,7 @@ img.event-logo[src*="hope.jpg"],
 /* Tablet Responsiveness for Featured Events */
 @media (max-width: 1024px) and (min-width: 769px) {
     .featured-events-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1.5fr 1fr;
         gap: 25px;
     }
     
