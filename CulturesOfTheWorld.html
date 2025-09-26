@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cultures of the World - Rutgers MSA</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="images/logos/msa-logo.svg" type="image/svg+xml">
-    <link rel="icon" href="images/logos/MSA.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="images/logos/MSA.png" sizes="16x16" type="image/png">
-    <link rel="apple-touch-icon" href="images/logos/MSA.png" sizes="180x180">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logos/MSA.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/logos/MSA.png">
+    <link rel="shortcut icon" href="images/logos/MSA.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/logos/MSA.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -53,11 +53,11 @@
         
         .cultures-poster {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
         
         .cultures-poster img {
-            max-width: 60%;
+            max-width: 45%;
             height: auto;
             border-radius: 15px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
@@ -78,10 +78,13 @@
         }
         
         .event-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            display: flex;
+            justify-content: space-between;
             gap: 20px;
             margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .detail-item {
@@ -89,25 +92,31 @@
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            border-left: 4px solid #2c5530;
         }
         
         .detail-item i {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #2c5530;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .detail-item h3 {
             color: #2c5530;
-            margin: 0 0 10px 0;
-            font-size: 1.1rem;
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+            font-weight: 600;
         }
         
         .detail-item p {
             color: #666;
             margin: 0;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            text-align: center;
+            width: 100%;
+            display: block;
         }
         
         .cultures-description {
@@ -246,7 +255,8 @@
             }
             
             .event-details {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                gap: 15px;
             }
             
             .form-section {
