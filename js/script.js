@@ -1667,15 +1667,22 @@ class EventGallery {
 // Contact Form
 class ContactForm {
     constructor() {
+        // Check if contactForm exists, if not, skip initialization
         this.form = document.getElementById('contactForm');
-        this.init();
+        if (this.form) {
+            this.init();
+        } else {
+            console.log('ContactForm: No contactForm element found, skipping initialization');
+        }
     }
 
     init() {
-        this.form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleSubmit();
-        });
+        if (this.form) {
+            this.form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleSubmit();
+            });
+        }
     }
 
     handleSubmit() {
@@ -1768,11 +1775,17 @@ class ScrollAnimations {
 }
 
 // Hero scroll indicator
-document.querySelector('.hero-scroll').addEventListener('click', () => {
-    document.querySelector('#about').scrollIntoView({
-        behavior: 'smooth'
+const heroScroll = document.querySelector('.hero-scroll');
+if (heroScroll) {
+    heroScroll.addEventListener('click', () => {
+        const aboutSection = document.querySelector('#about');
+        if (aboutSection) {
+            aboutSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     });
-});
+}
 
 // Counter animation for stats
 class CounterAnimation {
