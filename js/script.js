@@ -718,7 +718,9 @@ class EventGallery {
             '9-IMG_4443.jpg'
         ];
         
-        return brothersFiles.map(file => `images/gallery/Photos/Chai Brothers/${file}`);
+        const photos = brothersFiles.map(file => `images/gallery/Photos/Chai Brothers/${file}`);
+        console.log('Chai Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
     }
 
     generateChaiSistersPhotos() {
@@ -730,7 +732,9 @@ class EventGallery {
             '9-IMG_7432.jpg'
         ];
         
-        return sistersFiles.map(file => `images/gallery/Photos/Chai Sister/${file}`);
+        const photos = sistersFiles.map(file => `images/gallery/Photos/Chai Sister/${file}`);
+        console.log('Chai Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
     }
 
     // Diagnostic function to test image loading
