@@ -534,6 +534,22 @@ class EventGallery {
                         photos: this.generateScavengerHuntSistersPhotos()
                     }
                 }
+            },
+            'chai-and-chats': {
+                name: 'Chai and Chats',
+                poster: 'Chai and Chats.png',
+                albums: {
+                    'brothers': {
+                        name: 'Chai Brothers',
+                        count: 46,
+                        photos: this.generateChaiBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Chai Sisters', 
+                        count: 21,
+                        photos: this.generateChaiSistersPhotos()
+                    }
+                }
             }
             // Future events can be easily added here
         };
@@ -686,6 +702,35 @@ class EventGallery {
         ];
         
         return sistersFiles.map(file => `images/gallery/Photos/Scavenger Hunt | Sisters/${file}`);
+    }
+
+    generateChaiBrothersPhotos() {
+        const brothersFiles = [
+            '1-IMG_4513.jpg', '10-IMG_4518.jpg', '11-IMG_4448.jpg', '12-IMG_4449.jpg', '13-IMG_4486.jpg',
+            '14-IMG_4450.jpg', '15-IMG_4451.jpg', '16-IMG_4452.jpg', '17-IMG_4453.jpg', '18-IMG_4454.jpg',
+            '19-IMG_4455.jpg', '2-IMG_4436.jpg', '20-IMG_4456.jpg', '21-IMG_4487.jpg', '22-IMG_4457.jpg',
+            '23-IMG_4458.jpg', '24-IMG_4459.jpg', '25-IMG_4460.jpg', '26-IMG_4461.jpg', '27-IMG_4489.jpg',
+            '28-IMG_4490.jpg', '29-IMG_4464.jpg', '3-IMG_4437.jpg', '30-IMG_4465.jpg', '31-IMG_4495.jpg',
+            '32-IMG_4479.jpg', '33-IMG_4480.jpg', '34-IMG_4481.jpg', '35-IMG_4482.jpg', '36-IMG_4483.jpg',
+            '37-IMG_4500.jpg', '38-IMG_4484.jpg', '39-IMG_4504.jpg', '4-IMG_4440.jpg', '40-IMG_4506.jpg',
+            '41-IMG_4507.jpg', '42-IMG_4508.jpg', '43-IMG_4509.jpg', '44-IMG_4510.jpg', '45-IMG_4511.jpg',
+            '46-IMG_4512.jpg', '5-IMG_4441.jpg', '6-IMG_4442.jpg', '7-IMG_4514.jpg', '8-IMG_4517.jpg',
+            '9-IMG_4443.jpg'
+        ];
+        
+        return brothersFiles.map(file => `images/gallery/Photos/Chai Brothers/${file}`);
+    }
+
+    generateChaiSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_4435.jpg', '10-IMG_7431.jpg', '11-IMG_7430.jpg', '12-IMG_7450.jpg', '13-IMG_7449.jpg',
+            '14-IMG_7448.jpg', '15-IMG_7447.jpg', '16-IMG_7446.jpg', '17-IMG_7445.jpg', '18-IMG_7444.jpg',
+            '19-IMG_7443.jpg', '2-IMG_7440.jpg', '20-IMG_7442.jpg', '21-IMG_7441.jpg', '3-IMG_7439.jpg',
+            '4-IMG_7438.jpg', '5-IMG_7437.jpg', '6-IMG_7435.jpg', '7-IMG_7434.jpg', '8-IMG_7433.jpg',
+            '9-IMG_7432.jpg'
+        ];
+        
+        return sistersFiles.map(file => `images/gallery/Photos/Chai Sister/${file}`);
     }
 
     // Diagnostic function to test image loading
