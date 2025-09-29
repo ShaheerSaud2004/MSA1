@@ -550,6 +550,17 @@ class EventGallery {
                         photos: this.generateChaiSistersPhotos()
                     }
                 }
+            },
+            'snacks-and-suhbah': {
+                name: 'Snacks and Suhbah',
+                poster: 'Snacks$SUHBAH.png',
+                albums: {
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 128,
+                        photos: this.generateSnacksSistersPhotos()
+                    }
+                }
             }
             // Future events can be easily added here
         };
@@ -734,6 +745,41 @@ class EventGallery {
         
         const photos = sistersFiles.map(file => `images/gallery/Photos/Chai Sister/${file}`);
         console.log('Chai Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateSnacksSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_1013.jpg', '10-IMG_1030.jpg', '100-IMG_6966.jpg', '101-IMG_6970.jpg', '102-IMG_6971.jpg',
+            '103-IMG_6972.jpg', '104-IMG_6973.jpg', '105-IMG_6975.jpg', '106-IMG_6978.jpg', '107-IMG_6979.jpg',
+            '108-IMG_6981.jpg', '109-IMG_6982.jpg', '11-IMG_1031.jpg', '110-IMG_6983.jpg', '111-IMG_6984.jpg',
+            '112-IMG_6985.jpg', '113-IMG_6986.jpg', '114-IMG_6988.jpg', '115-IMG_6990.jpg', '116-IMG_6992.jpg',
+            '117-IMG_6997.jpg', '118-IMG_6998.jpg', '119-IMG_6999.jpg', '12-IMG_1032.jpg', '120-IMG_7000.jpg',
+            '121-IMG_7001.jpg', '122-IMG_7005.jpg', '123-IMG_7007.jpg', '124-IMG_7008.jpg', '125-IMG_7009.jpg',
+            '126-IMG_7010.jpg', '127-IMG_7011.jpg', '128-IMG_7012.jpg', '13-IMG_1034.jpg', '14-IMG_1035.jpg',
+            '15-IMG_1036.jpg', '16-IMG_1041.jpg', '17-IMG_1047.jpg', '18-IMG_1049.jpg', '19-IMG_1050.jpg',
+            '2-IMG_1016.jpg', '20-IMG_1051.jpg', '21-IMG_1053.jpg', '22-IMG_1054.jpg', '23-IMG_1055.jpg',
+            '24-IMG_1056.jpg', '25-IMG_1057.jpg', '26-IMG_1058.jpg', '27-IMG_1059.jpg', '28-IMG_1060.jpg',
+            '29-IMG_1061.jpg', '3-IMG_1018.jpg', '30-IMG_1066.jpg', '31-IMG_1069.jpg', '32-IMG_1070.jpg',
+            '33-IMG_1073.jpg', '34-IMG_1074.jpg', '35-IMG_1075.jpg', '36-IMG_1078.jpg', '37-IMG_1080.jpg',
+            '38-IMG_1081.jpg', '39-IMG_1083.jpg', '4-IMG_1019.jpg', '40-IMG_1084.jpg', '41-IMG_1089.jpg',
+            '42-IMG_1090.jpg', '43-IMG_1097.jpg', '44-IMG_1099.jpg', '45-IMG_1101.jpg', '46-IMG_1102.jpg',
+            '47-IMG_1104.jpg', '48-IMG_1107.jpg', '49-IMG_1110.jpg', '5-IMG_1023.jpg', '50-IMG_1114.jpg',
+            '51-IMG_1115.jpg', '52-IMG_1116.jpg', '53-IMG_1117.jpg', '54-IMG_1118.jpg', '55-IMG_1120.jpg',
+            '56-IMG_1121.jpg', '57-IMG_1123.jpg', '58-IMG_1124.jpg', '59-IMG_1126.jpg', '6-IMG_1024.jpg',
+            '60-IMG_1127.jpg', '61-IMG_1128.jpg', '62-IMG_1129.jpg', '63-IMG_1131.jpg', '64-IMG_1132.jpg',
+            '65-IMG_1133.jpg', '66-IMG_1134.jpg', '67-IMG_1135.jpg', '68-IMG_1138.jpg', '69-IMG_1139.jpg',
+            '7-IMG_1026.jpg', '70-IMG_1140.jpg', '71-IMG_1142.jpg', '72-IMG_1144.jpg', '73-IMG_1146.jpg',
+            '74-IMG_1147.jpg', '75-IMG_1153.jpg', '76-IMG_1159.jpg', '77-IMG_1161.jpg', '78-IMG_1162.jpg',
+            '79-IMG_1164.jpg', '8-IMG_1028.jpg', '80-IMG_1167.jpg', '81-IMG_1168.jpg', '82-IMG_1169.jpg',
+            '83-IMG_6925.jpg', '84-IMG_6926.jpg', '85-IMG_6927.jpg', '86-IMG_6928.jpg', '87-IMG_6932.jpg',
+            '88-IMG_6933.jpg', '89-IMG_6943.jpg', '9-IMG_1029.jpg', '90-IMG_6946.jpg', '91-IMG_6950.jpg',
+            '92-IMG_6952.jpg', '93-IMG_6953.jpg', '94-IMG_6954.jpg', '95-IMG_6956.jpg', '96-IMG_6957.jpg',
+            '97-IMG_6961.jpg', '98-IMG_6962.jpg', '99-IMG_6965.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/gallery/Photos/Snacks-Sisters/${file}`);
+        console.log('Snacks Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
         return photos;
     }
 
