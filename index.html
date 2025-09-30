@@ -786,10 +786,26 @@
                 <p class="section-subtitle">Memories from our amazing events and activities</p>
             </div>
             
+            <!-- Event Filter Buttons -->
+            <div class="event-filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th"></i>
+                    All Events
+                </button>
+                <button class="filter-btn" data-filter="msa-thursday">
+                    <i class="fas fa-calendar-week"></i>
+                    MSA Thursday Events
+                </button>
+                <button class="filter-btn" data-filter="special">
+                    <i class="fas fa-star"></i>
+                    Special Events
+                </button>
+            </div>
+            
             <!-- Event Gallery Grid -->
             <div class="events-gallery-grid">
                 <!-- Fall Kickoff Event Tile -->
-                <div class="event-tile" data-event="fall-kickoff">
+                <div class="event-tile" data-event="fall-kickoff" data-filter="special">
                     <div class="event-poster">
                         <img src="images/posters/KickoffPoster.png" alt="MSA Fall Kickoff 2025">
                         <div class="event-overlay">
@@ -803,7 +819,7 @@
                 </div>
                 
                 <!-- Freshman Orientation Event Tile -->
-                <div class="event-tile freshman-orientation-tile" data-event="freshman-orientation">
+                <div class="event-tile freshman-orientation-tile" data-event="freshman-orientation" data-filter="special">
                     <div class="event-poster">
                         <img src="images/posters/Freshman Orientation.JPG" alt="Freshman Orientation">
                         <div class="event-overlay">
@@ -817,7 +833,7 @@
                 </div>
                 
                 <!-- Chai and Chats Event Tile -->
-                <div class="event-tile chai-and-chats-tile" data-event="chai-and-chats">
+                <div class="event-tile chai-and-chats-tile" data-event="chai-and-chats" data-filter="msa-thursday">
                     <div class="event-poster">
                         <img src="images/posters/Chai and Chats.png" alt="Chai and Chats">
                         <div class="event-overlay">
@@ -831,7 +847,7 @@
                 </div>
                 
                 <!-- Scavenger Hunt Event Tile -->
-                <div class="event-tile scavenger-hunt-tile" data-event="scavenger-hunt">
+                <div class="event-tile scavenger-hunt-tile" data-event="scavenger-hunt" data-filter="special">
                     <div class="event-poster">
                         <img src="Scavenger Hunt.jpg" alt="Scavenger Hunt">
                         <div class="event-overlay">
@@ -845,7 +861,7 @@
                 </div>
                 
                 <!-- Art Night Event Tile -->
-                <div class="event-tile art-night-tile" data-event="art-night">
+                <div class="event-tile art-night-tile" data-event="art-night" data-filter="msa-thursday">
                     <div class="event-poster">
                         <img src="images/gallery/Photos/ArtNight.png" alt="Art Night">
                         <div class="event-overlay">
@@ -859,7 +875,7 @@
                 </div>
                 
                 <!-- Snacks and Suhbah Event Tile -->
-                <div class="event-tile snacks-and-suhbah-tile" data-event="snacks-and-suhbah">
+                <div class="event-tile snacks-and-suhbah-tile" data-event="snacks-and-suhbah" data-filter="msa-thursday">
                     <div class="event-poster">
                         <img src="Snacks$SUHBAH.png" alt="Snacks and Suhbah">
                         <div class="event-overlay">
@@ -873,7 +889,7 @@
                 </div>
                 
                 <!-- MSA Olympics Event Tile -->
-                <div class="event-tile msa-olympics-tile" data-event="msa-olympics">
+                <div class="event-tile msa-olympics-tile" data-event="msa-olympics" data-filter="special">
                     <div class="event-poster">
                         <img src="images/posters/MSA OLYMPICS POSTER.png" alt="MSA Olympics">
                         <div class="event-overlay">
@@ -887,7 +903,7 @@
                 </div>
                 
                 <!-- Cultures of the World Event Tile -->
-                <div class="event-tile cultures-of-the-world-tile" data-event="cultures-of-the-world">
+                <div class="event-tile cultures-of-the-world-tile" data-event="cultures-of-the-world" data-filter="special">
                     <div class="event-poster">
                         <img src="CulturesOfTheWorld.jpg" alt="Cultures of the World">
                         <div class="event-overlay">
@@ -901,7 +917,7 @@
                 </div>
                 
                 <!-- Hope Drive Event Tile -->
-                <div class="event-tile hope-drive-tile" data-event="hope-drive">
+                <div class="event-tile hope-drive-tile" data-event="hope-drive" data-filter="special">
                     <div class="event-poster">
                         <img src="HopeDrive.jpg" alt="Hope Clothing & Hygiene Drive">
                         <div class="event-overlay">
@@ -915,7 +931,7 @@
                 </div>
                 
                 <!-- Breaking Barriers Event Tile -->
-                <div class="event-tile breaking-barriers-tile" data-event="breaking-barriers">
+                <div class="event-tile breaking-barriers-tile" data-event="breaking-barriers" data-filter="special">
                     <div class="event-poster">
                         <img src="images/posters/Breaking Barriers.png" alt="Breaking Barriers">
                         <div class="event-overlay">

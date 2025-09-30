@@ -2849,3 +2849,41 @@ function getRemindMeData() {
     }
 }
 
+// Event Filter Functionality
+function initializeEventFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const eventTiles = document.querySelectorAll('.event-tile');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Get the filter value
+            const filterValue = button.getAttribute('data-filter');
+            
+            // Filter event tiles
+            eventTiles.forEach(tile => {
+                const tileFilter = tile.getAttribute('data-filter');
+                
+                if (filterValue === 'all' || tileFilter === filterValue) {
+                    tile.style.display = 'block';
+                    tile.style.animation = 'fadeInUp 0.5s ease forwards';
+                } else {
+                    tile.style.display = 'none';
+                }
+            });
+            
+            console.log(`Filtered events by: ${filterValue}`);
+        });
+    });
+}
+
+// Initialize event filters when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeEventFilters();
+});
+
