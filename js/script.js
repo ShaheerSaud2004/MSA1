@@ -561,6 +561,50 @@ class EventGallery {
                         photos: this.generateSnacksSistersPhotos()
                     }
                 }
+            },
+            'msa-olympics': {
+                name: 'MSA Olympics',
+                poster: 'images/posters/MSA OLYMPICS POSTER.png',
+                albums: {
+                    'general': {
+                        name: 'Event Photos',
+                        count: 0,
+                        photos: []
+                    }
+                }
+            },
+            'cultures-of-the-world': {
+                name: 'Cultures of the World',
+                poster: 'CulturesOfTheWorld.jpg',
+                albums: {
+                    'general': {
+                        name: 'Event Photos',
+                        count: 0,
+                        photos: []
+                    }
+                }
+            },
+            'hope-drive': {
+                name: 'Hope Clothing & Hygiene Drive',
+                poster: 'HopeDrive.jpg',
+                albums: {
+                    'general': {
+                        name: 'Event Photos',
+                        count: 0,
+                        photos: []
+                    }
+                }
+            },
+            'breaking-barriers': {
+                name: 'Breaking Barriers',
+                poster: 'images/posters/Breaking Barriers.png',
+                albums: {
+                    'general': {
+                        name: 'Event Photos',
+                        count: 0,
+                        photos: []
+                    }
+                }
             }
             // Future events can be easily added here
         };
