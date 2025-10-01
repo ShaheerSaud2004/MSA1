@@ -557,7 +557,7 @@ class EventGallery {
                 albums: {
                     'brothers': {
                         name: 'Brothers',
-                        count: 77,
+                        count: 158,
                         photos: this.generateSnacksBrothersPhotos()
                     },
                     'sisters': {
@@ -867,7 +867,7 @@ class EventGallery {
             '73-IMG_4510.jpg', '74-IMG_4511.jpg', '75-IMG_4512.jpg', '76-IMG_4521.jpg', '77-IMG_4522.jpg'
         ];
         
-        const photos = brothersFiles.map(file => `images/gallery/Photos/Snacks-Brothers/${file}`);
+        const photos = brothersFiles.map(file => `images/gallery/Photos/Snacks | Brothers/${file}`);
         console.log('Snacks Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
         return photos;
     }
