@@ -567,6 +567,22 @@ class EventGallery {
                     }
                 }
             },
+            'art-night': {
+                name: 'Art Night',
+                poster: 'images/gallery/Photos/ArtNight.png',
+                albums: {
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 10,
+                        photos: this.generateArtNightBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 10,
+                        photos: this.generateArtNightSistersPhotos()
+                    }
+                }
+            },
             'msa-olympics': {
                 name: 'MSA Olympics',
                 poster: 'images/posters/MSA OLYMPICS POSTER.png',
@@ -853,6 +869,28 @@ class EventGallery {
         
         const photos = brothersFiles.map(file => `images/gallery/Photos/Snacks-Brothers/${file}`);
         console.log('Snacks Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateArtNightBrothersPhotos() {
+        const brothersFiles = [
+            '1-IMG_4513.jpg', '2-IMG_4514.jpg', '3-IMG_4515.jpg', '4-IMG_4516.jpg', '5-IMG_4517.jpg',
+            '6-IMG_4519.jpg', '7-IMG_4520.jpg', '8-IMG_4521.jpg', '9-IMG_4522.jpg', '10-IMG_4518.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/gallery/Photos/Art Night Brothers/${file}`);
+        console.log('Art Night Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateArtNightSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_1013.jpg', '2-IMG_1016.jpg', '3-IMG_1018.jpg', '4-IMG_1019.jpg', '5-IMG_1023.jpg',
+            '6-IMG_1024.jpg', '7-IMG_1026.jpg', '8-IMG_1028.jpg', '9-IMG_1029.jpg', '10-IMG_1030.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/gallery/Photos/Art Night Sisters/${file}`);
+        console.log('Art Night Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
         return photos;
     }
 
