@@ -3655,6 +3655,9 @@ img.event-logo[src*="hope.jpg"],
     font-weight: 700;
     margin: 0;
     flex: 1;
+    line-height: 1.2;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .event-type-badge {
@@ -3680,10 +3683,12 @@ img.event-logo[src*="hope.jpg"],
     color: #666;
     margin-bottom: 12px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     font-size: 0.95rem;
     line-height: 1.5;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .event-info i {
