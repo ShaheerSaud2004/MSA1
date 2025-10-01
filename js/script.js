@@ -555,6 +555,11 @@ class EventGallery {
                 name: 'Snacks and Suhbah',
                 poster: 'Snacks$SUHBAH.png',
                 albums: {
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 77,
+                        photos: this.generateSnacksBrothersPhotos()
+                    },
                     'sisters': {
                         name: 'Sisters',
                         count: 128,
@@ -824,6 +829,30 @@ class EventGallery {
         
         const photos = sistersFiles.map(file => `images/gallery/Photos/Snacks-Sisters/${file}`);
         console.log('Snacks Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateSnacksBrothersPhotos() {
+        const brothersFiles = [
+            '1-IMG_4513.jpg', '10-IMG_4518.jpg', '11-IMG_4448.jpg', '12-IMG_4449.jpg', '13-IMG_4450.jpg',
+            '14-IMG_4451.jpg', '15-IMG_4452.jpg', '16-IMG_4453.jpg', '17-IMG_4454.jpg', '18-IMG_4455.jpg',
+            '19-IMG_4456.jpg', '2-IMG_4514.jpg', '20-IMG_4457.jpg', '21-IMG_4458.jpg', '22-IMG_4459.jpg',
+            '23-IMG_4460.jpg', '24-IMG_4461.jpg', '25-IMG_4462.jpg', '26-IMG_4463.jpg', '27-IMG_4464.jpg',
+            '28-IMG_4465.jpg', '29-IMG_4466.jpg', '3-IMG_4515.jpg', '30-IMG_4467.jpg', '31-IMG_4468.jpg',
+            '32-IMG_4469.jpg', '33-IMG_4470.jpg', '34-IMG_4471.jpg', '35-IMG_4472.jpg', '36-IMG_4473.jpg',
+            '37-IMG_4474.jpg', '38-IMG_4475.jpg', '39-IMG_4476.jpg', '4-IMG_4516.jpg', '40-IMG_4477.jpg',
+            '41-IMG_4478.jpg', '42-IMG_4479.jpg', '43-IMG_4480.jpg', '44-IMG_4481.jpg', '45-IMG_4482.jpg',
+            '46-IMG_4483.jpg', '47-IMG_4484.jpg', '48-IMG_4485.jpg', '49-IMG_4486.jpg', '5-IMG_4517.jpg',
+            '50-IMG_4487.jpg', '51-IMG_4488.jpg', '52-IMG_4489.jpg', '53-IMG_4490.jpg', '54-IMG_4491.jpg',
+            '55-IMG_4492.jpg', '56-IMG_4493.jpg', '57-IMG_4494.jpg', '58-IMG_4495.jpg', '59-IMG_4496.jpg',
+            '6-IMG_4519.jpg', '60-IMG_4497.jpg', '61-IMG_4498.jpg', '62-IMG_4499.jpg', '63-IMG_4500.jpg',
+            '64-IMG_4501.jpg', '65-IMG_4502.jpg', '66-IMG_4503.jpg', '67-IMG_4504.jpg', '68-IMG_4505.jpg',
+            '69-IMG_4506.jpg', '7-IMG_4520.jpg', '70-IMG_4507.jpg', '71-IMG_4508.jpg', '72-IMG_4509.jpg',
+            '73-IMG_4510.jpg', '74-IMG_4511.jpg', '75-IMG_4512.jpg', '76-IMG_4521.jpg', '77-IMG_4522.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/gallery/Photos/Snacks-Brothers/${file}`);
+        console.log('Snacks Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
         return photos;
     }
 
