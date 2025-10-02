@@ -156,19 +156,33 @@ class MSAAdminChat {
 
     handleAddEvent(message) {
         this.addMessage(`
-            <strong>🎉 Great! I can help you add a new event!</strong><br><br>
-            <strong>Demo Preview:</strong><br>
-            I would parse your message and extract:<br>
-            • Event name<br>
-            • Date and time<br>
-            • Location<br>
-            • Event type<br><br>
-            <strong>Next steps would be:</strong><br>
-            1. Upload event poster (if you have one)<br>
-            2. Add to calendar<br>
-            3. Add to featured events (if requested)<br>
-            4. Update the website automatically<br><br>
-            <em>In the real version, I'd ask for more details and handle the file upload!</em>
+            <div class="response-header">
+                <h3>🎉 Perfect! Let's Add Your Event</h3>
+                <p>I'll help you create a new event for your MSA website</p>
+            </div>
+            
+            <div class="response-content">
+                <div class="info-box">
+                    <h4>📋 What I'll Do:</h4>
+                    <ul>
+                        <li>✅ Add your event to the calendar</li>
+                        <li>✅ Create a featured event card</li>
+                        <li>✅ Upload and optimize your poster</li>
+                        <li>✅ Update the website instantly</li>
+                    </ul>
+                </div>
+                
+                <div class="next-steps">
+                    <h4>🚀 Next Steps:</h4>
+                    <p><strong>1.</strong> Upload your event poster (optional but recommended)</p>
+                    <p><strong>2.</strong> I'll ask for any missing details</p>
+                    <p><strong>3.</strong> Your event goes live immediately!</p>
+                </div>
+                
+                <div class="demo-notice">
+                    <strong>💡 Demo Mode:</strong> This is a preview - no real changes are made to your website yet!
+                </div>
+            </div>
         `, 'assistant');
         
         this.showFileUpload();

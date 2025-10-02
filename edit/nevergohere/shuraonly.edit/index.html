@@ -27,8 +27,41 @@
         <!-- Main Chat Interface -->
         <div class="chat-container">
             <div class="chat-header">
-                <h2><i class="fas fa-robot"></i> MSA Website Assistant</h2>
-                <p>Ask me to help you manage events, calendar, and gallery!</p>
+                <div class="header-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <div class="header-text">
+                    <h2>MSA Website Assistant</h2>
+                    <p>Simply tell me what you want to do - I'll handle all the technical stuff!</p>
+                </div>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="how-it-works">
+                <h3><i class="fas fa-lightbulb"></i> How This Works</h3>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>You tell me what you want</strong>
+                            <p>Just type naturally, like "Add Spring Kickoff event"</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>I understand and help</strong>
+                            <p>I'll ask for details and guide you through the process</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Changes happen automatically</strong>
+                            <p>I'll update your website without you touching any code!</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="chat-messages" id="chatMessages">
@@ -39,13 +72,56 @@
                     </div>
                     <div class="message-content">
                         <div class="message-text">
-                            <strong>Welcome to the MSA Admin Panel!</strong><br><br>
-                            I can help you with:<br>
-                            📅 <strong>Calendar:</strong> Add, edit, or remove events<br>
-                            ⭐ <strong>Featured Events:</strong> Manage what's highlighted<br>
-                            📸 <strong>Gallery:</strong> Add photos and create albums<br>
-                            🖼️ <strong>Posters:</strong> Upload and manage event posters<br><br>
-                            <em>Try saying: "Add a new event called Spring Kickoff on March 15th at 6 PM"</em>
+                            <div class="welcome-banner">
+                                <h3>🎉 Welcome to the MSA Admin Panel!</h3>
+                                <p>I'm your personal website assistant. No coding knowledge needed!</p>
+                            </div>
+                            
+                            <div class="capabilities-grid">
+                                <div class="capability">
+                                    <div class="capability-icon">📅</div>
+                                    <div class="capability-text">
+                                        <strong>Calendar Events</strong>
+                                        <p>Add, edit, or remove events from your calendar</p>
+                                    </div>
+                                </div>
+                                <div class="capability">
+                                    <div class="capability-icon">⭐</div>
+                                    <div class="capability-text">
+                                        <strong>Featured Events</strong>
+                                        <p>Choose which events to highlight on your homepage</p>
+                                    </div>
+                                </div>
+                                <div class="capability">
+                                    <div class="capability-icon">📸</div>
+                                    <div class="capability-text">
+                                        <strong>Photo Gallery</strong>
+                                        <p>Add photos and create albums for your events</p>
+                                    </div>
+                                </div>
+                                <div class="capability">
+                                    <div class="capability-icon">🖼️</div>
+                                    <div class="capability-text">
+                                        <strong>Event Posters</strong>
+                                        <p>Upload and manage beautiful event posters</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example-section">
+                                <h4>💡 Try These Examples:</h4>
+                                <div class="example-commands">
+                                    <button class="example-btn" onclick="sendQuickMessage('Add a new event called Spring Kickoff on March 15th at 6 PM')">
+                                        "Add Spring Kickoff event on March 15th"
+                                    </button>
+                                    <button class="example-btn" onclick="sendQuickMessage('Show me the calendar')">
+                                        "Show me the calendar"
+                                    </button>
+                                    <button class="example-btn" onclick="sendQuickMessage('Add photos from Art Night')">
+                                        "Add photos from Art Night"
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="message-time">Just now</div>
                     </div>
@@ -54,33 +130,71 @@
 
             <!-- Quick Actions -->
             <div class="quick-actions">
-                <h3>Quick Actions</h3>
+                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                <p class="quick-actions-desc">Click any button below to get started instantly!</p>
                 <div class="action-buttons">
-                    <button class="action-btn" onclick="sendQuickMessage('Add a new event')">
-                        <i class="fas fa-plus"></i> Add Event
+                    <button class="action-btn primary" onclick="sendQuickMessage('Add a new event')">
+                        <div class="btn-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="btn-content">
+                            <strong>Add Event</strong>
+                            <p>Create a new event for your calendar</p>
+                        </div>
                     </button>
-                    <button class="action-btn" onclick="sendQuickMessage('Show me the calendar')">
-                        <i class="fas fa-calendar"></i> View Calendar
+                    <button class="action-btn secondary" onclick="sendQuickMessage('Show me the calendar')">
+                        <div class="btn-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="btn-content">
+                            <strong>View Calendar</strong>
+                            <p>See all your upcoming events</p>
+                        </div>
                     </button>
-                    <button class="action-btn" onclick="sendQuickMessage('Add photos to gallery')">
-                        <i class="fas fa-images"></i> Add Photos
+                    <button class="action-btn tertiary" onclick="sendQuickMessage('Add photos to gallery')">
+                        <div class="btn-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="btn-content">
+                            <strong>Add Photos</strong>
+                            <p>Upload photos to your gallery</p>
+                        </div>
                     </button>
-                    <button class="action-btn" onclick="sendQuickMessage('Upload a poster')">
-                        <i class="fas fa-upload"></i> Upload Poster
+                    <button class="action-btn quaternary" onclick="sendQuickMessage('Upload a poster')">
+                        <div class="btn-icon">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <div class="btn-content">
+                            <strong>Upload Poster</strong>
+                            <p>Add a new event poster</p>
+                        </div>
                     </button>
                 </div>
             </div>
 
             <!-- Chat Input -->
             <div class="chat-input-container">
+                <div class="input-header">
+                    <h4><i class="fas fa-comments"></i> Chat with Your Assistant</h4>
+                    <p>Type naturally - I understand what you want to do!</p>
+                </div>
                 <div class="input-wrapper">
-                    <input type="text" id="chatInput" placeholder="Type your request here... (e.g., 'Add Spring Kickoff event on March 15th')" autocomplete="off">
+                    <input type="text" id="chatInput" placeholder="Try: 'Add Spring Kickoff event on March 15th at 6 PM' or 'Show me the calendar'" autocomplete="off">
                     <button id="sendButton" onclick="sendMessage()">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
                 <div class="input-hints">
-                    <span class="hint">💡 Try: "Add event", "Update calendar", "Add photos", "Upload poster"</span>
+                    <div class="hint-section">
+                        <span class="hint-label">💡 Popular Commands:</span>
+                        <div class="hint-tags">
+                            <span class="hint-tag">"Add event"</span>
+                            <span class="hint-tag">"Show calendar"</span>
+                            <span class="hint-tag">"Add photos"</span>
+                            <span class="hint-tag">"Upload poster"</span>
+                            <span class="hint-tag">"Featured events"</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
