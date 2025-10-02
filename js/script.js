@@ -1708,7 +1708,7 @@ class EventGallery {
         
         // Create all photo elements with virtual scrolling for 200+ photos
         const totalPhotos = this.currentAlbumPhotos.length;
-        const photosToShow = Math.min(totalPhotos, 50); // Show first 50 immediately
+        const photosToShow = Math.min(totalPhotos, 200); // Show first 200 immediately
         
         console.log(`Loading ${photosToShow} of ${totalPhotos} photos immediately...`);
         
