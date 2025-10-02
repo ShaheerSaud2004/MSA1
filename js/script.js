@@ -519,6 +519,22 @@ class EventGallery {
                     }
                 }
             },
+            'freshman-orientation': {
+                name: 'Freshman Orientation',
+                poster: 'images/posters/Freshman Orientation.JPG',
+                albums: {
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 5,
+                        photos: this.generateFreshmanBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 6,
+                        photos: this.generateFreshmanSistersPhotos()
+                    }
+                }
+            },
             'scavenger-hunt': {
                 name: 'Scavenger Hunt',
                 poster: 'Scavenger Hunt.jpg',
@@ -869,6 +885,35 @@ class EventGallery {
         
         const photos = brothersFiles.map(file => `images/gallery/Photos/Snacks | Brothers/${file}`);
         console.log('Snacks Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateFreshmanBrothersPhotos() {
+        const brothersFiles = [
+            '8aa72d85-eadf-40fd-8c9d-f0118b3baf71.jpg',
+            'c08c21fe-4baa-4ead-8362-7a77f86eeddd.jpg',
+            'ce27a977-e990-4c7c-8cd1-3b8ef086e42f.jpg',
+            'd91f2555-e5cb-4858-aaeb-093cf8ee2277.jpg',
+            'f127d868-52bd-40f5-9c4a-964206144a44.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/Freshman Brothers/${file}`);
+        console.log('Freshman Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateFreshmanSistersPhotos() {
+        const sistersFiles = [
+            '04b43bf2-df27-4b6e-a39b-cbbceef9a7c0.jpg',
+            'ad7f8f23-f6f2-48e5-aec6-787911180df7.jpg',
+            'b0447396-2a79-4441-ac68-2a417c8238ab.jpg',
+            'ea47ba38-5b13-4c31-98e0-0c7a0ea2ff8c.jpg',
+            'ea850f0e-4356-4dc6-9af5-eff99969ba86.jpg',
+            'ed717bfc-e912-45c5-969d-a39d2f5beb2d.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/Freshman | Sisters/${file}`);
+        console.log('Freshman Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
         return photos;
     }
 
