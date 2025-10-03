@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Option 6: Split View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .demo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #f0f8ff;
+        }
+
+        .demo-header h1 {
+            color: #2c5530;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .demo-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .gallery-modal {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-title {
+            color: #2c5530;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .split-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .section-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #2c5530;
+        }
+
+        .section-card.brothers {
+            border-color: #2c5530;
+        }
+
+        .section-card.sisters {
+            border-color: #e91e63;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .section-icon.brothers {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+        }
+
+        .section-icon.sisters {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+        }
+
+        .section-info h3 {
+            color: #2c5530;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .section-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .photo-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .preview-photo {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .preview-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .preview-photo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(44, 85, 48, 0.1), rgba(102, 126, 234, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .preview-photo:hover::before {
+            opacity: 1;
+        }
+
+        .view-section-btn {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .view-section-btn.sisters {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+        }
+
+        .view-section-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 85, 48, 0.3);
+        }
+
+        .view-section-btn.sisters:hover {
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .demo-navigation {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            background: #f8f9fa;
+            color: #2c5530;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #2c5530;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: #2c5530;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .split-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>Option 6: Split View</h1>
+            <p>Side-by-side Brothers and Sisters sections with preview photos</p>
+        </div>
+
+        <div class="gallery-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Art Night Gallery</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+
+            <div class="split-container">
+                <div class="section-card brothers">
+                    <div class="section-header">
+                        <div class="section-icon brothers">
+                            <i class="fas fa-male"></i>
+                        </div>
+                        <div class="section-info">
+                            <h3>Brothers</h3>
+                            <p>50 photos from Art Night</p>
+                        </div>
+                    </div>
+                    <div class="photo-preview">
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Brothers _ Submissions/1-DA3A1145-D060-4CBD-861F-52342ED16361.jpg" alt="Brothers 1">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Brothers _ Submissions/2-B40115CB-3690-48C9-A9DA-1FF13D4829DF(1).jpg" alt="Brothers 2">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Brothers _ Submissions/3-B40115CB-3690-48C9-A9DA-1FF13D4829DF.jpg" alt="Brothers 3">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Brothers _ Submissions/4-66F59869-7740-4A8C-B3B7-0BDF118281E8(1).jpg" alt="Brothers 4">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Brothers _ Submissions/5-66F59869-7740-4A8C-B3B7-0BDF118281E8.jpg" alt="Brothers 5">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Brothers _ Submissions/6-A557902D-3BB3-49EE-A38B-2BD1968C6359(1).jpg" alt="Brothers 6">
+                        </div>
+                    </div>
+                    <button class="view-section-btn">
+                        <i class="fas fa-images"></i>
+                        View All Brothers Photos
+                    </button>
+                </div>
+
+                <div class="section-card sisters">
+                    <div class="section-header">
+                        <div class="section-icon sisters">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <div class="section-info">
+                            <h3>Sisters</h3>
+                            <p>86 photos from Art Night</p>
+                        </div>
+                    </div>
+                    <div class="photo-preview">
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Sisters _ Submissions/1-875764FC-DAC4-42F3-96F0-5D77BBD735E0.jpg" alt="Sisters 1">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Sisters _ Submissions/2-86AA2FD0-9B0A-4D6B-A18D-C7C4D69D4D7C.jpg" alt="Sisters 2">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Sisters _ Submissions/3-7EE4E1B8-7BE3-4284-B88C-F7426FB1D11A.jpg" alt="Sisters 3">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Sisters _ Submissions/4-AAD32E32-3C54-4B2F-95AD-56017DA636CD.jpg" alt="Sisters 4">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Sisters _ Submissions/5-07AD4F9B-6201-4CF3-8312-41CD320F6952.jpg" alt="Sisters 5">
+                        </div>
+                        <div class="preview-photo">
+                            <img src="../images/Art Night _ Sisters _ Submissions/6-B3E4DFFE-58E8-41E1-881F-9DD7880C0710.jpg" alt="Sisters 6">
+                        </div>
+                    </div>
+                    <button class="view-section-btn sisters">
+                        <i class="fas fa-images"></i>
+                        View All Sisters Photos
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-navigation">
+            <div class="nav-links">
+                <a href="option3-tabs.html" class="nav-link">Option 3: Tabs</a>
+                <a href="option6-split-view.html" class="nav-link active">Option 6: Split</a>
+                <a href="option7-real-photos.html" class="nav-link">Option 7: Real Photos</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
