@@ -603,10 +603,15 @@ class EventGallery {
                 name: 'MSA Olympics',
                 poster: 'images/posters/MSA OLYMPICS POSTER.png',
                 albums: {
-                    'general': {
-                        name: 'Event Photos',
-                        count: 0,
-                        photos: []
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 156,
+                        photos: this.generateMSAOlympicsBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 79,
+                        photos: this.generateMSAOlympicsSistersPhotos()
                     }
                 }
             },
@@ -635,6 +640,17 @@ class EventGallery {
             'breaking-barriers': {
                 name: 'Breaking Barriers',
                 poster: 'images/posters/Breaking Barriers.png',
+                albums: {
+                    'general': {
+                        name: 'Event Photos',
+                        count: 0,
+                        photos: []
+                    }
+                }
+            },
+            'career-prep': {
+                name: 'Career Prep Workshop',
+                poster: 'images/Career Prep.jpg',
                 albums: {
                     'general': {
                         name: 'Event Photos',
@@ -987,6 +1003,72 @@ class EventGallery {
         
         const photos = sistersFiles.map(file => `images/Art Night _ Sisters _ Submissions/${file}`);
         console.log('Art Night Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateMSAOlympicsBrothersPhotos() {
+        const brothersFiles = [
+            '3-IMG_7019.jpg', '4-IMG_7020.jpg', '5-IMG_7025.jpg', '6-IMG_7027.jpg', '7-IMG_7028.jpg',
+            '8-IMG_7029.jpg', '9-IMG_7031.jpg', '10-IMG_7033.jpg', '11-IMG_7038.jpg', '12-IMG_7039.jpg',
+            '13-IMG_7040.jpg', '14-IMG_7042.jpg', '15-IMG_7044.jpg', '16-IMG_7046.jpg', '17-IMG_7047.jpg',
+            '18-IMG_7048.jpg', '19-IMG_7049.jpg', '20-IMG_7051.jpg', '21-IMG_7059.jpg', '22-IMG_7060.jpg',
+            '23-IMG_7061.jpg', '24-IMG_7063.jpg', '25-IMG_7064.jpg', '26-IMG_7065.jpg', '27-IMG_7067.jpg',
+            '28-IMG_7068.jpg', '29-IMG_7069.jpg', '30-IMG_7073.jpg', '31-IMG_7076.jpg', '32-IMG_7077.jpg',
+            '33-IMG_7078.jpg', '34-IMG_7093.jpg', '35-IMG_7103.jpg', '36-IMG_7107.jpg', '37-IMG_7109.jpg',
+            '38-IMG_7110.jpg', '39-IMG_7113.jpg', '40-IMG_7117.jpg', '41-IMG_7122.jpg', '42-IMG_7124.jpg',
+            '43-IMG_7125.jpg', '44-IMG_7126.jpg', '45-IMG_7129.jpg', '46-IMG_7132.jpg', '47-IMG_7134.jpg',
+            '48-IMG_7136.jpg', '49-IMG_7137.jpg', '50-IMG_7140.jpg', '51-IMG_2253.jpg', '52-IMG_2254.jpg',
+            '53-IMG_2256.jpg', '54-IMG_2257.jpg', '55-IMG_2259.jpg', '56-IMG_2262.jpg', '57-IMG_2263.jpg',
+            '58-IMG_2264.jpg', '59-IMG_2267.jpg', '60-IMG_2268.jpg', '61-IMG_2269.jpg', '62-IMG_2270.jpg',
+            '63-IMG_2271.jpg', '64-IMG_2272.jpg', '65-IMG_2273.jpg', '66-IMG_2274.jpg', '67-IMG_2275.jpg',
+            '68-IMG_2276.jpg', '69-IMG_2278.jpg', '70-IMG_2279.jpg', '71-IMG_2281.jpg', '72-IMG_2282.jpg',
+            '73-IMG_2283.jpg', '74-IMG_2284.jpg', '75-IMG_2285.jpg', '76-IMG_2286.jpg', '77-IMG_2288.jpg',
+            '78-IMG_2289.jpg', '79-IMG_2290.jpg', '80-IMG_2291.jpg', '81-IMG_2292.jpg', '82-IMG_2293.jpg',
+            '83-IMG_2295.jpg', '84-IMG_2296.jpg', '85-IMG_2297.jpg', '86-IMG_2298.jpg', '87-IMG_2299.jpg',
+            '88-IMG_2300.jpg', '89-IMG_2301.jpg', '90-IMG_2302.jpg', '91-IMG_2303.jpg', '92-IMG_2304.jpg',
+            '93-IMG_2305.jpg', '94-IMG_2306.jpg', '95-IMG_2307.jpg', '96-IMG_2308.jpg', '97-IMG_2310.jpg',
+            '98-IMG_2311.jpg', '99-IMG_2312.jpg', '100-IMG_2314.jpg', '101-IMG_2316.jpg', '102-IMG_2317.jpg',
+            '103-IMG_2318.jpg', '104-IMG_2319.jpg', '105-IMG_2320.jpg', '106-IMG_2321.jpg', '107-IMG_2322.jpg',
+            '108-IMG_2323.jpg', '109-IMG_2324.jpg', '110-IMG_2325.jpg', '111-IMG_2326.jpg', '112-IMG_2327.jpg',
+            '113-IMG_2328.jpg', '114-IMG_2329.jpg', '115-IMG_2330.jpg', '116-IMG_2331.jpg', '117-IMG_2332.jpg',
+            '118-IMG_2333.jpg', '119-IMG_2335.jpg', '120-IMG_2336.jpg', '121-IMG_2337.jpg', '122-IMG_2338.jpg',
+            '123-IMG_2339.jpg', '124-IMG_2340.jpg', '125-IMG_2344.jpg', '126-IMG_2348.jpg', '127-IMG_2350.jpg',
+            '128-IMG_2351.jpg', '129-IMG_2353.jpg', '130-IMG_2354.jpg', '131-IMG_2356.jpg', '132-IMG_2359.jpg',
+            '133-IMG_2360.jpg', '134-IMG_2364.jpg', '135-IMG_2365.jpg', '136-IMG_2366.jpg', '137-IMG_2367.jpg',
+            '138-IMG_2368.jpg', '139-IMG_2369.jpg', '140-IMG_2370.jpg', '141-IMG_2371.jpg', '142-IMG_2372.jpg',
+            '143-IMG_2373.jpg', '144-IMG_2374.jpg', '145-IMG_2375.jpg', '146-IMG_2377.jpg', '147-IMG_2378.jpg',
+            '148-IMG_2379.jpg', '149-IMG_2381.jpg', '150-IMG_2382.jpg', '151-IMG_2389.jpg', '152-IMG_2390.jpg',
+            '153-IMG_2391.jpg', '154-IMG_2392.jpg', '155-IMG_2393.jpg', '156-IMG_2394.jpg', '157-IMG_2395.jpg',
+            '158-IMG_2398.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/MSA Olympics | Brothers/${file}`);
+        console.log('MSA Olympics Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateMSAOlympicsSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_7595.jpg', '2-IMG_7524.jpg', '3-IMG_7535.jpg', '4-IMG_7591.jpg', '5-IMG_7597.jpg',
+            '6-IMG_7534.jpg', '7-IMG_7523.jpg', '8-IMG_7592.jpg', '9-IMG_7598.jpg', '10-IMG_7533.jpg',
+            '11-IMG_7567.jpg', '12-IMG_7565.jpg', '13-IMG_7563.jpg', '14-IMG_7594.jpg', '15-IMG_7590.jpg',
+            '16-IMG_7596.jpg', '17-IMG_7589.jpg', '18-IMG_7588.jpg', '19-IMG_7586.jpg', '20-IMG_7583.jpg',
+            '21-IMG_7582.jpg', '22-IMG_7581.jpg', '23-IMG_7580.jpg', '24-IMG_7577.jpg', '25-IMG_7575.jpg',
+            '26-IMG_7573.jpg', '27-IMG_7571.jpg', '28-IMG_7570.jpg', '29-IMG_7570.jpg', '30-IMG_7569.jpg',
+            '31-IMG_7568.jpg', '32-IMG_7599.jpg', '33-IMG_7566.jpg', '34-IMG_7564.jpg', '35-IMG_7562.jpg',
+            '36-IMG_7560.jpg', '37-IMG_7558.jpg', '38-IMG_7556.jpg', '39-IMG_7555.jpg', '40-IMG_7554.jpg',
+            '41-IMG_7553.jpg', '42-IMG_7551.jpg', '43-IMG_7550.jpg', '44-IMG_7549.jpg', '45-IMG_7548.jpg',
+            '46-IMG_7547.jpg', '47-IMG_7546.jpg', '48-IMG_7545.jpg', '49-IMG_7544.jpg', '50-IMG_7543.jpg',
+            '51-IMG_7542.jpg', '52-IMG_7540.jpg', '53-IMG_7561.jpg', '54-IMG_7559.jpg', '55-IMG_7557.jpg',
+            '56-IMG_7531.jpg', '57-IMG_7522.jpg', '58-IMG_7530.jpg', '59-IMG_7539.jpg', '60-IMG_7529.jpg',
+            '61-IMG_7538.jpg', '62-IMG_7528.jpg', '63-IMG_7537.jpg', '64-IMG_7536.jpg', '66-IMG_0071.jpg',
+            '67-IMG_0073.jpg', '68-IMG_0075.jpg', '69-IMG_0076.jpg', '70-IMG_0077.jpg', '71-IMG_0078.jpg',
+            '72-IMG_0080.jpg', '73-IMG_0081.jpg', '74-IMG_0082.jpg', '75-IMG_0083.jpg', '76-IMG_0084.jpg',
+            '77-IMG_0085.jpg', '78-IMG_0086.jpg', '79-IMG_0087.jpg', '80-IMG_0091.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/MSA Olympics | Sisters/${file}`);
+        console.log('MSA Olympics Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
         return photos;
     }
 
