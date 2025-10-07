@@ -6922,9 +6922,39 @@ img.event-logo[src*="hope.jpg"],
     height: 100%;
     background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     animation: placeholderPulse 1.5s ease-in-out infinite;
+}
+
+/* Loading Spinner for Lazy Loading */
+.loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #2c5530;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+.loading-text {
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Lazy Placeholder Styles */
+.lazy-placeholder {
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.lazy-placeholder:hover {
+    border-color: #2c5530;
+    background: #f0f8f0;
 }
 
 /* Image Placeholder for Lazy Loading */

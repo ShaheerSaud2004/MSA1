@@ -1785,33 +1785,33 @@ class EventGallery {
         // Performance optimizations
         const startTime = performance.now();
         
-        // Create all photo elements with virtual scrolling for 200+ photos
+        // Create all photo elements with improved lazy loading
         const totalPhotos = this.currentAlbumPhotos.length;
-        const photosToShow = Math.min(totalPhotos, 200); // Show first 200 immediately
+        const initialLoadCount = Math.min(totalPhotos, 50); // Load first 50 immediately
         
-        console.log(`Loading ${photosToShow} of ${totalPhotos} photos immediately...`);
+        console.log(`Loading ${initialLoadCount} of ${totalPhotos} photos immediately, rest will lazy load...`);
         
         const fragment = document.createDocumentFragment();
         
-        // Load first batch immediately
-        for (let i = 0; i < photosToShow; i++) {
-            const item = this.createPhotoItem(i, albumName);
+        // Load first 50 photos immediately
+        for (let i = 0; i < initialLoadCount; i++) {
+            const item = this.createPhotoItem(i, albumName, false); // false = not lazy
             fragment.appendChild(item);
         }
         
         // Add first batch to DOM
         container.appendChild(fragment);
         
-        // Load remaining photos progressively
-        if (totalPhotos > photosToShow) {
-            this.loadRemainingPhotos(container, albumName, photosToShow);
+        // Create placeholder elements for remaining photos
+        if (totalPhotos > initialLoadCount) {
+            this.createLazyLoadPlaceholders(container, albumName, initialLoadCount);
         }
         
         const endTime = performance.now();
-        console.log(`Initial ${photosToShow} photos loaded in ${(endTime - startTime).toFixed(2)}ms`);
+        console.log(`Initial ${initialLoadCount} photos loaded in ${(endTime - startTime).toFixed(2)}ms`);
     }
     
-    createPhotoItem(index, albumName) {
+    createPhotoItem(index, albumName, isLazy = true) {
         const photo = this.currentAlbumPhotos[index];
         const thumbnailPath = this.getThumbnailPath(photo);
         const item = document.createElement('div');
@@ -1819,10 +1819,17 @@ class EventGallery {
         
         // Optimized image creation
         const img = document.createElement('img');
-        img.src = thumbnailPath;
         img.alt = `${albumName} Photo ${index + 1}`;
         img.style.cssText = 'width: 100%; height: 100%; object-fit: cover; display: block;';
-        img.loading = 'lazy'; // Native lazy loading
+        
+        if (isLazy) {
+            // Lazy loading with placeholder
+            img.loading = 'lazy';
+            img.src = thumbnailPath;
+        } else {
+            // Immediate loading
+            img.src = thumbnailPath;
+        }
         
         // Error handling
         img.onerror = () => {
@@ -1846,6 +1853,64 @@ class EventGallery {
         return item;
     }
     
+    createLazyLoadPlaceholders(container, albumName, startIndex) {
+        const totalPhotos = this.currentAlbumPhotos.length;
+        const remainingPhotos = totalPhotos - startIndex;
+        
+        console.log(`Creating ${remainingPhotos} lazy load placeholders...`);
+        
+        // Create placeholder elements for remaining photos
+        for (let i = startIndex; i < totalPhotos; i++) {
+            const placeholder = this.createLazyPlaceholder(i, albumName);
+            container.appendChild(placeholder);
+        }
+        
+        // Set up intersection observer for lazy loading
+        this.setupLazyLoadingObserver(container, albumName, startIndex);
+    }
+    
+    createLazyPlaceholder(index, albumName) {
+        const item = document.createElement('div');
+        item.className = 'full-album-item lazy-placeholder';
+        item.setAttribute('data-index', index);
+        item.setAttribute('data-album', albumName);
+        
+        // Create loading placeholder
+        const placeholder = document.createElement('div');
+        placeholder.className = 'photo-placeholder';
+        placeholder.innerHTML = `
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading...</div>
+        `;
+        
+        item.appendChild(placeholder);
+        return item;
+    }
+    
+    setupLazyLoadingObserver(container, albumName, startIndex) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const placeholder = entry.target;
+                    const index = parseInt(placeholder.getAttribute('data-index'));
+                    
+                    // Replace placeholder with actual photo
+                    const photoItem = this.createPhotoItem(index, albumName, true);
+                    placeholder.parentNode.replaceChild(photoItem, placeholder);
+                    
+                    // Stop observing this element
+                    observer.unobserve(placeholder);
+                }
+            });
+        }, {
+            rootMargin: '100px' // Start loading 100px before the image comes into view
+        });
+        
+        // Observe all placeholder elements
+        const placeholders = container.querySelectorAll('.lazy-placeholder');
+        placeholders.forEach(placeholder => observer.observe(placeholder));
+    }
+
     loadRemainingPhotos(container, albumName, startIndex) {
         // Load remaining photos in small batches to prevent lag
         const batchSize = 20;
