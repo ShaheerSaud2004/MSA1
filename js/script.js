@@ -2080,9 +2080,35 @@ class EventGallery {
             cursor: pointer;
         `;
 
+        const removeBtn = document.createElement('button');
+        removeBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        removeBtn.title = 'Request Photo Removal';
+        removeBtn.style.cssText = `
+            position: absolute;
+            top: 20px;
+            right: 130px;
+            background: rgba(220, 53, 69, 0.8);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        `;
+        
+        removeBtn.addEventListener('mouseover', () => {
+            removeBtn.style.background = 'rgba(220, 53, 69, 1)';
+        });
+        removeBtn.addEventListener('mouseout', () => {
+            removeBtn.style.background = 'rgba(220, 53, 69, 0.8)';
+        });
+
         lightbox.appendChild(img);
         lightbox.appendChild(closeBtn);
         lightbox.appendChild(downloadBtn);
+        lightbox.appendChild(removeBtn);
         document.body.appendChild(lightbox);
 
         // Event handlers
@@ -2094,10 +2120,226 @@ class EventGallery {
         downloadBtn.addEventListener('click', () => {
             this.downloadSinglePhoto(src, alt.replace(/[^a-zA-Z0-9]/g, '_'));
         });
+        removeBtn.addEventListener('click', () => {
+            this.showRemovalRequestForm(src, alt);
+        });
         
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
+    }
+
+    showRemovalRequestForm(photoSrc, photoAlt) {
+        // Create modal overlay
+        const modal = document.createElement('div');
+        modal.className = 'removal-request-modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 16000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        `;
+
+        // Create form container
+        const formContainer = document.createElement('div');
+        formContainer.style.cssText = `
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        `;
+
+        formContainer.innerHTML = `
+            <h3 style="margin: 0 0 10px 0; color: #2c5530; font-size: 1.5rem;">Request Photo Removal</h3>
+            <p style="margin: 0 0 20px 0; color: #666; font-size: 0.9rem;">Please provide your information and we'll review your request.</p>
+            
+            <form id="removalRequestForm" style="display: flex; flex-direction: column; gap: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Full Name *</label>
+                    <input type="text" id="requesterName" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Email Address *</label>
+                    <input type="email" id="requesterEmail" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Reason for Removal (Optional)</label>
+                    <textarea id="removalReason" rows="3" placeholder="e.g., I don't want my photo public" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical; box-sizing: border-box;"></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button type="submit" style="flex: 1; padding: 12px; background: #2c5530; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.3s ease;">
+                        Submit Request
+                    </button>
+                    <button type="button" id="cancelRemovalBtn" style="flex: 1; padding: 12px; background: #6c757d; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.3s ease;">
+                        Cancel
+                    </button>
+                </div>
+                
+                <div id="removalFormMessage" style="margin-top: 10px; padding: 10px; border-radius: 8px; display: none;"></div>
+            </form>
+        `;
+
+        modal.appendChild(formContainer);
+        document.body.appendChild(modal);
+
+        // Close modal function
+        const closeModal = () => {
+            document.body.removeChild(modal);
+        };
+
+        // Cancel button handler
+        document.getElementById('cancelRemovalBtn').addEventListener('click', closeModal);
+
+        // Form submission handler
+        document.getElementById('removalRequestForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('requesterName').value.trim();
+            const email = document.getElementById('requesterEmail').value.trim();
+            const reason = document.getElementById('removalReason').value.trim();
+            
+            // Send email using Gmail SMTP
+            this.sendRemovalRequest(name, email, reason, photoSrc, photoAlt, closeModal);
+        });
+
+        // Close on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    }
+
+    async sendRemovalRequest(name, email, reason, photoSrc, photoAlt, closeModal) {
+        const messageDiv = document.getElementById('removalFormMessage');
+        const submitBtn = document.querySelector('#removalRequestForm button[type="submit"]');
+        
+        // Disable submit button
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        
+        try {
+            // Use SMTP.js to send email directly
+            const response = await Email.send({
+                Host: "smtp.gmail.com",
+                Username: "shaheersaud2004@gmail.com",
+                Password: "zuwk okik cgzp mgac",
+                To: 'shaheersaud2004@gmail.com',
+                From: 'shaheersaud2004@gmail.com',
+                Subject: `Photo Removal Request from ${name}`,
+                Body: `
+                    <html>
+                    <head>
+                        <style>
+                            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                            .container { max-width: 600px; margin: 0 auto; padding: 20px; background: #f9f9f9; }
+                            .header { background: #2c5530; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+                            .content { background: white; padding: 20px; border-radius: 0 0 8px 8px; }
+                            .field { margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-left: 4px solid #2c5530; }
+                            .label { font-weight: bold; color: #2c5530; }
+                            .photo-preview { margin-top: 20px; padding: 15px; background: #f9f9f9; border: 2px dashed #ddd; border-radius: 8px; }
+                            .photo-preview img { max-width: 100%; height: auto; border-radius: 4px; margin-top: 10px; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <div class="header">
+                                <h2>📸 Photo Removal Request</h2>
+                            </div>
+                            <div class="content">
+                                <div class="field">
+                                    <div class="label">Requester Name:</div>
+                                    <div>${name}</div>
+                                </div>
+                                
+                                <div class="field">
+                                    <div class="label">Requester Email:</div>
+                                    <div>${email}</div>
+                                </div>
+                                
+                                <div class="field">
+                                    <div class="label">Reason for Removal:</div>
+                                    <div>${reason || 'No reason provided'}</div>
+                                </div>
+                                
+                                <div class="field">
+                                    <div class="label">Photo Name:</div>
+                                    <div>${photoAlt}</div>
+                                </div>
+                                
+                                <div class="field">
+                                    <div class="label">Photo URL:</div>
+                                    <div style="word-break: break-all;"><a href="${photoSrc}">${photoSrc}</a></div>
+                                </div>
+                                
+                                <div class="field">
+                                    <div class="label">Timestamp:</div>
+                                    <div>${new Date().toLocaleString()}</div>
+                                </div>
+                                
+                                <div class="photo-preview">
+                                    <div class="label">Photo Preview:</div>
+                                    <img src="${photoSrc}" alt="${photoAlt}" />
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+                                    <strong>Action Required:</strong> Review this request and manually delete the photo from GitHub if approved. Reply to ${email} with your decision.
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `
+            });
+            
+            if (response === 'OK') {
+                // Show success message
+                messageDiv.style.display = 'block';
+                messageDiv.style.background = '#d4edda';
+                messageDiv.style.color = '#155724';
+                messageDiv.style.border = '1px solid #c3e6cb';
+                messageDiv.innerHTML = `
+                    <i class="fas fa-check-circle"></i> 
+                    <strong>Request Submitted!</strong><br>
+                    We've received your removal request and will review it shortly. You'll receive an email confirmation at ${email}.
+                `;
+                
+                // Close modal after 3 seconds
+                setTimeout(() => {
+                    closeModal();
+                }, 3000);
+            } else {
+                throw new Error('Email sending failed');
+            }
+            
+        } catch (error) {
+            console.error('Error sending removal request:', error);
+            
+            // Show error message
+            messageDiv.style.display = 'block';
+            messageDiv.style.background = '#f8d7da';
+            messageDiv.style.color = '#721c24';
+            messageDiv.style.border = '1px solid #f5c6cb';
+            messageDiv.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i> 
+                <strong>Error!</strong><br>
+                There was a problem sending your request. Please try again or email us directly at shaheersaud2004@gmail.com
+            `;
+            
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Request';
+        }
     }
 
     closeAllModals() {
