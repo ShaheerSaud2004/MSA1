@@ -2229,15 +2229,8 @@ class EventGallery {
         submitBtn.textContent = 'Sending...';
         
         try {
-            // Use SMTP.js to send email directly
-            const response = await Email.send({
-                Host: "smtp.gmail.com",
-                Username: "shaheersaud2004@gmail.com",
-                Password: "zuwk okik cgzp mgac",
-                To: 'shaheersaud2004@gmail.com',
-                From: 'shaheersaud2004@gmail.com',
-                Subject: `Photo Removal Request from ${name}`,
-                Body: `
+            // Use Formspree to send email (alternative: create backend API)
+            const emailBody = `
                     <html>
                     <head>
                         <style>
@@ -2299,10 +2292,28 @@ class EventGallery {
                         </div>
                     </body>
                     </html>
-                `
+                `;
+
+            // Send email using fetch to Formspree
+            const response = await fetch('https://formspree.io/f/xdkokowb', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    reason: reason || 'No reason provided',
+                    photoUrl: photoSrc,
+                    photoName: photoAlt,
+                    timestamp: new Date().toLocaleString(),
+                    message: emailBody,
+                    _subject: `Photo Removal Request from ${name}`,
+                    _replyto: email
+                })
             });
             
-            if (response === 'OK') {
+            if (response.ok) {
                 // Show success message
                 messageDiv.style.display = 'block';
                 messageDiv.style.background = '#d4edda';
