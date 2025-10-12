@@ -2295,7 +2295,7 @@ class EventGallery {
                 `;
 
             // Send email using fetch to Formspree
-            const response = await fetch('https://formspree.io/f/xdkokowb', {
+            const response = await fetch('https://formspree.io/f/meorpqjz', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -2307,9 +2307,10 @@ class EventGallery {
                     photoUrl: photoSrc,
                     photoName: photoAlt,
                     timestamp: new Date().toLocaleString(),
-                    message: emailBody,
-                    _subject: `Photo Removal Request from ${name}`,
-                    _replyto: email
+                    message: `Photo Removal Request\n\nRequester: ${name}\nEmail: ${email}\nReason: ${reason || 'No reason provided'}\nPhoto: ${photoAlt}\nPhoto URL: ${photoSrc}\nTimestamp: ${new Date().toLocaleString()}`,
+                    _subject: `🗑️ Photo Removal Request from ${name}`,
+                    _replyto: email,
+                    _autoresponse: `Thank you for your photo removal request. We have received your request and will review it shortly. You will receive a response within 24-48 hours.\n\nRequest Details:\n- Photo: ${photoAlt}\n- Submitted: ${new Date().toLocaleString()}\n\nThank you,\nRutgers MSA Team`
                 })
             });
             
