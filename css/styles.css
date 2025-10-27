@@ -3496,6 +3496,7 @@ img.event-logo[src*="hope.jpg"],
     gap: 40px;
     max-width: 1400px;
     margin: 0 auto;
+    padding: 0 60px;
     align-items: start;
 }
 
