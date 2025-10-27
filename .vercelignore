@@ -1,0 +1,5 @@
+# Exclude large image folders from Vercel deployment to avoid size limits
+# These will remain in Git but won't be deployed to Vercel
+images/gallery/Cultures of the World | Brothers/
+images/gallery/Cultures of the World | Sisters/
+
