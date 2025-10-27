@@ -619,10 +619,15 @@ class EventGallery {
                 name: 'Cultures of the World',
                 poster: 'CulturesOfTheWorld.jpg',
                 albums: {
-                    'general': {
-                        name: 'Event Photos',
-                        count: 0,
-                        photos: []
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 362,
+                        photos: this.generateCulturesOfTheWorldBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 532,
+                        photos: this.generateCulturesOfTheWorldSistersPhotos()
                     }
                 }
             },
@@ -630,10 +635,15 @@ class EventGallery {
                 name: 'Hope Clothing & Hygiene Drive',
                 poster: 'HopeDrive.jpg',
                 albums: {
-                    'general': {
-                        name: 'Event Photos',
-                        count: 0,
-                        photos: []
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 60,
+                        photos: this.generateHopeDriveBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 74,
+                        photos: this.generateHopeDriveSistersPhotos()
                     }
                 }
             },
@@ -641,10 +651,15 @@ class EventGallery {
                 name: 'Breaking Barriers',
                 poster: 'images/posters/Breaking Barriers.png',
                 albums: {
-                    'general': {
-                        name: 'Event Photos',
-                        count: 0,
-                        photos: []
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 16,
+                        photos: this.generateBreakingBarriersBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 20,
+                        photos: this.generateBreakingBarriersSistersPhotos()
                     }
                 }
             },
@@ -1069,6 +1084,277 @@ class EventGallery {
         
         const photos = sistersFiles.map(file => `images/MSA Olympics | Sisters/${file}`);
         console.log('MSA Olympics Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateHopeDriveBrothersPhotos() {
+        const brothersFiles = [
+            '1-7827E190-FA7A-4C8A-BEFB-94FD6BCF0C1C_1_105_c.jpg', '2-DSC03669.jpg', '3-DSC03670.jpg',
+            '4-DSC03671.jpg', '5-DSC03676.jpg', '6-DSC03679.jpg', '7-DSC03681.jpg', '8-DSC03683.jpg',
+            '9-DSC03689.jpg', '10-DSC03690.jpg', '11-DSC03698.jpg', '12-DSC03699.jpg', '13-DSC03703.jpg',
+            '14-DSC03704.jpg', '15-DSC03706.jpg', '16-DSC03707.jpg', '17-DSC03721.jpg', '18-DSC03722.jpg',
+            '19-DSC03723.jpg', '20-DSC03724.jpg', '21-DSC03725.jpg', '22-DSC03728.jpg', '23-DSC03730.jpg',
+            '24-DSC03729.jpg', '25-DSC03731.jpg', '26-DSC03733.jpg', '27-DSC03734.jpg', '28-DSC03735.jpg',
+            '29-DSC03736.jpg', '30-DSC03737.jpg', '31-DSC03739.jpg', '32-DSC03740.jpg', '33-DSC03741.jpg',
+            '34-DSC03742.jpg', '35-DSC03743.jpg', '36-DSC03744.jpg', '37-DSC03745.jpg', '38-DSC03746.jpg',
+            '39-DSC03747.jpg', '40-DSC03748.jpg', '41-DSC03750.jpg', '42-DSC03753.jpg', '43-DSC03754.jpg',
+            '44-DSC03755.jpg', '45-DSC03756.jpg', '46-DSC03757.jpg', '47-DSC03758.jpg', '48-DSC03759.jpg',
+            '49-DSC03760.jpg', '50-DSC03761.jpg', '51-DSC03762.jpg', '52-DSC03763.jpg', '53-DSC03764.jpg',
+            '54-DSC03765.jpg', '55-DSC03766.jpg', '56-DSC03767.jpg', '57-DSC03768.jpg', '58-DSC03769.jpg',
+            '59-DSC03775.jpg', '60-DSC03776.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/Hope Drive | Brothers/${file}`);
+        console.log('Hope Drive Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateHopeDriveSistersPhotos() {
+        const sistersFiles = [
+            '1-DED18E6B-B700-4538-8351-D67751EF33C3_4_5005_c.jpg', '2-IMG_5042.jpg', '3-IMG_5043.jpg',
+            '4-IMG_5044.jpg', '5-IMG_5045.jpg', '6-IMG_5046.jpg', '7-IMG_5047.jpg', '8-IMG_5048.jpg',
+            '9-IMG_5049.jpg', '10-IMG_5050.jpg', '11-IMG_5051.jpg', '12-IMG_5052.jpg', '13-IMG_5053.jpg',
+            '14-IMG_5054.jpg', '15-IMG_5055.jpg', '16-IMG_5056.jpg', '17-IMG_5057.jpg', '18-IMG_5058.jpg',
+            '19-IMG_5059.jpg', '20-IMG_5060.jpg', '21-IMG_5061.jpg', '22-IMG_5062.jpg', '23-IMG_5063.jpg',
+            '24-IMG_5064.jpg', '25-IMG_5065.jpg', '26-IMG_5066.jpg', '27-IMG_5067.jpg', '28-IMG_5068.jpg',
+            '29-IMG_5069.jpg', '30-IMG_5070.jpg', '31-IMG_5071.jpg', '32-IMG_5072.jpg', '33-IMG_5073.jpg',
+            '34-IMG_5074.jpg', '35-IMG_5075.jpg', '36-IMG_5076.jpg', '37-IMG_5077.jpg', '38-IMG_5078.jpg',
+            '39-IMG_5079.jpg', '40-IMG_5080.jpg', '41-IMG_5081.jpg', '42-IMG_5082.jpg', '43-IMG_5083.jpg',
+            '44-IMG_5084.jpg', '45-IMG_5085.jpg', '46-IMG_5086.jpg', '47-IMG_5087.jpg', '48-IMG_5088.jpg',
+            '49-IMG_5089.jpg', '50-IMG_5090.jpg', '51-IMG_5091.jpg', '52-IMG_5092.jpg', '53-IMG_5093.jpg',
+            '54-IMG_5094.jpg', '55-IMG_5095.jpg', '56-IMG_5096.jpg', '57-IMG_5097.jpg', '58-IMG_5098.jpg',
+            '59-IMG_5099.jpg', '60-IMG_5100.jpg', '61-IMG_5101.jpg', '62-IMG_5102.jpg', '63-IMG_5103.jpg',
+            '64-IMG_5104.jpg', '65-IMG_5106.jpg', '66-IMG_5107.jpg', '67-IMG_5108.jpg', '68-IMG_5109.jpg',
+            '69-IMG_5110.jpg', '70-IMG_5111.jpg', '71-IMG_5112.jpg', '72-IMG_5113.jpg', '73-IMG_5115.jpg',
+            '74-IMG_5116.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/Hope Drive | Sisters/${file}`);
+        console.log('Hope Drive Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateBreakingBarriersBrothersPhotos() {
+        const brothersFiles = [
+            '1-IMG_1172.jpg', '2-IMG_1173.jpg', '3-IMG_1174.jpg', '4-IMG_1175.jpg', '5-IMG_1176.jpg',
+            '6-IMG_1177.jpg', '7-IMG_1178.jpg', '8-IMG_1179.jpg', '9-IMG_1180.jpg', '10-IMG_1181.jpg',
+            '11-IMG_1185.jpg', '12-IMG_0161.jpg', '13-IMG_0162.jpg', '14-IMG_0173.jpg', '15-IMG_0174.jpg',
+            '16-IMG_0177.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/Racism_Classism | Brothers/${file}`);
+        console.log('Breaking Barriers Brothers photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateBreakingBarriersSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_0135.jpg', '2-IMG_0136.jpg', '3-IMG_0137.jpg', '4-IMG_0138.jpg', '5-IMG_0140.jpg',
+            '6-IMG_0143.jpg', '7-IMG_0144.jpg', '8-IMG_0145.jpg', '9-IMG_0149.jpg', '10-IMG_0151.jpg',
+            '11-IMG_0154.jpg', '12-IMG_0156.jpg', '13-IMG_0157.jpg', '14-IMG_0158.jpg', '15-IMG_0167.jpg',
+            '16-IMG_0168.jpg', '17-IMG_0169.jpg', '18-IMG_0170.jpg', '19-IMG_0171.jpg', '20-IMG_0172.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/Racism_Classism | Sisters/${file}`);
+        console.log('Breaking Barriers Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateCulturesOfTheWorldBrothersPhotos() {
+        const brothersFiles = [
+            '1-84670034.jpg', '10-84670018.jpg', '100-SAU07248.jpg', '101-SAU07249.jpg', '102-SAU07250.jpg',
+            '103-SAU07251.jpg', '104-SAU07252.jpg', '105-SAU07253.jpg', '106-SAU07254.jpg', '107-SAU07255.jpg',
+            '108-SAU07256.jpg', '109-SAU07257.jpg', '11-84670020.jpg', '110-SAU07258.jpg', '111-SAU07259.jpg',
+            '112-SAU07260.jpg', '113-SAU07262.jpg', '114-SAU07261.jpg', '115-SAU07263.jpg', '116-SAU07264.jpg',
+            '117-SAU07265.jpg', '118-SAU07266.jpg', '119-SAU07267.jpg', '12-84670017.jpg', '120-SAU07268.jpg',
+            '121-SAU07270.jpg', '122-SAU07269.jpg', '123-SAU07271.jpg', '124-SAU07272.jpg', '125-SAU07273.jpg',
+            '126-SAU07274.jpg', '127-SAU07275.jpg', '128-SAU07276.jpg', '129-SAU07277.jpg', '13-84670015.jpg',
+            '130-SAU07278.jpg', '131-SAU07279.jpg', '132-SAU07280.jpg', '133-SAU07282.jpg', '134-SAU07281.jpg',
+            '135-SAU07283.jpg', '136-SAU07284.jpg', '137-SAU07285.jpg', '138-SAU07286.jpg', '139-SAU07287.jpg',
+            '14-84670016.jpg', '140-SAU07289.jpg', '141-SAU07288.jpg', '142-SAU07290.jpg', '143-SAU07291.jpg',
+            '144-SAU07293.jpg', '145-SAU07292.jpg', '146-SAU07294.jpg', '147-SAU07296.jpg', '148-SAU07295.jpg',
+            '149-SAU07297.jpg', '15-84670013.jpg', '150-SAU07298.jpg', '151-SAU07299.jpg', '152-SAU07300.jpg',
+            '153-SAU07301.jpg', '154-SAU07302.jpg', '155-SAU07303.jpg', '156-SAU07304.jpg', '157-SAU07305.jpg',
+            '158-SAU07306.jpg', '159-SAU07307.jpg', '16-84670014.jpg', '160-SAU07308.jpg', '161-SAU07309.jpg',
+            '162-SAU07310.jpg', '163-SAU07311.jpg', '164-SAU07313.jpg', '165-SAU07360.jpg', '166-SAU07362.jpg',
+            '167-SAU07363.jpg', '168-SAU07364.jpg', '169-SAU07365.jpg', '17-84670011.jpg', '170-SAU07366.jpg',
+            '171-SAU07367.jpg', '172-SAU07368.jpg', '173-SAU07369.jpg', '174-SAU07370.jpg', '175-SAU07372.jpg',
+            '176-SAU07373.jpg', '177-SAU07374.jpg', '178-SAU07375.jpg', '179-SAU07376.jpg', '18-84670010.jpg',
+            '180-SAU07377.jpg', '181-SAU07378.jpg', '182-SAU07379.jpg', '183-SAU07380.jpg', '184-SAU07381.jpg',
+            '185-SAU07383.jpg', '186-SAU07382.jpg', '187-SAU07384.jpg', '188-SAU07386.jpg', '189-SAU07385.jpg',
+            '19-84670012.jpg', '190-SAU07387.jpg', '191-SAU07388.jpg', '192-SAU07389.jpg', '193-SAU07390.jpg',
+            '194-SAU07391.jpg', '195-SAU07392.jpg', '196-SAU07393.jpg', '197-SAU07395.jpg', '198-SAU07394.jpg',
+            '199-SAU07396.jpg', '2-84670032.jpg', '200-SAU07397.jpg', '201-SAU07398.jpg', '202-SAU07399.jpg',
+            '203-SAU07400.jpg', '204-SAU07401.jpg', '205-SAU07402.jpg', '206-SAU07403.jpg', '207-SAU07404.jpg',
+            '208-SAU07406.jpg', '209-SAU07405.jpg', '210-SAU07407.jpg', '211-SAU07409.jpg', '212-SAU07408.jpg',
+            '213-SAU07410.jpg', '214-SAU07411.jpg', '215-SAU07412.jpg', '216-SAU07413.jpg', '217-SAU07414.jpg',
+            '218-SAU07415.jpg', '219-SAU07416.jpg', '220-SAU07417.jpg', '221-SAU07418.jpg', '222-SAU07419.jpg',
+            '223-SAU07420.jpg', '224-SAU07421.jpg', '225-SAU07422.jpg', '226-SAU07423.jpg', '227-SAU07424.jpg',
+            '228-SAU07425.jpg', '229-SAU07432.jpg', '230-SAU07433.jpg', '231-SAU07434.jpg', '232-SAU07435.jpg',
+            '233-SAU07436.jpg', '234-SAU07438.jpg', '235-SAU07437.jpg', '236-SAU07439.jpg', '237-SAU07440.jpg',
+            '238-SAU07441.jpg', '239-SAU07442.jpg', '240-SAU07443.jpg', '241-SAU07444.jpg', '242-SAU07445.jpg',
+            '243-SAU07446.jpg', '244-SAU07448.jpg', '245-SAU07447.jpg', '246-SAU07449.jpg', '247-SAU07450.jpg',
+            '248-SAU07451.jpg', '249-SAU07452.jpg', '250-SAU07453.jpg', '251-SAU07454.jpg', '252-SAU07455.jpg',
+            '253-SAU07456.jpg', '254-SAU07457.jpg', '255-SAU07458.jpg', '256-SAU07460.jpg', '257-SAU07459.jpg',
+            '259-SAU07461.jpg', '260-SAU07462.jpg', '263-SAU07463.jpg', '264-SAU07464.jpg', '265-SAU07465.jpg',
+            '268-SAU07467.jpg', '269-SAU07466.jpg', '270-SAU07468.jpg', '271-SAU07469.jpg', '272-SAU07470.jpg',
+            '274-SAU07471.jpg', '276-SAU07472.jpg', '277-SAU07473.jpg', '3-84670029.jpg', '308-SAU07511.jpg',
+            '309-SAU07514.jpg', '310-SAU07515.jpg', '311-SAU07516.jpg', '312-SAU07517.jpg', '313-SAU07518.jpg',
+            '314-SAU07519.jpg', '315-SAU07520.jpg', '316-SAU07521.jpg', '317-SAU07522.jpg', '318-SAU07524.jpg',
+            '319-SAU07523.jpg', '320-SAU07525.jpg', '321-SAU07526.jpg', '322-SAU07527.jpg', '323-SAU07528.jpg',
+            '324-SAU07529.jpg', '325-SAU07531.jpg', '326-SAU07530.jpg', '327-SAU07532.jpg', '328-SAU07533.jpg',
+            '332-SAU07536.jpg', '333-SAU07537.jpg', '334-SAU07538.jpg', '335-SAU07539.jpg', '336-SAU07553.jpg',
+            '337-SAU07554.jpg', '338-SAU07555.jpg', '339-SAU07556.jpg', '340-SAU07557.jpg', '341-SAU07558.jpg',
+            '342-SAU07559.jpg', '343-SAU07560.jpg', '344-SAU07561.jpg', '345-SAU07562.jpg', '346-SAU07563.jpg',
+            '347-SAU07564.jpg', '348-SAU07565.jpg', '349-SAU07566.jpg', '350-SAU07571.jpg', '351-SAU07572.jpg',
+            '352-SAU07573.jpg', '353-SAU07574.jpg', '355-SAU07575.jpg', '356-SAU07578.jpg', '357-SAU07579.jpg',
+            '358-SAU07580.jpg', '359-SAU07584.jpg', '360-SAU07585.jpg', '361-SAU07586.jpg', '362-SAU07587.jpg',
+            '363-SAU07588.jpg', '364-SAU07589.jpg', '365-SAU07590.jpg', '366-SAU07591.jpg', '367-SAU07600.jpg',
+            '368-SAU07601.jpg', '369-SAU07602.jpg', '370-SAU07603.jpg', '371-SAU07608.jpg', '372-SAU07609.jpg',
+            '373-SAU07610.jpg', '374-SAU07611.jpg', '375-SAU07612.jpg', '376-SAU07613.jpg', '377-SAU07614.jpg',
+            '378-SAU07615.jpg', '379-SAU07617.jpg', '38-SAU07188.jpg', '380-SAU07616.jpg', '382-SAU07618.jpg',
+            '383-SAU07619.jpg', '384-SAU07620.jpg', '385-SAU07626.jpg', '386-SAU07627.jpg', '387-SAU07628.jpg',
+            '388-SAU07629.jpg', '389-SAU07630.jpg', '39-SAU07190.jpg', '390-SAU07641.jpg', '391-SAU07640.jpg',
+            '392-SAU07647.jpg', '393-SAU07649.jpg', '394-SAU07648.jpg', '395-SAU07650.jpg', '397-SAU07653.jpg',
+            '398-SAU07654.jpg', '399-SAU07655.jpg', '4-84670033.jpg', '40-SAU07191.jpg', '400-SAU07656.jpg',
+            '401-SAU07657.jpg', '402-SAU07658.jpg', '403-SAU07659.jpg', '404-SAU07660.jpg', '405-SAU07661.jpg',
+            '406-SAU07662.jpg', '407-SAU07663.jpg', '408-SAU07664.jpg', '409-SAU07665.jpg', '41-SAU07192.jpg',
+            '410-SAU07666.jpg', '411-SAU07667.jpg', '412-SAU07668.jpg', '416-SAU07670.jpg', '417-SAU07671.jpg',
+            '418-SAU07672.jpg', '419-SAU07673.jpg', '42-SAU07193.jpg', '420-SAU07674.jpg', '421-SAU07675.jpg',
+            '422-SAU07676.jpg', '423-SAU07677.jpg', '424-SAU07678.jpg', '425-SAU07679.jpg', '427-SAU07680.jpg',
+            '428-SAU07681.jpg', '429-SAU07682.jpg', '43-SAU07194.jpg', '430-SAU07683.jpg', '44-SAU07195.jpg',
+            '45-SAU07196.jpg', '46-SAU07197.jpg', '47-SAU07198.jpg', '48-SAU07199.jpg', '5-84670030.jpg',
+            '52-SAU07200.jpg', '53-SAU07201.jpg', '54-SAU07202.jpg', '55-SAU07203.jpg', '56-SAU07204.jpg',
+            '57-SAU07205.jpg', '58-SAU07206.jpg', '59-SAU07207.jpg', '6-84670028.jpg', '60-SAU07208.jpg',
+            '61-SAU07209.jpg', '62-SAU07211.jpg', '63-SAU07210.jpg', '64-SAU07213.jpg', '65-SAU07212.jpg',
+            '66-SAU07214.jpg', '67-SAU07215.jpg', '68-SAU07217.jpg', '69-SAU07216.jpg', '7-84670031.jpg',
+            '70-SAU07218.jpg', '71-SAU07219.jpg', '72-SAU07220.jpg', '73-SAU07221.jpg', '74-SAU07222.jpg',
+            '75-SAU07223.jpg', '76-SAU07225.jpg', '77-SAU07224.jpg', '78-SAU07226.jpg', '79-SAU07228.jpg',
+            '8-84670027.jpg', '80-SAU07227.jpg', '81-SAU07229.jpg', '82-SAU07230.jpg', '83-SAU07231.jpg',
+            '84-SAU07232.jpg', '85-SAU07233.jpg', '86-SAU07235.jpg', '87-SAU07234.jpg', '88-SAU07236.jpg',
+            '89-SAU07237.jpg', '9-84670019.jpg', '90-SAU07238.jpg', '91-SAU07239.jpg', '92-SAU07240.jpg',
+            '93-SAU07241.jpg', '94-SAU07242.jpg', '95-SAU07243.jpg', '96-SAU07245.jpg', '97-SAU07244.jpg',
+            '98-SAU07246.jpg', '99-SAU07247.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/gallery/Cultures of the World | Brothers/${file}`);
+        console.log('Cultures of the World Brothers photos generated:', photos.slice(0, 3));
+        return photos;
+    }
+
+    generateCulturesOfTheWorldSistersPhotos() {
+        const sistersFiles = [
+            '1-84670026.jpg', '10-84670006.jpg', '100-IMG_7162.jpg', '101-IMG_7163.jpg', '102-IMG_7164.jpg',
+            '103-IMG_7165.jpg', '104-IMG_7166.jpg', '105-IMG_7167.jpg', '106-IMG_7168.jpg', '107-IMG_7169.jpg',
+            '108-IMG_7170.jpg', '109-IMG_7171.jpg', '11-84670007.jpg', '110-IMG_7172.jpg', '111-IMG_7173.jpg',
+            '112-IMG_7174.jpg', '113-IMG_7175.jpg', '114-IMG_7176.jpg', '115-IMG_7177.jpg', '116-IMG_7178.jpg',
+            '117-IMG_7179.jpg', '118-IMG_7180.jpg', '119-IMG_7181.jpg', '12-84670003.jpg', '120-IMG_7182.jpg',
+            '121-IMG_7183.jpg', '122-IMG_7184.jpg', '123-IMG_7185.jpg', '124-IMG_7186.jpg', '125-IMG_7187.jpg',
+            '126-IMG_7188.jpg', '127-IMG_7189.jpg', '128-IMG_7190.jpg', '129-IMG_7191.jpg', '13-84670004.jpg',
+            '130-IMG_7192.jpg', '131-IMG_7193.jpg', '132-IMG_7194.jpg', '133-IMG_7195.jpg', '134-IMG_7196.jpg',
+            '135-IMG_7197.jpg', '136-IMG_7198.jpg', '137-IMG_7199.jpg', '138-IMG_7200.jpg', '139-IMG_7201.jpg',
+            '14-84670002.jpg', '140-IMG_7202.jpg', '141-IMG_7203.jpg', '142-IMG_7204.jpg', '143-IMG_7205.jpg',
+            '144-IMG_7206.jpg', '145-IMG_7207.jpg', '146-IMG_7208.jpg', '147-IMG_7209.jpg', '148-IMG_7210.jpg',
+            '149-IMG_7211.jpg', '15-84670001.jpg', '150-IMG_7212.jpg', '151-IMG_7213.jpg', '152-IMG_7214.jpg',
+            '153-IMG_7215.jpg', '154-IMG_7216.jpg', '155-IMG_7217.jpg', '156-IMG_7218.jpg', '157-IMG_7219.jpg',
+            '158-IMG_7220.jpg', '159-IMG_7221.jpg', '16-IMG_7853.jpg', '160-IMG_7222.jpg', '161-IMG_7223.jpg',
+            '162-IMG_7224.jpg', '163-IMG_7225.jpg', '164-IMG_7226.jpg', '165-IMG_7227.jpg', '166-IMG_7228.jpg',
+            '167-IMG_7229.jpg', '168-IMG_7230.jpg', '169-IMG_7231.jpg', '17-IMG_7840.jpg', '170-IMG_7232.jpg',
+            '171-IMG_7233.jpg', '172-IMG_7234.jpg', '173-IMG_7235.jpg', '174-IMG_7236.jpg', '175-IMG_7237.jpg',
+            '176-IMG_7238.jpg', '177-IMG_7239.jpg', '178-IMG_7240.jpg', '179-IMG_7241.jpg', '18-IMG_7907.jpg',
+            '180-IMG_7242.jpg', '181-IMG_7243.jpg', '182-IMG_7244.jpg', '183-IMG_7245.jpg', '184-IMG_7246.jpg',
+            '185-IMG_7247.jpg', '186-IMG_7248.jpg', '187-IMG_7249.jpg', '188-IMG_7250.jpg', '189-IMG_7251.jpg',
+            '19-IMG_7847.jpg', '190-IMG_7252.jpg', '191-IMG_7253.jpg', '192-IMG_7254.jpg', '193-IMG_7255.jpg',
+            '194-IMG_7256.jpg', '195-IMG_7257.jpg', '196-IMG_7258.jpg', '197-IMG_7259.jpg', '198-IMG_7260.jpg',
+            '199-IMG_7261.jpg', '2-84670023.jpg', '20-IMG_7852.jpg', '200-IMG_7262.jpg', '201-IMG_7263.jpg',
+            '202-IMG_7264.jpg', '203-IMG_7265.jpg', '204-IMG_7266.jpg', '205-IMG_7267.jpg', '206-IMG_7268.jpg',
+            '207-IMG_7270.jpg', '208-IMG_7271.jpg', '209-IMG_7272.jpg', '21-IMG_7890.jpg', '210-IMG_7273.jpg',
+            '211-IMG_7274.jpg', '212-IMG_7275.jpg', '213-IMG_7276.jpg', '214-IMG_7277.jpg', '215-IMG_7278.jpg',
+            '216-IMG_7279.jpg', '217-IMG_7280.jpg', '218-IMG_7281.jpg', '219-IMG_7282.jpg', '22-IMG_7906.jpg',
+            '220-IMG_7283.jpg', '221-IMG_7284.jpg', '222-IMG_7285.jpg', '223-IMG_7286.jpg', '224-IMG_7287.jpg',
+            '225-IMG_7288.jpg', '226-IMG_7289.jpg', '227-IMG_7290.jpg', '228-IMG_7291.jpg', '229-IMG_7292.jpg',
+            '23-IMG_7839.jpg', '230-IMG_7293.jpg', '231-IMG_7294.jpg', '232-IMG_7295.jpg', '233-IMG_7296.jpg',
+            '234-IMG_7297.jpg', '235-IMG_7298.jpg', '236-IMG_7299.jpg', '237-IMG_7300.jpg', '238-IMG_7301.jpg',
+            '239-IMG_7302.jpg', '24-IMG_7846.jpg', '240-IMG_7303.jpg', '241-IMG_7304.jpg', '242-IMG_7305.jpg',
+            '243-IMG_7306.jpg', '244-IMG_7307.jpg', '245-IMG_7308.jpg', '246-IMG_7309.jpg', '247-IMG_7310.jpg',
+            '248-IMG_7311.jpg', '249-IMG_7312.jpg', '25-IMG_7851.jpg', '250-IMG_7313.jpg', '251-IMG_7314.jpg',
+            '252-IMG_7315.jpg', '253-IMG_7316.jpg', '254-IMG_7320.jpg', '255-IMG_7321.jpg', '256-IMG_7322.jpg',
+            '257-IMG_7323.jpg', '258-IMG_7324.jpg', '259-IMG_7325.jpg', '26-IMG_7838.jpg', '260-IMG_7326.jpg',
+            '261-IMG_7327.jpg', '262-IMG_7328.jpg', '263-IMG_7329.jpg', '264-IMG_7331.jpg', '265-IMG_7332.jpg',
+            '266-IMG_7333.jpg', '267-IMG_7335.jpg', '268-IMG_7336.jpg', '269-IMG_7337.jpg', '27-IMG_7889.jpg',
+            '270-IMG_7338.jpg', '271-IMG_7339.jpg', '272-IMG_7340.jpg', '273-IMG_7341.jpg', '274-IMG_7342.jpg',
+            '275-IMG_7343.jpg', '276-IMG_7344.jpg', '277-IMG_7345.jpg', '278-IMG_7346.jpg', '279-IMG_7347.jpg',
+            '28-IMG_7850.jpg', '280-IMG_7348.jpg', '281-IMG_7349.jpg', '282-IMG_7350.jpg', '283-IMG_7351.jpg',
+            '284-IMG_7352.jpg', '285-IMG_7353.jpg', '286-IMG_7354.jpg', '287-DSC_0017.jpg', '288-DSC_0018.jpg',
+            '289-DSC_0019.jpg', '29-IMG_7888.jpg', '290-DSC_0020.jpg', '291-DSC_0021.jpg', '292-DSC_0022.jpg',
+            '293-DSC_0023.jpg', '294-DSC_0024.jpg', '295-DSC_0025.jpg', '296-DSC_0026.jpg', '297-DSC_0027.jpg',
+            '298-DSC_0028.jpg', '299-DSC_0029.jpg', '3-84670024.jpg', '30-IMG_7849.jpg', '300-DSC_0030.jpg',
+            '301-DSC_0031.jpg', '302-DSC_0032.jpg', '303-DSC_0033.jpg', '304-DSC_0034.jpg', '305-DSC_0035.jpg',
+            '306-DSC_0036.jpg', '307-DSC_0037.jpg', '308-DSC_0038.jpg', '309-DSC_0039.jpg', '31-IMG_7905.jpg',
+            '310-DSC_0040.jpg', '311-DSC_0041.jpg', '312-DSC_0042.jpg', '313-DSC_0043.jpg', '314-DSC_0044.jpg',
+            '315-DSC_0045.jpg', '316-DSC_0046.jpg', '317-DSC_0047.jpg', '318-DSC_0048.jpg', '319-DSC_0049.jpg',
+            '32-IMG_7887.jpg', '320-DSC_0050.jpg', '321-DSC_0051.jpg', '322-DSC_0052.jpg', '323-DSC_0053.jpg',
+            '324-DSC_0054.jpg', '325-DSC_0055.jpg', '326-DSC_0056.jpg', '327-DSC_0057.jpg', '328-DSC_0058.jpg',
+            '329-DSC_0059.jpg', '33-IMG_7886.jpg', '330-DSC_0060.jpg', '331-DSC_0061.jpg', '332-DSC_0062.jpg',
+            '333-DSC_0063.jpg', '334-DSC_0064.jpg', '335-DSC_0065.jpg', '336-DSC_0066.jpg', '337-DSC_0067.jpg',
+            '338-DSC_0068.jpg', '339-DSC_0069.jpg', '34-IMG_7885.jpg', '340-DSC_0070.jpg', '341-DSC_0071.jpg',
+            '342-DSC_0072.jpg', '343-DSC_0073.jpg', '344-DSC_0074.jpg', '345-DSC_0075.jpg', '346-DSC_0076.jpg',
+            '347-DSC_0077.jpg', '348-DSC_0078.jpg', '349-DSC_0079.jpg', '35-IMG_7904.jpg', '350-DSC_0080.jpg',
+            '351-DSC_0081.jpg', '352-DSC_0082.jpg', '353-DSC_0083.jpg', '354-DSC_0084.jpg', '355-DSC_0085.jpg',
+            '356-DSC_0086.jpg', '357-DSC_0087.jpg', '358-DSC_0088.jpg', '359-DSC_0089.jpg', '36-IMG_7841.jpg',
+            '360-DSC_0090.jpg', '361-DSC_0091.jpg', '362-DSC_0092.jpg', '363-DSC_0093.jpg', '364-DSC_0094.jpg',
+            '365-DSC_0095.jpg', '366-DSC_0096.jpg', '367-DSC_0097.jpg', '368-DSC_0098.jpg', '369-DSC_0099.jpg',
+            '37-IMG_7837.jpg', '370-DSC_0100.jpg', '371-DSC_0101.jpg', '372-DSC_0102.jpg', '373-DSC_0103.jpg',
+            '374-DSC_0104.jpg', '375-DSC_0105.jpg', '376-DSC_0106.jpg', '377-DSC_0107.jpg', '378-DSC_0108.jpg',
+            '379-DSC_0109.jpg', '38-IMG_7845.jpg', '380-DSC_0110.jpg', '381-DSC_0111.jpg', '382-DSC_0112.jpg',
+            '383-DSC_0113.jpg', '384-DSC_0114.jpg', '385-DSC_0115.jpg', '386-DSC_0116.jpg', '387-DSC_0117.jpg',
+            '388-DSC_0118.jpg', '389-DSC_0119.jpg', '39-IMG_7884.jpg', '390-DSC_0120.jpg', '391-DSC_0121.jpg',
+            '392-DSC_0122.jpg', '393-DSC_0123.jpg', '394-DSC_0124.jpg', '395-DSC_0125.jpg', '396-DSC_0126.jpg',
+            '397-DSC_0127.jpg', '398-DSC_0128.jpg', '399-DSC_0129.jpg', '4-84670025.jpg', '40-IMG_7883.jpg',
+            '400-DSC_0130.jpg', '401-DSC_0131.jpg', '402-DSC_0132.jpg', '403-DSC_0133.jpg', '404-DSC_0134.jpg',
+            '405-DSC_0135.jpg', '406-DSC_0136.jpg', '407-DSC_0137.jpg', '408-DSC_0138.jpg', '409-DSC_0139.jpg',
+            '41-IMG_7882.jpg', '410-DSC_0140.jpg', '411-DSC_0141.jpg', '412-DSC_0142.jpg', '413-DSC_0143.jpg',
+            '414-DSC_0144.jpg', '415-DSC_0145.jpg', '416-DSC_0146.jpg', '417-DSC_0147.jpg', '418-DSC_0148.jpg',
+            '419-DSC_0149.jpg', '42-IMG_7881.jpg', '420-DSC_0150.jpg', '421-DSC_0151.jpg', '422-DSC_0152.jpg',
+            '423-DSC_0153.jpg', '424-DSC_0154.jpg', '425-DSC_0155.jpg', '426-DSC_0156.jpg', '427-DSC_0157.jpg',
+            '428-DSC_0158.jpg', '429-DSC_0159.jpg', '43-IMG_7880.jpg', '430-DSC_0160.jpg', '431-DSC_0161.jpg',
+            '432-DSC_0162.jpg', '433-DSC_0163.jpg', '434-DSC_0164.jpg', '435-DSC_0165.jpg', '436-DSC_0166.jpg',
+            '437-DSC_0167.jpg', '438-DSC_0168.jpg', '439-DSC_0169.jpg', '44-IMG_7879.jpg', '440-DSC_0170.jpg',
+            '441-DSC_0171.jpg', '442-DSC_0172.jpg', '443-DSC_0173.jpg', '444-DSC_0174.jpg', '445-DSC_0175.jpg',
+            '446-DSC_0176.jpg', '447-DSC_0177.jpg', '448-DSC_0178.jpg', '449-DSC_0179.jpg', '45-IMG_7835.jpg',
+            '450-DSC_0180.jpg', '451-DSC_0181.jpg', '452-DSC_0182.jpg', '453-DSC_0183.jpg', '454-DSC_0184.jpg',
+            '455-DSC_0185.jpg', '456-DSC_0186.jpg', '457-DSC_0187.jpg', '458-DSC_0188.jpg', '459-DSC_0189.jpg',
+            '46-IMG_7834.jpg', '460-DSC_0190.jpg', '461-DSC_0191.jpg', '462-DSC_0192.jpg', '463-DSC_0193.jpg',
+            '464-DSC_0194.jpg', '465-DSC_0195.jpg', '466-DSC_0196.jpg', '467-DSC_0197.jpg', '468-DSC_0198.jpg',
+            '469-DSC_0199.jpg', '47-IMG_7903.jpg', '470-DSC_0200.jpg', '471-DSC_0201.jpg', '472-DSC_0202.jpg',
+            '473-DSC_0203.jpg', '474-DSC_0204.jpg', '475-DSC_0205.jpg', '476-DSC_0206.jpg', '477-DSC_0207.jpg',
+            '478-DSC_0208.jpg', '479-DSC_0212.jpg', '48-IMG_7902.jpg', '480-DSC_0213.jpg', '481-DSC_0215.jpg',
+            '482-DSC_0216.jpg', '483-DSC_0217.jpg', '484-DSC_0218.jpg', '485-DSC_0219.jpg', '486-DSC_0220.jpg',
+            '487-DSC_0221.jpg', '488-DSC_0222.jpg', '489-DSC_0223.jpg', '49-IMG_7878.jpg', '490-DSC_0224.jpg',
+            '491-DSC_0225.jpg', '492-DSC_0226.jpg', '493-DSC_0227.jpg', '494-DSC_0228.jpg', '495-DSC_0229.jpg',
+            '496-DSC_0230.jpg', '497-DSC_0231.jpg', '498-DSC_0232.jpg', '499-DSC_0233.jpg', '5-84670021.jpg',
+            '50-IMG_7901.jpg', '500-DSC_0234.jpg', '501-DSC_0235.jpg', '502-DSC_0236.jpg', '503-DSC_0237.jpg',
+            '504-DSC_0238.jpg', '505-DSC_0239.jpg', '506-DSC_0240.jpg', '507-DSC_0241.jpg', '508-DSC_0242.jpg',
+            '509-DSC_0243.jpg', '51-IMG_7900.jpg', '510-DSC_0244.jpg', '511-DSC_0245.jpg', '512-DSC_0246.jpg',
+            '513-DSC_0247.jpg', '514-DSC_0248.jpg', '515-DSC_0249.jpg', '516-DSC_0250.jpg', '517-DSC_0251.jpg',
+            '518-DSC_0252.jpg', '519-DSC_0253.jpg', '52-IMG_7899.jpg', '520-DSC_0254.jpg', '521-DSC_0255.jpg',
+            '522-DSC_0257.jpg', '523-DSC_0258.jpg', '524-DSC_0259.jpg', '525-DSC_0260.jpg', '526-DSC_0261.jpg',
+            '527-DSC_0262.jpg', '528-DSC_0263.jpg', '529-DSC_0264.jpg', '53-IMG_7877.jpg', '530-DSC_0265.jpg',
+            '531-DSC_0266.jpg', '532-DSC_0267.jpg', '54-IMG_7876.jpg', '55-IMG_7898.jpg', '56-IMG_7875.jpg',
+            '57-IMG_7897.jpg', '58-IMG_7874.jpg', '59-IMG_7896.jpg', '6-84670022.jpg', '60-IMG_7895.jpg',
+            '61-IMG_7894.jpg', '62-IMG_7893.jpg', '63-IMG_7873.jpg', '64-IMG_7872.jpg', '65-IMG_7871.jpg',
+            '66-IMG_7870.jpg', '67-IMG_7869.jpg', '68-IMG_7892.jpg', '69-IMG_7891.jpg', '7-84670009.jpg',
+            '70-IMG_7868.jpg', '71-IMG_7867.jpg', '72-IMG_7866.jpg', '73-IMG_7865.jpg', '74-IMG_7864.jpg',
+            '75-IMG_7843.jpg', '76-IMG_7863.jpg', '77-IMG_7848.jpg', '78-IMG_7862.jpg', '79-IMG_7861.jpg',
+            '8-84670008.jpg', '80-IMG_7860.jpg', '81-IMG_7859.jpg', '82-IMG_7858.jpg', '83-IMG_7857.jpg',
+            '84-IMG_7856.jpg', '85-IMG_7855.jpg', '86-IMG_7854.jpg', '87-IMG_7149.jpg', '88-IMG_7150.jpg',
+            '89-IMG_7151.jpg', '9-84670005.jpg', '90-IMG_7152.jpg', '91-IMG_7153.jpg', '92-IMG_7154.jpg',
+            '93-IMG_7155.jpg', '94-IMG_7156.jpg', '95-IMG_7157.jpg', '96-IMG_7158.jpg', '97-IMG_7159.jpg',
+            '98-IMG_7160.jpg', '99-IMG_7161.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/gallery/Cultures of the World | Sisters/${file}`);
+        console.log('Cultures of the World Sisters photos generated:', photos.slice(0, 3));
         return photos;
     }
 
@@ -3260,6 +3546,7 @@ function initializeFlipCards() {
 // Initialize Remind Me modal functionality
 function initializeRemindMeModal() {
     const remindMeBtn = document.getElementById('remindMeBtn');
+    const remindMeBtn3 = document.getElementById('remindMeBtn3');
     const modal = document.getElementById('remindMeModal');
     const closeBtn = document.getElementById('remindMeCloseBtn');
     const overlay = document.querySelector('.remind-me-modal-overlay');
@@ -3267,10 +3554,8 @@ function initializeRemindMeModal() {
     const emailInput = document.getElementById('remindMeEmail');
     const messageDiv = document.getElementById('remindMeMessage');
     
-    if (!remindMeBtn || !modal) return;
-    
-    // Open the notification modal instead of remind me modal
-    remindMeBtn.addEventListener('click', function() {
+    // Function to open notification modal
+    function openNotificationModal() {
         const notificationModal = document.getElementById('notificationModal');
         if (notificationModal) {
             notificationModal.classList.add('active');
@@ -3282,7 +3567,19 @@ function initializeRemindMeModal() {
                 setTimeout(() => notificationEmailInput.focus(), 100);
             }
         }
-    });
+    }
+    
+    // Attach to remindMeBtn if it exists
+    if (remindMeBtn) {
+        remindMeBtn.addEventListener('click', openNotificationModal);
+    }
+    
+    // Attach to remindMeBtn3 if it exists
+    if (remindMeBtn3) {
+        remindMeBtn3.addEventListener('click', openNotificationModal);
+    }
+    
+    if (!modal) return;
     
     // Close modal functions
     function closeModal() {
