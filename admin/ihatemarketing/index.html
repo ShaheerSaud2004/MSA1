@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSA Admin Dashboard</title>
+    <link rel="icon" href="../../images/logos/msa-icon.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header h1 {
+            color: #2c5530;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2c5530 0%, #3a6b3e 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(44, 85, 48, 0.4);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+        }
+
+        tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9ff;
+        }
+
+        .email-cell {
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .phone-cell {
+            color: #2c5530;
+            font-weight: 500;
+        }
+
+        .timestamp-cell {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ff4444;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-email {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-phone {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .badge-both {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .stats {
+                justify-content: center;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>
+                    🔒 MSA Admin Dashboard
+                </h1>
+                <p style="color: #666; margin-top: 10px;">Manage event notification subscriptions</p>
+            </div>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total Subscriptions</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="emailCount">0</div>
+                    <div class="stat-label">Emails</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="phoneCount">0</div>
+                    <div class="stat-label">Phone Numbers</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search by email or phone...">
+            </div>
+            <button class="btn btn-primary" onclick="refreshData()">
+                🔄 Refresh
+            </button>
+            <button class="btn btn-success" onclick="exportToCSV()">
+                📥 Export CSV
+            </button>
+        </div>
+
+        <div id="contentArea">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading subscriptions...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allSubscriptions = [];
+        let filteredSubscriptions = [];
+
+        // Load data on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSubscriptions();
+            
+            // Setup search
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                filterSubscriptions(e.target.value);
+            });
+        });
+
+        async function loadSubscriptions() {
+            try {
+                const response = await fetch('/api/get-subscriptions');
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to load subscriptions');
+                }
+
+                allSubscriptions = data.subscriptions || [];
+                filteredSubscriptions = [...allSubscriptions];
+                
+                updateStats();
+                renderTable();
+
+            } catch (error) {
+                console.error('Error loading subscriptions:', error);
+                document.getElementById('contentArea').innerHTML = `
+                    <div class="error">
+                        <h3>⚠️ Error Loading Data</h3>
+                        <p>${error.message}</p>
+                        <button class="btn btn-primary" onclick="refreshData()" style="margin-top: 15px;">
+                            Try Again
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function updateStats() {
+            const emailsOnly = allSubscriptions.filter(s => s.email && !s.phone).length;
+            const phonesOnly = allSubscriptions.filter(s => s.phone && !s.email).length;
+            const both = allSubscriptions.filter(s => s.email && s.phone).length;
+
+            document.getElementById('totalCount').textContent = allSubscriptions.length;
+            document.getElementById('emailCount').textContent = emailsOnly + both;
+            document.getElementById('phoneCount').textContent = phonesOnly + both;
+        }
+
+        function renderTable() {
+            const contentArea = document.getElementById('contentArea');
+
+            if (filteredSubscriptions.length === 0) {
+                contentArea.innerHTML = `
+                    <div class="table-container">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <h3>No subscriptions found</h3>
+                            <p>${allSubscriptions.length === 0 ? 'No one has subscribed yet.' : 'No results match your search.'}</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHTML = `
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Date Subscribed</th>
+                                <th>ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filteredSubscriptions.map(sub => `
+                                <tr>
+                                    <td>
+                                        ${getBadge(sub)}
+                                    </td>
+                                    <td class="email-cell">${sub.email || '-'}</td>
+                                    <td class="phone-cell">${sub.phone || '-'}</td>
+                                    <td class="timestamp-cell">${formatDate(sub.timestamp)}</td>
+                                    <td style="color: #999; font-size: 0.85rem;">${sub.id}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            contentArea.innerHTML = tableHTML;
+        }
+
+        function getBadge(sub) {
+            if (sub.email && sub.phone) {
+                return '<span class="badge badge-both">Both</span>';
+            } else if (sub.email) {
+                return '<span class="badge badge-email">Email</span>';
+            } else {
+                return '<span class="badge badge-phone">Phone</span>';
+            }
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function filterSubscriptions(searchTerm) {
+            const term = searchTerm.toLowerCase().trim();
+            
+            if (!term) {
+                filteredSubscriptions = [...allSubscriptions];
+            } else {
+                filteredSubscriptions = allSubscriptions.filter(sub => {
+                    const email = (sub.email || '').toLowerCase();
+                    const phone = (sub.phone || '').toLowerCase();
+                    return email.includes(term) || phone.includes(term);
+                });
+            }
+            
+            renderTable();
+        }
+
+        function refreshData() {
+            document.getElementById('contentArea').innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Refreshing data...</p>
+                </div>
+            `;
+            document.getElementById('searchInput').value = '';
+            loadSubscriptions();
+        }
+
+        function exportToCSV() {
+            if (allSubscriptions.length === 0) {
+                alert('No data to export!');
+                return;
+            }
+
+            // Create CSV content
+            const headers = ['Type', 'Email', 'Phone', 'Date Subscribed', 'ID'];
+            const rows = allSubscriptions.map(sub => [
+                sub.email && sub.phone ? 'Both' : (sub.email ? 'Email' : 'Phone'),
+                sub.email || '',
+                sub.phone || '',
+                formatDate(sub.timestamp),
+                sub.id
+            ]);
+
+            const csvContent = [
+                headers.join(','),
+                ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+
+            // Create download link
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `msa-subscriptions-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
+
