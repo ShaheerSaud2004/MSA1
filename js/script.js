@@ -663,9 +663,9 @@ class EventGallery {
                     }
                 }
             },
-            'ladders-workshop': {
-                name: 'Ladders Workshop',
-                poster: 'images/gallery/Ladders Workshop | Brothers/1-f39266ef-2fa0-4263-944b-b4444b73132d.jpg',
+            'career-prep': {
+                name: 'Career Prep Workshop',
+                poster: 'images/Career Prep.jpg',
                 albums: {
                     'brothers': {
                         name: 'Brothers',
@@ -676,17 +676,6 @@ class EventGallery {
                         name: 'Sisters',
                         count: 17,
                         photos: this.generateLaddersWorkshopSistersPhotos()
-                    }
-                }
-            },
-            'career-prep': {
-                name: 'Career Prep Workshop',
-                poster: 'images/Career Prep.jpg',
-                albums: {
-                    'general': {
-                        name: 'Event Photos',
-                        count: 0,
-                        photos: []
                     }
                 }
             }
