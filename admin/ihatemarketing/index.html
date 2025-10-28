@@ -294,20 +294,24 @@
                     <strong>✅ Server Storage:</strong> Data is stored in Vercel Blob. You'll see ALL subscriptions from ALL visitors!
                 </div>
             </div>
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-number" id="totalCount">0</div>
-                    <div class="stat-label">Total Subscriptions</div>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalCount">0</div>
+                        <div class="stat-label">Total Subscriptions</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="emailCount">0</div>
+                        <div class="stat-label">Emails</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="phoneCount">0</div>
+                        <div class="stat-label">Phone Numbers</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalClicks">0</div>
+                        <div class="stat-label">Total Clicks</div>
+                    </div>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="emailCount">0</div>
-                    <div class="stat-label">Emails</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="phoneCount">0</div>
-                    <div class="stat-label">Phone Numbers</div>
-                </div>
-            </div>
         </div>
 
         <div class="controls">
@@ -319,6 +323,9 @@
             </button>
             <button class="btn btn-success" onclick="exportToCSV()">
                 📥 Export CSV
+            </button>
+            <button class="btn btn-primary" onclick="showAnalytics()">
+                📊 Analytics
             </button>
         </div>
 
@@ -333,10 +340,12 @@
     <script>
         let allSubscriptions = [];
         let filteredSubscriptions = [];
+        let analyticsData = null;
 
         // Load data on page load
         window.addEventListener('DOMContentLoaded', () => {
             loadSubscriptions();
+            loadAnalytics();
             
             // Setup search
             document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -408,6 +417,20 @@
             }
         }
 
+        async function loadAnalytics() {
+            try {
+                const response = await fetch('/api/get-analytics');
+                const data = await response.json();
+                
+                if (data.success) {
+                    analyticsData = data.analytics;
+                    document.getElementById('totalClicks').textContent = analyticsData.totalClicks;
+                }
+            } catch (error) {
+                console.error('Error loading analytics:', error);
+            }
+        }
+
         function updateStats() {
             const emailsOnly = allSubscriptions.filter(s => s.email && !s.phone).length;
             const phonesOnly = allSubscriptions.filter(s => s.phone && !s.email).length;
@@ -416,6 +439,10 @@
             document.getElementById('totalCount').textContent = allSubscriptions.length;
             document.getElementById('emailCount').textContent = emailsOnly + both;
             document.getElementById('phoneCount').textContent = phonesOnly + both;
+            
+            if (analyticsData) {
+                document.getElementById('totalClicks').textContent = analyticsData.totalClicks;
+            }
         }
 
         function renderTable() {
@@ -513,6 +540,78 @@
             `;
             document.getElementById('searchInput').value = '';
             loadSubscriptions();
+            loadAnalytics();
+        }
+
+        function showAnalytics() {
+            if (!analyticsData) {
+                alert('Analytics data not loaded yet. Please refresh.');
+                return;
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; max-width: 800px; max-height: 80vh; overflow-y: auto;">
+                    <h2 style="margin-top: 0; color: #2c5530;">📊 Website Analytics</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                            <h3 style="margin: 0; color: #2c5530;">${analyticsData.totalClicks}</h3>
+                            <p style="margin: 5px 0 0; color: #666;">Total Clicks</p>
+                        </div>
+                    </div>
+
+                    <h3>📈 Section Clicks</h3>
+                    <div style="margin: 15px 0;">
+                        ${Object.entries(analyticsData.sectionStats).map(([section, count]) => 
+                            `<div style="display: flex; justify-content: space-between; padding: 10px; background: #f8f9fa; margin: 5px 0; border-radius: 5px;">
+                                <span style="text-transform: capitalize;">${section.replace('-', ' ')}</span>
+                                <strong>${count}</strong>
+                            </div>`
+                        ).join('')}
+                    </div>
+
+                    <h3>🎯 Event Clicks</h3>
+                    <div style="margin: 15px 0;">
+                        ${Object.entries(analyticsData.eventStats).map(([event, count]) => 
+                            `<div style="display: flex; justify-content: space-between; padding: 10px; background: #f8f9fa; margin: 5px 0; border-radius: 5px;">
+                                <span style="text-transform: capitalize;">${event.replace('-', ' ')}</span>
+                                <strong>${count}</strong>
+                            </div>`
+                        ).join('')}
+                    </div>
+
+                    <h3>👥 Album Clicks</h3>
+                    <div style="margin: 15px 0;">
+                        ${Object.entries(analyticsData.albumStats).map(([album, count]) => 
+                            `<div style="display: flex; justify-content: space-between; padding: 10px; background: #f8f9fa; margin: 5px 0; border-radius: 5px;">
+                                <span style="text-transform: capitalize;">${album}</span>
+                                <strong>${count}</strong>
+                            </div>`
+                        ).join('')}
+                    </div>
+
+                    <button onclick="this.closest('div').parentElement.remove()" 
+                            style="background: #2c5530; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px;">
+                        Close
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
         }
 
         function exportToCSV() {

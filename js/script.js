@@ -1,3 +1,25 @@
+// Click tracking utility
+function trackClick(section, event = null, album = null) {
+    const clickData = {
+        section: section,
+        event: event,
+        album: album,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+    };
+
+    // Send to analytics API
+    fetch('/api/track-click', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(clickData)
+    }).catch(error => {
+        console.log('Analytics tracking failed (non-critical):', error);
+    });
+}
+
 // Mobile Navigation
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -1444,6 +1466,9 @@ class EventGallery {
                 const eventId = tile.getAttribute('data-event');
                 const button = tile.querySelector('.view-event-btn');
                 
+                // Track click
+                trackClick('gallery', eventId);
+                
                 // Don't open modal for disabled events
                 if (button && button.disabled) {
                     return;
@@ -1530,6 +1555,8 @@ class EventGallery {
             `;
             
             choice.addEventListener('click', () => {
+                // Track album click
+                trackClick('gallery', eventId, albumId);
                 this.showAlbumPreview(eventId, albumId);
             });
             
@@ -3642,6 +3669,9 @@ function initializeRemindMeModal() {
     
     // Function to open notification modal
     function openNotificationModal() {
+        // Track notification modal open
+        trackClick('notification-modal');
+        
         const notificationModal = document.getElementById('notificationModal');
         if (notificationModal) {
             notificationModal.classList.add('active');
