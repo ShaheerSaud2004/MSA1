@@ -5467,6 +5467,13 @@ img.event-logo[src*="hope.jpg"],
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
     padding: 5rem 2.5rem 2rem;
     color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.events-gallery-grid .event-info {
+    margin-top: auto;
 }
 
 .events-gallery-grid .event-info h3 {
