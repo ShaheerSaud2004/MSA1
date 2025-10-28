@@ -3017,6 +3017,24 @@ class PhotoNotificationHandler {
         const email = emailInput.value.trim();
         const phone = phoneInput.value.trim();
         
+        // Validate: at least one field must be filled
+        if (!email && !phone) {
+            this.showMessage(messageDiv, '⚠️ Please enter either an email or phone number', 'error');
+            return;
+        }
+        
+        // Validate email format if provided
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            this.showMessage(messageDiv, '⚠️ Please enter a valid email address', 'error');
+            return;
+        }
+        
+        // Validate phone format if provided
+        if (phone && !/^[\d\s\-\+\(\)]{10,}$/.test(phone)) {
+            this.showMessage(messageDiv, '⚠️ Please enter a valid phone number', 'error');
+            return;
+        }
+        
         // Store the data
         const contactData = {
             email: email || null,

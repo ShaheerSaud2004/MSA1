@@ -5678,7 +5678,21 @@ img.event-logo[src*="hope.jpg"],
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 10px;
+}
+
+.input-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2c5530;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-label i {
+    font-size: 1rem;
+    opacity: 0.8;
 }
 
 .notification-input {
@@ -5706,33 +5720,44 @@ img.event-logo[src*="hope.jpg"],
     transform: translateY(-2px);
 }
 
-.input-divider {
-    text-align: center;
+.input-divider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.input-divider-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(44, 85, 48, 0.2), transparent);
+}
+
+.input-divider-text {
     color: #2c5530;
     font-weight: 700;
     font-size: 0.85rem;
-    position: relative;
-    margin: 8px 0;
     text-transform: uppercase;
     letter-spacing: 1px;
+    padding: 5px 10px;
+    background: rgba(44, 85, 48, 0.05);
+    border-radius: 20px;
 }
 
-.input-divider::before,
-.input-divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 35%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(44, 85, 48, 0.3), transparent);
+.form-note {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin: -10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
-.input-divider::before {
-    left: 0;
-}
-
-.input-divider::after {
-    right: 0;
+.form-note i {
+    color: #2c5530;
+    font-size: 1rem;
 }
 
 .notification-submit-btn {

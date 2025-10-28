@@ -896,21 +896,41 @@
                     </button>
                     
                     <div class="modal-header">
-                        <div class="modal-icon">📸</div>
-                        <h3>Stay Updated with MSA Photos!</h3>
-                        <p>Get notified instantly when we post new event photos and memories</p>
+                        <div class="modal-icon">
+                            <i class="fas fa-bell" style="font-size: 3rem; color: #2c5530;"></i>
+                        </div>
+                        <h3>Stay Connected with MSA</h3>
+                        <p>Get notified about upcoming events, new photos, and important announcements</p>
                     </div>
                     
                     <form class="notification-form" id="photoNotificationForm" action="javascript:void(0);" method="post">
                         <div class="form-group">
-                            <input type="email" id="emailInput" placeholder="Enter your email address" class="notification-input">
-                            <span class="input-divider">OR</span>
-                            <input type="tel" id="phoneInput" placeholder="Enter your phone number" class="notification-input">
+                            <label for="emailInput" class="input-label">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <input type="email" id="emailInput" placeholder="your.email@example.com" class="notification-input">
                         </div>
                         
+                        <div class="input-divider-container">
+                            <span class="input-divider-line"></span>
+                            <span class="input-divider-text">OR</span>
+                            <span class="input-divider-line"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phoneInput" class="input-label">
+                                <i class="fas fa-phone"></i> Phone Number
+                            </label>
+                            <input type="tel" id="phoneInput" placeholder="(123) 456-7890" class="notification-input">
+                        </div>
+                        
+                        <p class="form-note">
+                            <i class="fas fa-info-circle"></i> Choose at least one way to stay in touch
+                        </p>
+                        
                         <button type="submit" class="notification-submit-btn">
-                            <i class="fas fa-bell"></i>
-                            Get Notified!
+                            <i class="fas fa-paper-plane"></i>
+                            Subscribe to Updates
                         </button>
                         
                         <div class="form-message" id="formMessage"></div>
