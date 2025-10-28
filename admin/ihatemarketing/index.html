@@ -290,8 +290,8 @@
                     🔒 MSA Admin Dashboard
                 </h1>
                 <p style="color: #666; margin-top: 10px;">Manage event notification subscriptions</p>
-                <div style="background: #fff3cd; color: #856404; padding: 12px 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #ffc107;">
-                    <strong>⚠️ Note:</strong> Data is stored in browser localStorage. You'll only see subscriptions from THIS browser.
+                <div style="background: #d4edda; color: #155724; padding: 12px 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #28a745;">
+                    <strong>✅ Server Storage:</strong> Data is stored in Vercel Blob. You'll see ALL subscriptions from ALL visitors!
                 </div>
             </div>
             <div class="stats">
@@ -346,15 +346,35 @@
 
         async function loadSubscriptions() {
             try {
-                // Load from localStorage
+                // Load from Vercel Blob API
+                const response = await fetch('/api/get-subscriptions');
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to load subscriptions');
+                }
+
+                allSubscriptions = data.subscriptions || [];
+                
+                // Also load from localStorage as fallback/backup
                 const storedData = localStorage.getItem('msa_photo_notifications');
-                allSubscriptions = storedData ? JSON.parse(storedData) : [];
+                if (storedData) {
+                    const localSubs = JSON.parse(storedData);
+                    // Add any local subscriptions that aren't in blob storage
+                    localSubs.forEach(localSub => {
+                        if (!allSubscriptions.some(sub => sub.id === localSub.id)) {
+                            allSubscriptions.push({
+                                ...localSub,
+                                source: 'localStorage_backup'
+                            });
+                        }
+                    });
+                }
                 
                 // Also try to load "Remind Me" emails
                 const remindMeData = localStorage.getItem('remindMeData');
                 if (remindMeData) {
                     const reminders = JSON.parse(remindMeData);
-                    // Add reminders that aren't already in subscriptions
                     reminders.forEach(reminder => {
                         if (!allSubscriptions.some(sub => sub.email === reminder.email)) {
                             allSubscriptions.push({
@@ -379,6 +399,7 @@
                     <div class="error">
                         <h3>⚠️ Error Loading Data</h3>
                         <p>${error.message}</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">Make sure Vercel Blob is configured with BLOB_READ_WRITE_TOKEN</p>
                         <button class="btn btn-primary" onclick="refreshData()" style="margin-top: 15px;">
                             Try Again
                         </button>

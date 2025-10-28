@@ -3022,13 +3022,13 @@ class PhotoNotificationHandler {
         });
     }
 
-    showSuccessScreen(emailInput, phoneInput, messageDiv) {
+    async showSuccessScreen(emailInput, phoneInput, messageDiv) {
         console.log('Button clicked - showing success screen');
         
         const email = emailInput.value.trim();
         const phone = phoneInput.value.trim();
         
-        // Store the data (even if empty)
+        // Store the data
         const contactData = {
             email: email || null,
             phone: phone || null,
@@ -3036,9 +3036,31 @@ class PhotoNotificationHandler {
             id: Date.now().toString()
         };
 
-        // Save to localStorage for tracking
+        // Save to localStorage as backup
         this.saveNotificationData(contactData);
         console.log('Saved to localStorage:', contactData);
+        
+        // Save to Vercel Blob via API
+        try {
+            const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(contactData)
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                console.log('✅ Saved to Vercel Blob:', result.blobUrl);
+            } else {
+                console.error('❌ Failed to save to server:', result.error);
+            }
+        } catch (error) {
+            console.error('❌ Error saving to server:', error);
+            // Continue anyway - data is in localStorage
+        }
         
         // Show success message immediately
         this.showMessage(messageDiv, `🎉 Success! You're now subscribed to photo notifications!`, 'success');
