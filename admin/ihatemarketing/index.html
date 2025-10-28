@@ -290,6 +290,9 @@
                     🔒 MSA Admin Dashboard
                 </h1>
                 <p style="color: #666; margin-top: 10px;">Manage event notification subscriptions</p>
+                <div style="background: #fff3cd; color: #856404; padding: 12px 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #ffc107;">
+                    <strong>⚠️ Note:</strong> Data is stored in browser localStorage. You'll only see subscriptions from THIS browser.
+                </div>
             </div>
             <div class="stats">
                 <div class="stat-box">
@@ -343,14 +346,28 @@
 
         async function loadSubscriptions() {
             try {
-                const response = await fetch('/api/get-subscriptions');
-                const data = await response.json();
-
-                if (!data.success) {
-                    throw new Error(data.error || 'Failed to load subscriptions');
+                // Load from localStorage
+                const storedData = localStorage.getItem('msa_photo_notifications');
+                allSubscriptions = storedData ? JSON.parse(storedData) : [];
+                
+                // Also try to load "Remind Me" emails
+                const remindMeData = localStorage.getItem('remindMeData');
+                if (remindMeData) {
+                    const reminders = JSON.parse(remindMeData);
+                    // Add reminders that aren't already in subscriptions
+                    reminders.forEach(reminder => {
+                        if (!allSubscriptions.some(sub => sub.email === reminder.email)) {
+                            allSubscriptions.push({
+                                id: reminder.timestamp || Date.now(),
+                                email: reminder.email,
+                                phone: null,
+                                timestamp: reminder.timestamp,
+                                source: 'remind_me'
+                            });
+                        }
+                    });
                 }
-
-                allSubscriptions = data.subscriptions || [];
+                
                 filteredSubscriptions = [...allSubscriptions];
                 
                 updateStats();
