@@ -5461,11 +5461,12 @@ img.event-logo[src*="hope.jpg"],
 
 .events-gallery-grid .event-overlay {
     position: absolute;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-    padding: 5rem 2.5rem 2rem;
+    background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.8));
+    padding: 2.5rem;
     color: white;
     display: flex;
     flex-direction: column;
