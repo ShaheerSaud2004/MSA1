@@ -663,6 +663,22 @@ class EventGallery {
                     }
                 }
             },
+            'ladders-workshop': {
+                name: 'Ladders Workshop',
+                poster: 'images/gallery/Ladders Workshop | Brothers/1-f39266ef-2fa0-4263-944b-b4444b73132d.jpg',
+                albums: {
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 27,
+                        photos: this.generateLaddersWorkshopBrothersPhotos()
+                    },
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 17,
+                        photos: this.generateLaddersWorkshopSistersPhotos()
+                    }
+                }
+            },
             'career-prep': {
                 name: 'Career Prep Workshop',
                 poster: 'images/Career Prep.jpg',
@@ -1355,6 +1371,47 @@ class EventGallery {
         
         const photos = sistersFiles.map(file => `images/gallery/Cultures of the World | Sisters/${file}`);
         console.log('Cultures of the World Sisters photos generated:', photos.slice(0, 3));
+        return photos;
+    }
+
+    generateLaddersWorkshopBrothersPhotos() {
+        const brothersFiles = [
+            '1-f39266ef-2fa0-4263-944b-b4444b73132d.jpg', '10-192b339b-35f4-4464-bc61-27e0c1b8e8ba.jpg',
+            '11-1952be83-9ebf-44ae-9ce6-201ec5f3b622.jpg', '12-154e316b-05c4-4bcd-b7a8-2a77d283a908.jpg',
+            '13-8f1d9c2e-2089-44ba-9cf6-b912a8f76470.jpg', '14-651e5e2a-56e8-4e75-b1ef-61509b238d87.jpg',
+            '15-75a22523-dae0-4a8d-9196-d20a622e0d30.jpg', '16-76bd2518-7f56-40d3-984e-ea686d2420ae.jpg',
+            '17-7bee1ae7-ed3b-4878-b626-6a35213b6b86.jpg', '18-6cdffbcb-aca6-456e-8f63-2acd23fcccdb.jpg',
+            '19-3ea4b6ac-94d4-42c0-ac7c-779cc347c6a3.jpg', '2-be978967-9068-408a-b0b2-e97b538364ce.jpg',
+            '20-173c3e7c-2a3c-4969-83c7-0c47d78738ea.jpg', '21-2f6dd92b-c96f-4fcf-8185-66953d78b53c.jpg',
+            '22-02ff2c34-f412-45a9-8fa7-513591595b07.jpg', '23-0fa6c353-882f-4c89-be1b-8ea467a51244.jpg',
+            '24-1f0e78bf-5cb6-4ea3-b5fb-103460976aaa.jpg', '25-6b986b40-a5fe-4c1b-acf2-6abc7a9deb8b.jpg',
+            '26-0b8b2d0c-976d-4321-bd9f-187bfe0b2472.jpg', '27-03d15c82-0032-40d3-abd6-2b9f46516d38.jpg',
+            '3-c9072b78-68d1-4106-86d3-e4bbca96f092.jpg', '4-b1a5c643-289d-48a9-9dcc-65f61eebc280.jpg',
+            '5-b481acae-6e24-4892-b8db-2ce8412c1708.jpg', '6-62510670-8023-4823-8d60-b51575e69414.jpg',
+            '7-a79f776e-4237-43c9-9a1f-f45f1569823b.jpg', '8-759dc9cf-3944-494d-a216-2ebd05071883.jpg',
+            '9-1001b5f7-7661-4c8f-afc1-6e745addf0c6.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/gallery/Ladders Workshop | Brothers/${file}`);
+        console.log('Ladders Workshop Brothers photos generated:', photos.slice(0, 3));
+        return photos;
+    }
+
+    generateLaddersWorkshopSistersPhotos() {
+        const sistersFiles = [
+            '1-578d194e-faa2-4ffe-9bc1-b2059c699b00.jpg', '10-bf8b98bb-04a1-4864-abc1-56f08081bfc9.jpg',
+            '11-b21092a5-9117-4cfd-8ba8-9cbb16b834cd.jpg', '12-be48167f-f950-44d9-bc50-b01a8722f84d.jpg',
+            '13-59772723-7994-419b-b3d3-590e099d313e.jpg', '14-18836891-043c-4568-a98a-0a33209735d1.jpg',
+            '15-a2595f52-58b7-4ce3-ac2d-2e7385aaba7e.jpg', '16-ca7d4690-b282-4efb-80b5-143129273870.jpg',
+            '17-a4fd1aaa-81fd-488d-aafe-0dac30c915a2.jpg', '2-12ba6f68-21e6-4355-a439-1867bce6acae.jpg',
+            '3-6d63a90e-2a73-4ac5-8934-086807a2240b.jpg', '4-3f90d51e-cbc7-43fc-b0c1-4e5da738a982.jpg',
+            '5-0cf2f8dc-e93d-422f-a338-837dd9b7744e.jpg', '6-0d9f5e71-c4e5-4577-a154-0cd90ae1e09d.jpg',
+            '7-f420a11b-2398-4279-9bb7-8646165fd41a.jpg', '8-d7a5feba-e858-452a-ab93-b3d076497542.jpg',
+            '9-d232f1cd-e5c0-402c-a3d6-5794fd68eac8.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/gallery/Ladders Workshop | Sisters/${file}`);
+        console.log('Ladders Workshop Sisters photos generated:', photos.slice(0, 3));
         return photos;
     }
 
