@@ -700,6 +700,17 @@ class EventGallery {
                         photos: this.generateLaddersWorkshopSistersPhotos()
                     }
                 }
+            },
+            'brothers-social-bonfire': {
+                name: 'Brothers Social Bonfire Night',
+                poster: 'BrothersSocialBonfireNight.png',
+                albums: {
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 227,
+                        photos: this.generateBrothersSocialBonfirePhotos()
+                    }
+                }
             }
             // Future events can be easily added here
         };
@@ -1423,6 +1434,61 @@ class EventGallery {
         
         const photos = sistersFiles.map(file => `images/gallery/Ladders Workshop | Sisters/${file}`);
         console.log('Ladders Workshop Sisters photos generated:', photos.slice(0, 3));
+        return photos;
+    }
+
+    generateBrothersSocialBonfirePhotos() {
+        const brothersFiles = [
+            '1-IMG_2945.jpg', '2-IMG_2946.jpg', '3-IMG_2947.jpg', '4-IMG_2948.jpg', '5-IMG_2949.jpg',
+            '6-IMG_2950.jpg', '7-IMG_2951.jpg', '8-IMG_2952.jpg', '9-IMG_2955.jpg', '10-IMG_2957.jpg',
+            '11-IMG_2958.jpg', '12-IMG_2959.jpg', '13-IMG_2960.jpg', '14-IMG_2961.jpg', '15-IMG_2963.jpg',
+            '16-IMG_2964.jpg', '17-IMG_2965.jpg', '18-IMG_2966.jpg', '19-IMG_2967.jpg', '20-IMG_2968.jpg',
+            '21-IMG_2969.jpg', '22-IMG_2970.jpg', '23-IMG_2971.jpg', '24-IMG_2972.jpg', '25-IMG_2973.jpg',
+            '26-IMG_2976.jpg', '27-IMG_2978.jpg', '28-IMG_2979.jpg', '29-IMG_2980.jpg', '30-IMG_2981.jpg',
+            '31-IMG_2983.jpg', '32-IMG_2984.jpg', '33-IMG_2985.jpg', '34-IMG_2986.jpg', '35-IMG_2987.jpg',
+            '36-IMG_2988.jpg', '37-IMG_2989.jpg', '38-IMG_2990.jpg', '39-IMG_2991.jpg', '40-IMG_2992.jpg',
+            '41-IMG_2994.jpg', '42-IMG_2995.jpg', '43-IMG_2996.jpg', '44-IMG_2997.jpg', '45-IMG_2998.jpg',
+            '46-IMG_2999.jpg', '47-IMG_3001.jpg', '48-IMG_3004.jpg', '49-IMG_3006.jpg', '50-IMG_3007.jpg',
+            '51-IMG_3008.jpg', '52-IMG_3009.jpg', '53-IMG_3010.jpg', '54-IMG_3011.jpg', '55-IMG_3012.jpg',
+            '56-IMG_3014.jpg', '57-IMG_3015.jpg', '58-IMG_3016.jpg', '59-IMG_3017.jpg', '60-IMG_3018.jpg',
+            '61-IMG_3019.jpg', '62-IMG_3021.jpg', '63-IMG_3022.jpg', '64-IMG_3023.jpg', '65-IMG_3024.jpg',
+            '66-IMG_3025.jpg', '67-IMG_3027.jpg', '68-IMG_3028.jpg', '69-IMG_3029.jpg', '70-IMG_3031.jpg',
+            '71-IMG_3033.jpg', '72-IMG_3034.jpg', '73-IMG_3035.jpg', '74-IMG_3036.jpg', '75-IMG_3037.jpg',
+            '76-IMG_3039.jpg', '77-IMG_3042.jpg', '78-IMG_3044.jpg', '79-IMG_3045.jpg', '80-IMG_3048.jpg',
+            '81-IMG_3049.jpg', '82-IMG_3050.jpg', '83-IMG_3051.jpg', '84-IMG_3052.jpg', '85-IMG_3053.jpg',
+            '86-IMG_3054.jpg', '87-IMG_3056.jpg', '88-IMG_3057.jpg', '89-IMG_3058.jpg', '90-IMG_3059.jpg',
+            '91-IMG_3060.jpg', '92-IMG_3061.jpg', '93-IMG_3063.jpg', '94-IMG_3064.jpg', '95-IMG_3065.jpg',
+            '96-IMG_3067.jpg', '97-IMG_3068.jpg', '98-IMG_3069.jpg', '99-IMG_3070.jpg', '100-IMG_3071.jpg',
+            '101-IMG_3072.jpg', '102-IMG_3073.jpg', '103-IMG_3074.jpg', '104-IMG_3075.jpg', '105-IMG_3076.jpg',
+            '106-IMG_3077.jpg', '107-IMG_3078.jpg', '108-IMG_3079.jpg', '109-IMG_3080.jpg', '110-IMG_3081.jpg',
+            '111-IMG_3082.jpg', '112-IMG_3083.jpg', '113-IMG_3086.jpg', '114-IMG_3087.jpg', '115-IMG_3089.jpg',
+            '116-IMG_3090.jpg', '117-IMG_3091.jpg', '118-IMG_3094.jpg', '119-IMG_3095.jpg', '120-IMG_3096.jpg',
+            '121-IMG_3097.jpg', '122-IMG_3098.jpg', '123-IMG_3099.jpg', '124-IMG_3101.jpg', '125-IMG_3102.jpg',
+            '126-IMG_3103.jpg', '127-IMG_3104.jpg', '128-IMG_3105.jpg', '129-IMG_3106.jpg', '130-IMG_3107.jpg',
+            '131-IMG_3108.jpg', '132-IMG_3109.jpg', '133-IMG_3110.jpg', '134-DSC_4203.jpg', '135-DSC_4204.jpg',
+            '136-DSC_4205.jpg', '137-DSC_4206.jpg', '138-DSC_4207.jpg', '139-DSC_4208.jpg', '140-DSC_4209.jpg',
+            '141-DSC_4210.jpg', '142-DSC_4211.jpg', '143-DSC_4212.jpg', '144-DSC_4213.jpg', '145-DSC_4214.jpg',
+            '146-DSC_4215.jpg', '147-DSC_4216.jpg', '148-DSC_4217.jpg', '149-DSC_4218.jpg', '150-DSC_4219.jpg',
+            '151-DSC_4220.jpg', '152-DSC_4221.jpg', '153-DSC_4222.jpg', '154-DSC_4223.jpg', '155-DSC_4224.jpg',
+            '156-DSC_4225.jpg', '157-DSC_4226.jpg', '158-DSC_4227.jpg', '159-DSC_4228.jpg', '160-DSC_4229.jpg',
+            '161-DSC_4230.jpg', '162-DSC_4231.jpg', '163-DSC_4232.jpg', '164-DSC_4233.jpg', '165-DSC_4234.jpg',
+            '166-DSC_4235.jpg', '167-DSC_4235.jpg', '168-DSC_4236.jpg', '171-DSC_4237.jpg', '172-DSC_4238.jpg',
+            '173-DSC_4239.jpg', '174-DSC_4240.jpg', '175-DSC_4241.jpg', '176-DSC_4242.jpg', '177-DSC_4243.jpg',
+            '178-DSC_4244.jpg', '179-DSC_4245.jpg', '180-DSC_4246.jpg', '181-DSC_4247.jpg', '182-DSC_4248.jpg',
+            '183-DSC_4249.jpg', '184-DSC_4250.jpg', '185-DSC_4251.jpg', '186-DSC_4252.jpg', '187-DSC_4253.jpg',
+            '188-DSC_4254.jpg', '189-DSC_4255.jpg', '190-DSC_4256.jpg', '191-DSC_4257.jpg', '192-DSC_4258.jpg',
+            '193-DSC_4259.jpg', '194-DSC_4260.jpg', '195-DSC_4261.jpg', '196-DSC_4262.jpg', '197-DSC_4263.jpg',
+            '198-DSC_4264.jpg', '199-DSC_4265.jpg', '200-DSC_4266.jpg', '201-DSC_4267.jpg', '202-DSC_4268.jpg',
+            '203-DSC_4269.jpg', '204-DSC_4270.jpg', '205-DSC_4271.jpg', '206-DSC_4272.jpg', '207-DSC_4273.jpg',
+            '208-DSC_4274.jpg', '209-DSC_4275.jpg', '210-DSC_4276.jpg', '211-DSC_4277.jpg', '212-DSC_4278.jpg',
+            '213-DSC_4279.jpg', '214-DSC_4280.jpg', '215-DSC_4281.jpg', '216-DSC_4282.jpg', '217-DSC_4283.jpg',
+            '218-DSC_4284.jpg', '219-DSC_4285.jpg', '220-DSC_4286.jpg', '221-DSC_4287.jpg', '222-DSC_4288.jpg',
+            '223-DSC_4289.jpg', '224-DSC_4290.jpg', '225-DSC_4291.jpg', '226-DSC_4292.jpg', '227-DSC_4293.jpg',
+            '228-DSC_4294.jpg', '229-DSC_4295.jpg'
+        ];
+        
+        const photos = brothersFiles.map(file => `images/Brothers Social Bonfire Night/${file}`);
+        console.log('Brothers Social Bonfire Night photos generated:', photos.slice(0, 3));
         return photos;
     }
 

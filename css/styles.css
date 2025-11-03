@@ -5495,6 +5495,10 @@ img.event-logo[src*="hope.jpg"],
     padding-top: 8rem !important;
 }
 
+.brothers-social-bonfire-tile .event-overlay {
+    padding-top: 8rem !important;
+}
+
 .view-event-btn {
     background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
     color: white;
