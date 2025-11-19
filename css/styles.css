@@ -5492,11 +5492,45 @@ img.event-logo[src*="hope.jpg"],
 }
 
 .taboo-topics-tile .event-overlay {
-    padding-top: 8rem !important;
+    padding-top: 12rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
 }
 
 .brothers-social-bonfire-tile .event-overlay {
-    padding-top: 8rem !important;
+    padding-top: 12rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+}
+
+.town-hall-tile .event-overlay {
+    padding-top: 12rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+}
+
+.quran-night-tile .event-overlay {
+    padding-top: 12rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+}
+
+.understanding-death-tile .event-overlay {
+    padding-top: 12rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+}
+
+.career-prep-tile .event-overlay {
+    padding-top: 12rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+}
+
+.art-gala-tile .event-overlay {
+    padding-top: 12rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
 }
 
 .view-event-btn {

@@ -1540,6 +1540,12 @@ class EventGallery {
                     return;
                 }
                 
+                // Redirect to Art Gala page instead of opening modal
+                if (eventId === 'art-gala') {
+                    window.location.href = 'art-gala.html';
+                    return;
+                }
+                
                 this.showEventModal(eventId);
             });
         });
