@@ -711,6 +711,40 @@ class EventGallery {
                         photos: this.generateBrothersSocialBonfirePhotos()
                     }
                 }
+            },
+            'taboo-topics': {
+                name: 'Taboo Topics',
+                poster: 'images/posters/TabooTopics.jpg',
+                albums: {
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 31,
+                        photos: this.generateTabooTopicsSistersPhotos()
+                    },
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 0,
+                        photos: [],
+                        comingSoon: true
+                    }
+                }
+            },
+            'quran-night': {
+                name: 'Quran Night',
+                poster: 'QuranNight.png',
+                albums: {
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 19,
+                        photos: this.generateQuranNightSistersPhotos()
+                    },
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 0,
+                        photos: [],
+                        comingSoon: true
+                    }
+                }
             }
             // Future events can be easily added here
         };
@@ -1198,6 +1232,35 @@ class EventGallery {
         return photos;
     }
 
+    generateTabooTopicsSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_8046.jpg', '2-IMG_8044.jpg', '3-IMG_8042.jpg', '4-IMG_8038.jpg', '5-IMG_8031.jpg',
+            '6-IMG_8029.jpg', '7-IMG_8058.jpg', '8-IMG_8054.jpg', '9-IMG_8052.jpg', '10-IMG_8037.jpg',
+            '11-IMG_8050.jpg', '12-IMG_8048.jpg', '13-IMG_8036.jpg', '14-IMG_8035.jpg', '15-IMG_8056.jpg',
+            '16-IMG_8055.jpg', '17-IMG_8034.jpg', '18-IMG_8053.jpg', '19-IMG_8051.jpg', '20-IMG_8049.jpg',
+            '21-IMG_8047.jpg', '22-IMG_8045.jpg', '23-IMG_8043.jpg', '24-IMG_8033.jpg', '25-IMG_8041.jpg',
+            '26-IMG_8032.jpg', '27-IMG_8030.jpg', '28-IMG_8059.jpg', '29-IMG_8040.jpg', '30-IMG_8039.jpg',
+            '31-IMG_8057.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/Taboo Topics | Sisters/${file}`);
+        console.log('Taboo Topics Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
+    generateQuranNightSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_8547.jpg', '2-IMG_8546.jpg', '3-IMG_8552.jpg', '4-IMG_8551.jpg', '5-IMG_8545.jpg',
+            '6-IMG_8550.jpg', '7-IMG_8543.jpg', '8-IMG_8542.jpg', '9-IMG_8541.jpg', '10-IMG_8540.jpg',
+            '11-IMG_8539.jpg', '12-IMG_8538.jpg', '13-IMG_8537.jpg', '14-IMG_8536.jpg', '15-IMG_8535.jpg',
+            '16-IMG_8549.jpg', '17-IMG_8548.jpg', '18-IMG_8534.jpg', '19-IMG_8553.jpg'
+        ];
+        
+        const photos = sistersFiles.map(file => `images/Qur'an Night | Sisters/${file}`);
+        console.log('Quran Night Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
+        return photos;
+    }
+
     generateCulturesOfTheWorldBrothersPhotos() {
         const brothersFiles = [
             '1-84670034.jpg', '10-84670018.jpg', '100-SAU07248.jpg', '101-SAU07249.jpg', '102-SAU07250.jpg',
@@ -1599,39 +1662,61 @@ class EventGallery {
             const choice = document.createElement('div');
             choice.className = `album-choice album-choice-${albumId}`;
             
-            // Get preview images for this album with lazy loading
-            const previewImages = album.photos.slice(0, 3);
-            const previewHtml = previewImages.map((photo, index) => 
-                `<img data-src="${photo}" alt="Preview" class="album-preview-thumb lazy-thumb" loading="lazy">`
-            ).join('');
-            
-            choice.innerHTML = `
-                <div class="album-preview-thumbs">
-                    ${previewHtml}
-                    <div class="album-overlay-count">+${album.count - 3}</div>
-                </div>
-                <div class="album-choice-content">
-                    <h4>${album.name}</h4>
-                    <p>${album.count} photos from ${event.name}</p>
-                    <button class="choose-album-btn">
-                        <i class="fas fa-images"></i>
-                        View Album
-                    </button>
-                </div>
-            `;
-            
-            choice.addEventListener('click', () => {
-                // Track album click
-                trackClick('gallery', eventId, albumId);
-                this.showAlbumPreview(eventId, albumId);
-            });
+            // Check if album is coming soon or has no photos
+            if (album.comingSoon || album.count === 0 || album.photos.length === 0) {
+                choice.innerHTML = `
+                    <div class="album-preview-thumbs coming-soon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="album-choice-content">
+                        <h4>${album.name}</h4>
+                        <p>Photos Coming Soon</p>
+                        <button class="choose-album-btn" disabled>
+                            <i class="fas fa-clock"></i>
+                            Coming Soon
+                        </button>
+                    </div>
+                `;
+                choice.style.opacity = '0.6';
+                choice.style.cursor = 'not-allowed';
+            } else {
+                // Get preview images for this album with lazy loading
+                const previewImages = album.photos.slice(0, 3);
+                const previewHtml = previewImages.map((photo, index) => 
+                    `<img data-src="${photo}" alt="Preview" class="album-preview-thumb lazy-thumb" loading="lazy">`
+                ).join('');
+                
+                const remainingCount = album.count > 3 ? album.count - 3 : 0;
+                const overlayCountHtml = remainingCount > 0 ? `<div class="album-overlay-count">+${remainingCount}</div>` : '';
+                
+                choice.innerHTML = `
+                    <div class="album-preview-thumbs">
+                        ${previewHtml}
+                        ${overlayCountHtml}
+                    </div>
+                    <div class="album-choice-content">
+                        <h4>${album.name}</h4>
+                        <p>${album.count} photos from ${event.name}</p>
+                        <button class="choose-album-btn">
+                            <i class="fas fa-images"></i>
+                            View Album
+                        </button>
+                    </div>
+                `;
+                
+                choice.addEventListener('click', () => {
+                    // Track album click
+                    trackClick('gallery', eventId, albumId);
+                    this.showAlbumPreview(eventId, albumId);
+                });
+                
+                // Initialize lazy loading for preview thumbnails
+                choice.querySelectorAll('.lazy-thumb').forEach(img => {
+                    this.loadThumbnail(img);
+                });
+            }
             
             albumsSelection.appendChild(choice);
-            
-            // Initialize lazy loading for preview thumbnails
-            choice.querySelectorAll('.lazy-thumb').forEach(img => {
-                this.loadThumbnail(img);
-            });
         });
 
         // Show modal
