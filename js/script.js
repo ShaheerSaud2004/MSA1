@@ -2532,10 +2532,13 @@ class EventGallery {
                 }
             } else {
                 // Get preview images for this album with lazy loading
+                // Use first 3 photos, converting to blob URLs if available
                 const previewImages = album.photos.slice(0, 3);
-                const previewHtml = previewImages.map((photo, index) => 
-                    `<img data-src="${photo}" alt="Preview" class="album-preview-thumb lazy-thumb" loading="lazy">`
-                ).join('');
+                const previewHtml = previewImages.map((photo, index) => {
+                    // Convert to blob URL if available (for Art Gala)
+                    const blobUrl = this.getThumbnailPath(photo);
+                    return `<img data-src="${blobUrl}" alt="Preview" class="album-preview-thumb lazy-thumb" loading="lazy">`;
+                }).join('');
                 
                 const remainingCount = album.count > 3 ? album.count - 3 : 0;
                 const overlayCountHtml = remainingCount > 0 ? `<div class="album-overlay-count">+${remainingCount}</div>` : '';
@@ -2624,8 +2627,11 @@ class EventGallery {
                 const previewItem = document.createElement('div');
                 previewItem.className = 'preview-carousel-item';
                 
+                // Use blob URL if available (for Art Gala)
+                const blobUrl = this.getThumbnailPath(photo);
+                
                 previewItem.innerHTML = `
-                    <img src="${photo}" alt="Preview ${i + 1}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="${blobUrl}" alt="Preview ${i + 1}" style="width: 100%; height: 100%; object-fit: cover;">
                 `;
                 
                 const img = previewItem.querySelector('img');
@@ -3381,9 +3387,18 @@ class EventGallery {
         // Simple immediate loading for thumbnails since they're smaller
         const src = img.getAttribute('data-src');
         if (src) {
-            img.src = src;
+            // Ensure we use blob URL if available (getThumbnailPath already handles this)
+            const finalSrc = this.getThumbnailPath(src);
+            img.src = finalSrc;
             img.onload = () => {
                 img.classList.add('loaded');
+            };
+            img.onerror = () => {
+                console.error('Failed to load preview thumbnail:', finalSrc);
+                // Try original path as fallback
+                if (finalSrc !== src && !src.startsWith('http')) {
+                    img.src = src;
+                }
             };
         }
     }
