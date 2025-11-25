@@ -3005,12 +3005,19 @@ class EventGallery {
     }
 
     getThumbnailPath(originalPath) {
-        // Check if this is an Art Gala image and we have blob URLs loaded
-        if (originalPath.includes('Art Gala') && this.blobUrlMapping) {
-            const blobUrl = this.getBlobUrl(originalPath);
-            if (blobUrl !== originalPath) {
-                // Return blob URL if found
-                return blobUrl;
+        // Always try to get blob URL for Art Gala images (even if mapping not loaded yet, it will retry)
+        if (originalPath.includes('Art Gala')) {
+            if (this.blobUrlMapping) {
+                const blobUrl = this.getBlobUrl(originalPath);
+                if (blobUrl !== originalPath && blobUrl.startsWith('http')) {
+                    // Return blob URL if found and valid
+                    console.log('Using blob URL for:', originalPath);
+                    return blobUrl;
+                } else {
+                    console.warn('Blob URL not found for:', originalPath, 'mapping keys:', Object.keys(this.blobUrlMapping.brothers || {}).slice(0, 3));
+                }
+            } else {
+                console.warn('Blob mapping not loaded yet for:', originalPath);
             }
         }
         // For other images or if blob URL not found, use original path
