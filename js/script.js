@@ -705,6 +705,24 @@ class EventGallery {
                     }
                 }
             },
+            'charity-week': {
+                name: 'HOPE Charity Week',
+                poster: 'CharityWeek.png',
+                albums: {
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 0,
+                        photos: [],
+                        comingSoon: true
+                    },
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 0,
+                        photos: [],
+                        comingSoon: true
+                    }
+                }
+            },
             'hope-drive': {
                 name: 'Hope Clothing & Hygiene Drive',
                 poster: 'HopeDrive.jpg',
