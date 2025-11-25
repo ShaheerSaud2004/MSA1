@@ -1405,7 +1405,11 @@ class EventGallery {
             '36-IMG_7550.jpg'
         ];
         
-        const photos = sistersFiles.map(file => `images/gallery/GBM | Sisters/${file}`);
+        const photos = sistersFiles.map(file => {
+            // URL encode the path to handle pipe character properly
+            const path = `images/gallery/GBM | Sisters/${file}`;
+            return encodeURI(path);
+        });
         console.log('GBM Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
         return photos;
     }
