@@ -520,7 +520,36 @@ class EventGallery {
         this.currentEvent = null;
         this.currentAlbum = null;
         this.rotationInterval = null;
+        this.blobUrlMapping = null;
+        this.loadBlobUrlMapping();
         this.init();
+    }
+
+    async loadBlobUrlMapping() {
+        try {
+            const response = await fetch('art-gala-blob-urls.json');
+            if (response.ok) {
+                this.blobUrlMapping = await response.json();
+                console.log('Art Gala blob URL mapping loaded');
+            }
+        } catch (error) {
+            console.warn('Could not load blob URL mapping, using local paths:', error);
+        }
+    }
+
+    getBlobUrl(localPath) {
+        if (this.blobUrlMapping) {
+            // Try brothers first
+            if (this.blobUrlMapping.brothers && this.blobUrlMapping.brothers[localPath]) {
+                return this.blobUrlMapping.brothers[localPath];
+            }
+            // Try sisters
+            if (this.blobUrlMapping.sisters && this.blobUrlMapping.sisters[localPath]) {
+                return this.blobUrlMapping.sisters[localPath];
+            }
+        }
+        // Fallback to local path if blob URL not found
+        return localPath;
     }
 
     initializeEvents() {
@@ -1972,7 +2001,10 @@ class EventGallery {
             '1902-IMG_9587.jpg'
         ];
         
-        const photos = sistersFiles.map(file => `images/gallery/Photos/Art Gala | Sisters/${file}`);
+        const photos = sistersFiles.map(file => {
+            const localPath = `images/gallery/Photos/Art Gala | Sisters/${file}`;
+            return this.getBlobUrl(localPath);
+        });
         console.log("Art Gala Sisters photos generated:", photos.slice(0, 3));
         return photos;
     }
@@ -2134,7 +2166,10 @@ class EventGallery {
             '761-IMG_1015.jpg', '762-IMG_1016.jpg', '763-IMG_1017.jpg', '764-IMG_1020.jpg'
         ];
         
-        const photos = brothersFiles.map(file => `images/Art Gala | Brothers/${file}`);
+        const photos = brothersFiles.map(file => {
+            const localPath = `images/Art Gala | Brothers/${file}`;
+            return this.getBlobUrl(localPath);
+        });
         console.log("Art Gala Brothers photos generated:", photos.slice(0, 3));
         return photos;
     }
