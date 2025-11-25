@@ -707,7 +707,7 @@ class EventGallery {
             },
             'charity-week': {
                 name: 'HOPE Charity Week',
-                poster: 'images/CharityWeek.png',
+                poster: 'images/cw.png',
                 hasSections: true,
                 sections: {
                     'days-1-3': {
