@@ -2611,11 +2611,11 @@ class EventGallery {
 
         // Album action events
         document.querySelector('.view-full-album-btn')?.addEventListener('click', () => {
-            this.showFullAlbum(this.currentEvent, this.currentAlbum);
+            this.showFullAlbum(this.currentEvent, this.currentAlbum, this.currentSection);
         });
 
         document.querySelector('.download-album-btn')?.addEventListener('click', () => {
-            this.downloadAlbum(this.currentEvent, this.currentAlbum);
+            this.downloadAlbum(this.currentEvent, this.currentAlbum, this.currentSection);
         });
 
         // ESC key to close modals
@@ -2927,12 +2927,22 @@ class EventGallery {
         this.rotationInterval = setInterval(slideToNext, 4000);
     }
 
-    showFullAlbum(eventId, albumId) {
+    showFullAlbum(eventId, albumId, sectionId = null) {
         const event = this.events[eventId];
-        const album = event.albums[albumId];
+        let album;
+        
+        // Get album from section if sectionId is provided, otherwise from event.albums
+        if (sectionId && event.sections && event.sections[sectionId]) {
+            album = event.sections[sectionId].albums[albumId];
+        } else {
+            album = event.albums[albumId];
+        }
+        
+        if (!album) return;
         
         // Update modal content
-        document.getElementById('full-album-title').textContent = `${event.name} | ${album.name}`;
+        const sectionName = sectionId && event.sections && event.sections[sectionId] ? event.sections[sectionId].name : event.name;
+        document.getElementById('full-album-title').textContent = `${sectionName} | ${album.name}`;
         document.getElementById('full-album-count').textContent = `${album.count} photos`;
         
         // Store current album data
