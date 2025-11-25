@@ -2606,7 +2606,7 @@ class EventGallery {
         // Back to event button removed from UI
 
         document.querySelector('.back-to-preview-btn')?.addEventListener('click', () => {
-            this.showAlbumPreview(this.currentEvent, this.currentAlbum);
+            this.showAlbumPreview(this.currentEvent, this.currentAlbum, this.currentSection);
         });
 
         // Album action events
@@ -2663,15 +2663,26 @@ class EventGallery {
             
             Object.entries(event.sections).forEach(([sectionId, section]) => {
                 const totalPhotos = Object.values(section.albums).reduce((sum, album) => sum + (album.count || 0), 0);
-                const previewAlbums = Object.values(section.albums).slice(0, 2);
-                const previewHtml = previewAlbums.map(album => {
-                    if (album.photos && album.photos.length > 0) {
-                        const previewPhoto = album.photos[0];
-                        const blobUrl = this.getThumbnailPath(previewPhoto);
-                        return `<img data-src="${blobUrl}" alt="Preview" class="album-preview-thumb lazy-thumb" loading="lazy">`;
-                    }
-                    return '';
-                }).filter(html => html).join('');
+                // Collect up to 3 preview photos from all albums in the section
+                const previewPhotos = [];
+                const albums = Object.values(section.albums);
+                
+                // Strategy: Get first photo from first album, first from second album, then second from first album
+                if (albums.length > 0 && albums[0].photos && albums[0].photos.length > 0) {
+                    previewPhotos.push(albums[0].photos[0]); // First photo from first album
+                }
+                if (albums.length > 1 && albums[1].photos && albums[1].photos.length > 0 && previewPhotos.length < 3) {
+                    previewPhotos.push(albums[1].photos[0]); // First photo from second album
+                }
+                if (albums.length > 0 && albums[0].photos && albums[0].photos.length > 1 && previewPhotos.length < 3) {
+                    previewPhotos.push(albums[0].photos[1]); // Second photo from first album
+                }
+                
+                // Ensure we have exactly 3 photos (or as many as available)
+                const previewHtml = previewPhotos.slice(0, 3).map(photo => {
+                    const blobUrl = this.getThumbnailPath(photo);
+                    return `<img data-src="${blobUrl}" alt="Preview" class="album-preview-thumb lazy-thumb" loading="lazy">`;
+                }).join('');
                 
                 const choice = document.createElement('div');
                 choice.className = `album-choice section-choice section-choice-${sectionId}`;
