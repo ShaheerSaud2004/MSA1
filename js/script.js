@@ -2012,8 +2012,8 @@ class EventGallery {
         ];
         
         const photos = sistersFiles.map(file => {
-            const localPath = `images/gallery/Photos/Art Gala | Sisters/${file}`;
-            return this.getBlobUrl(localPath);
+            // Store local path - blob URL will be resolved when image is displayed
+            return `images/gallery/Photos/Art Gala | Sisters/${file}`;
         });
         console.log("Art Gala Sisters photos generated:", photos.slice(0, 3));
         return photos;
@@ -2177,8 +2177,8 @@ class EventGallery {
         ];
         
         const photos = brothersFiles.map(file => {
-            const localPath = `images/Art Gala | Brothers/${file}`;
-            return this.getBlobUrl(localPath);
+            // Store local path - blob URL will be resolved when image is displayed
+            return `images/Art Gala | Brothers/${file}`;
         });
         console.log("Art Gala Brothers photos generated:", photos.slice(0, 3));
         return photos;
