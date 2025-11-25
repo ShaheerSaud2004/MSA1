@@ -3670,9 +3670,18 @@ class EventGallery {
         document.body.removeChild(link);
     }
 
-    downloadAlbum(eventId, albumId) {
+    downloadAlbum(eventId, albumId, sectionId = null) {
         const event = this.events[eventId];
-        const album = event.albums[albumId];
+        let album;
+        
+        // Get album from section if sectionId is provided, otherwise from event.albums
+        if (sectionId && event.sections && event.sections[sectionId]) {
+            album = event.sections[sectionId].albums[albumId];
+        } else {
+            album = event.albums[albumId];
+        }
+        
+        if (!album) return;
         
         // Create a simple alert for now - in a real app, you'd implement ZIP download
         alert(`Downloading ${album.count} photos from ${album.name} album. This feature will be fully implemented soon!`);
