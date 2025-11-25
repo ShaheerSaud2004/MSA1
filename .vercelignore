@@ -3,3 +3,8 @@
 # images/gallery/Cultures of the World | Brothers/ - Now compressed to 20MB
 # images/gallery/Cultures of the World | Sisters/ - Now compressed to 40MB
 
+# Art Gala photos are now served from Vercel Blob Storage (CDN)
+# Exclude from deployment to reduce build size
+images/Art Gala | Brothers/
+images/gallery/Photos/Art Gala | Sisters/
+
