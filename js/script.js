@@ -708,20 +708,40 @@ class EventGallery {
             'charity-week': {
                 name: 'HOPE Charity Week',
                 poster: 'CharityWeek.png',
-                albums: {
-                    'brothers': {
-                        name: 'Brothers',
-                        count: 0,
-                        photos: [],
-                        comingSoon: true
+                hasSections: true,
+                sections: {
+                    'days-1-3': {
+                        name: 'Charity Week Days 1-3',
+                        albums: {
+                            'brothers': {
+                                name: 'Brothers',
+                                count: 9,
+                                photos: this.generateCharityWeekDays13BrothersPhotos()
+                            },
+                            'sisters': {
+                                name: 'Sisters',
+                                count: 135,
+                                photos: this.generateCharityWeekDays13SistersPhotos()
+                            }
+                        }
                     },
-                    'sisters': {
-                        name: 'Sisters',
-                        count: 0,
-                        photos: [],
-                        comingSoon: true
+                    'finale': {
+                        name: 'Charity Week Finale',
+                        albums: {
+                            'brothers': {
+                                name: 'Brothers',
+                                count: 115,
+                                photos: this.generateCharityWeekFinaleBrothersPhotos()
+                            },
+                            'sisters': {
+                                name: 'Sisters',
+                                count: 175,
+                                photos: this.generateCharityWeekFinaleSistersPhotos()
+                            }
+                        }
                     }
-                }
+                },
+                albums: {} // Empty for backward compatibility
             },
             'hope-drive': {
                 name: 'Hope Clothing & Hygiene Drive',
@@ -2396,6 +2416,125 @@ class EventGallery {
         return photos;
     }
 
+    generateCharityWeekDays13BrothersPhotos() {
+        const brothersFiles = [
+            '1-IMG_4318.jpg', '2-IMG_4318.jpg', '3-IMG_4319.jpg', '4-IMG_4319.jpg', '5-IMG_5342.jpg',
+            '6-IMG_5413.jpg', '7-IMG_5414.jpg', '8-IMG_5415.jpg', '9-IMG_5419.jpg'
+        ];
+        const photos = brothersFiles.map(file => `images/gallery/Charity Week | Day 1 - 3 Brothers/${file}`);
+        return photos;
+    }
+
+    generateCharityWeekDays13SistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_4308.jpg', '10-IMG_4317.jpg', '100-IMG_5380.jpg', '101-IMG_5381.jpg', '102-IMG_5382.jpg',
+            '103-IMG_5383.jpg', '104-IMG_5384.jpg', '105-IMG_5385.jpg', '106-IMG_5386.jpg', '107-IMG_5387.jpg',
+            '108-IMG_5389.jpg', '109-IMG_5390.jpg', '11-IMG_4322.jpg', '110-IMG_5391.jpg', '111-IMG_5392.jpg',
+            '112-IMG_5393.jpg', '113-IMG_5395.jpg', '114-IMG_5396.jpg', '115-IMG_5397.jpg', '116-IMG_5398.jpg',
+            '117-IMG_5399.jpg', '118-IMG_5400.jpg', '119-IMG_5401.jpg', '12-IMG_4322.jpg', '120-IMG_5402.jpg',
+            '121-IMG_5403.jpg', '122-IMG_5404.jpg', '123-IMG_5405.jpg', '124-IMG_5406.jpg', '125-IMG_5407.jpg',
+            '126-IMG_5408.jpg', '127-IMG_5409.jpg', '128-IMG_5411.jpg', '129-IMG_5412.jpg', '13-IMG_4323.jpg',
+            '130-IMG_5416.jpg', '131-IMG_5417.jpg', '132-IMG_5418.jpg', '133-IMG_5420.jpg', '134-IMG_5421.jpg',
+            '135-IMG_5422.jpg', '14-IMG_4323.jpg', '15-IMG_4324.jpg', '16-IMG_4324.jpg', '17-IMG_4325.jpg',
+            '18-IMG_4325.jpg', '19-IMG_4327.jpg', '2-IMG_4311.jpg', '20-IMG_4329.jpg', '21-IMG_4329.jpg',
+            '22-IMG_4330.jpg', '23-IMG_4330.jpg', '24-IMG_4332.jpg', '25-IMG_4332.jpg', '26-IMG_4333.jpg',
+            '27-IMG_4334.jpg', '28-IMG_4334.jpg', '29-IMG_4336.jpg', '3-IMG_4313.jpg', '30-IMG_4336.jpg',
+            '31-IMG_4339.jpg', '32-IMG_4340.jpg', '33-IMG_4341.jpg', '34-IMG_4341.jpg', '35-IMG_4342.jpg',
+            '36-IMG_4343.jpg', '37-IMG_4343.jpg', '38-IMG_4344.jpg', '39-IMG_4344.jpg', '4-IMG_4313.jpg',
+            '40-IMG_4346.jpg', '41-IMG_4346.jpg', '42-IMG_4347.jpg', '43-IMG_4347.jpg', '44-IMG_4349.jpg',
+            '45-IMG_4351.jpg', '46-IMG_4352.jpg', '47-IMG_4353.jpg', '48-IMG_4354.jpg', '49-IMG_4355.jpg',
+            '5-IMG_4315.jpg', '50-IMG_4357.jpg', '51-IMG_4359.jpg', '52-IMG_4360.jpg', '53-IMG_4361.jpg',
+            '54-IMG_4362.jpg', '55-IMG_4363.jpg', '56-IMG_4364.jpg', '57-IMG_5103.jpg', '58-IMG_5336.jpg',
+            '59-IMG_5337.jpg', '6-IMG_4315.jpg', '60-IMG_5338.jpg', '61-IMG_5341.jpg', '62-IMG_5343.jpg',
+            '63-IMG_5344.jpg', '64-IMG_5345.jpg', '65-IMG_5346.jpg', '66-IMG_5347.jpg', '67-IMG_5348.jpg',
+            '68-IMG_5349.jpg', '69-IMG_5350.jpg', '7-IMG_4316.jpg', '70-IMG_5351.jpg', '71-IMG_5352.jpg',
+            '72-IMG_5353.jpg', '73-IMG_5354.jpg', '74-IMG_5356.jpg', '75-IMG_5357.jpg', '76-IMG_5358.jpg',
+            '77-IMG_5359.jpg', '78-IMG_5360.jpg', '79-IMG_5361.jpg', '8-IMG_4316.jpg', '80-IMG_5362.jpg',
+            '81-IMG_5363.jpg', '82-IMG_5364.jpg', '83-IMG_5365.jpg', '84-IMG_5159.jpg', '85-IMG_5366.jpg',
+            '86-IMG_5368.jpg', '87-IMG_5371.jpg', '88-IMG_5372.jpg', '89-IMG_5373.jpg', '9-IMG_4317.jpg',
+            '90-IMG_5182.jpg', '91-IMG_5183.jpg', '92-IMG_5184.jpg', '93-IMG_5185.jpg', '94-IMG_5186.jpg',
+            '95-IMG_5374.jpg', '96-IMG_5375.jpg', '97-IMG_5376.jpg', '98-IMG_5377.jpg', '99-IMG_5378.jpg'
+        ];
+        const photos = sistersFiles.map(file => `images/gallery/Charity Week | Day 1 - 3 Sisters/${file}`);
+        return photos;
+    }
+
+    generateCharityWeekFinaleBrothersPhotos() {
+        const brothersFiles = [
+            '1-IMG_0425.jpg', '10-IMG_0438.jpg', '100-IMG_7571.jpg', '101-IMG_7573.jpg', '102-IMG_7575.jpg',
+            '103-IMG_7577.jpg', '104-IMG_7580.jpg', '105-IMG_7581.jpg', '106-IMG_7583.jpg', '107-IMG_7635.jpg',
+            '108-IMG_7636.jpg', '109-IMG_7637.jpg', '11-IMG_0439.jpg', '110-IMG_7638.jpg', '111-IMG_7639.jpg',
+            '112-IMG_7640.jpg', '113-IMG_7641.jpg', '114-IMG_7642.jpg', '115-IMG_7643.jpg', '12-IMG_0440.jpg',
+            '13-IMG_0441.jpg', '14-IMG_0442.jpg', '15-IMG_0443.jpg', '16-IMG_0444.jpg', '17-IMG_0445.jpg',
+            '18-IMG_0446.jpg', '19-IMG_0447.jpg', '2-IMG_0426.jpg', '20-IMG_0448.jpg', '21-IMG_0449.jpg',
+            '22-IMG_0450.jpg', '23-IMG_0451.jpg', '24-IMG_0452.jpg', '25-IMG_0453.jpg', '26-IMG_0454.jpg',
+            '27-IMG_0455.jpg', '28-IMG_0456.jpg', '29-IMG_7392.jpg', '3-IMG_0427.jpg', '30-IMG_7394.jpg',
+            '31-IMG_7397.jpg', '32-IMG_7399.jpg', '33-IMG_7401.jpg', '34-IMG_7403.jpg', '35-IMG_7406.jpg',
+            '36-IMG_7409.jpg', '37-IMG_7412.jpg', '38-IMG_7413.jpg', '39-IMG_7415.jpg', '4-IMG_0432.jpg',
+            '40-IMG_7416.jpg', '41-IMG_7421.jpg', '42-IMG_7422.jpg', '43-IMG_7423.jpg', '44-IMG_7424.jpg',
+            '45-IMG_7425.jpg', '46-IMG_7426.jpg', '47-IMG_7429.jpg', '48-IMG_7432.jpg', '49-IMG_7433.jpg',
+            '5-IMG_0433.jpg', '50-IMG_7434.jpg', '51-IMG_7435.jpg', '52-IMG_7438.jpg', '53-IMG_7440.jpg',
+            '54-IMG_7441.jpg', '55-IMG_7443.jpg', '56-IMG_7444.jpg', '57-IMG_7446.jpg', '58-IMG_7447.jpg',
+            '59-IMG_7450.jpg', '6-IMG_0434.jpg', '60-IMG_7452.jpg', '61-IMG_7457.jpg', '62-IMG_7463.jpg',
+            '63-IMG_7464.jpg', '64-IMG_7467.jpg', '65-IMG_7468.jpg', '66-IMG_7469.jpg', '67-IMG_7470.jpg',
+            '68-IMG_7499.jpg', '69-IMG_7500.jpg', '7-IMG_0435.jpg', '70-IMG_7501.jpg', '71-IMG_7502.jpg',
+            '72-IMG_7503.jpg', '73-IMG_7504.jpg', '74-IMG_7505.jpg', '75-IMG_7511.jpg', '76-IMG_7512.jpg',
+            '77-IMG_7518.jpg', '78-IMG_7525.jpg', '79-IMG_7526.jpg', '8-IMG_0436.jpg', '80-IMG_7529.jpg',
+            '81-IMG_7532.jpg', '82-IMG_7535.jpg', '83-IMG_7536.jpg', '84-IMG_7537.jpg', '85-IMG_7538.jpg',
+            '86-IMG_7543.jpg', '87-IMG_7545.jpg', '88-IMG_7546.jpg', '89-IMG_7547.jpg', '9-IMG_0437.jpg',
+            '90-IMG_7549.jpg', '91-IMG_7558.jpg', '92-IMG_7559.jpg', '93-IMG_7561.jpg', '94-IMG_7563.jpg',
+            '95-IMG_7564.jpg', '96-IMG_7566.jpg', '97-IMG_7567.jpg', '98-IMG_7568.jpg', '99-IMG_7570.jpg'
+        ];
+        const photos = brothersFiles.map(file => `images/gallery/Charity Week | Day 4 | Brothers/${file}`);
+        return photos;
+    }
+
+    generateCharityWeekFinaleSistersPhotos() {
+        const sistersFiles = [
+            '1-150-IMG_1889.jpg', '10-102-DSC01155.jpg', '100-IMG_0474.jpg', '101-IMG_0475.jpg', '102-IMG_0476.jpg',
+            '103-IMG_0477.jpg', '104-IMG_0478.jpg', '105-IMG_0479.jpg', '106-IMG_0480.jpg', '107-IMG_0481.jpg',
+            '108-IMG_0482.jpg', '109-IMG_0483.jpg', '11-98-DSC01146.jpg', '110-IMG_0484.jpg', '111-IMG_0485.jpg',
+            '112-IMG_0486.jpg', '113-IMG_7584.jpg', '114-IMG_7588.jpg', '115-IMG_7589.jpg', '116-IMG_7590.jpg',
+            '117-IMG_7592.jpg', '118-IMG_7594.jpg', '119-IMG_0487.jpg', '12-99-IMG_2003.jpg', '120-IMG_0488.jpg',
+            '121-IMG_0489.jpg', '122-IMG_0490.jpg', '123-IMG_0491.jpg', '124-IMG_0492.jpg', '125-IMG_0493.jpg',
+            '126-IMG_0494.jpg', '127-IMG_0495.jpg', '128-IMG_0496.jpg', '129-IMG_0497.jpg', '13-100-IMG_2038.jpg',
+            '130-IMG_0498.jpg', '131-IMG_0499.jpg', '132-IMG_0500.jpg', '133-IMG_0501.jpg', '134-IMG_0502.jpg',
+            '135-IMG_0503.jpg', '136-IMG_0504.jpg', '137-IMG_0505.jpg', '138-IMG_0506.jpg', '139-IMG_0507.jpg',
+            '14-97-DSC01145.jpg', '140-IMG_0508.jpg', '141-IMG_0509.jpg', '142-IMG_0510.jpg', '143-IMG_0511.jpg',
+            '144-IMG_0512.jpg', '145-IMG_0513.jpg', '146-IMG_0514.jpg', '147-IMG_0515.jpg', '148-IMG_0516.jpg',
+            '149-IMG_0517.jpg', '15-95-IMG_1996.jpg', '150-IMG_0518.jpg', '151-IMG_0519.jpg', '152-IMG_0520.jpg',
+            '153-IMG_0521.jpg', '154-IMG_7597.jpg', '155-IMG_7598.jpg', '156-IMG_7601.jpg', '157-IMG_7602.jpg',
+            '158-IMG_7605.jpg', '159-IMG_7606.jpg', '16-94-IMG_2026.jpg', '160-IMG_7607.jpg', '161-IMG_7609.jpg',
+            '162-IMG_7610.jpg', '163-IMG_7612.jpg', '164-IMG_7613.jpg', '165-IMG_7615.jpg', '166-IMG_7617.jpg',
+            '167-IMG_7619.jpg', '168-IMG_7620.jpg', '169-IMG_7621.jpg', '17-96-IMG_2032.jpg', '170-IMG_7623.jpg',
+            '171-IMG_7625.jpg', '172-IMG_0522.jpg', '173-IMG_7628.jpg', '174-IMG_0523.jpg', '175-IMG_0524.jpg',
+            '176-IMG_0525.jpg', '177-IMG_0526.jpg', '178-IMG_7631.jpg', '179-IMG_7632.jpg', '18-92-IMG_2021.jpg',
+            '19-93-IMG_1990.jpg', '2-148-IMG_1887.jpg', '20-90-IMG_2016.jpg', '21-91-IMG_1985.jpg',
+            '22-89-IMG_2045.jpg', '23-88-IMG_1979.jpg', '24-87-IMG_2010.jpg', '25-83-IMG_1997.jpg',
+            '26-85-IMG_2004.jpg', '27-84-IMG_2033.jpg', '28-81-IMG_1991.jpg', '29-79-IMG_1986.jpg',
+            '3-149-IMG_1888.jpg', '30-82-IMG_2027.jpg', '31-80-IMG_2022.jpg', '32-78-IMG_2017.jpg',
+            '33-77-IMG_2046.jpg', '34-76-IMG_1980.jpg', '35-75-IMG_2011.jpg', '36-74-IMG_2040.jpg',
+            '37-73-IMG_2005.jpg', '38-71-IMG_1998.jpg', '39-72-IMG_2034.jpg', '40-69-IMG_1992.jpg',
+            '41-68-IMG_2023.jpg', '42-67-IMG_1987.jpg', '43-86-IMG_2039.jpg', '44-66-IMG_2018.jpg',
+            '45-65-IMG_2047.jpg', '46-64-IMG_1981.jpg', '47-63-IMG_2012.jpg', '48-62-IMG_2041.jpg',
+            '49-54-IMG_1999.jpg', '50-57-IMG_2035.jpg', '51-51-DSC01055.jpg', '52-52-DSC01056.jpg',
+            '53-47-DSC01051.jpg', '54-70-IMG_2028.jpg', '55-59-IMG_2006.jpg', '56-46-DSC01050.jpg',
+            '57-45-IMG_2029.jpg', '58-49-DSC01053.jpg', '59-42-IMG_1993.jpg', '60-50-DSC01054.jpg',
+            '61-36-IMG_2019.jpg', '62-48-DSC01052.jpg', '63-38-IMG_1988.jpg', '64-34-IMG_2048.jpg',
+            '65-33-IMG_1982.jpg', '66-31-DSC01033.jpg', '67-32-DSC01034.jpg', '68-29-DSC01031.jpg',
+            '69-28-DSC01030.jpg', '7-101-IMG_2009.jpg', '70-27-DSC01029.jpg', '71-26-DSC01028.jpg',
+            '72-23-DSC01025.jpg', '73-41-IMG_2024.jpg', '74-25-DSC01027.jpg', '75-22-DSC01024.jpg',
+            '76-18-IMG_2042.jpg', '77-15-IMG_2007.jpg', '78-30-DSC01032.jpg', '79-13-IMG_2036.jpg',
+            '80-24-DSC01026.jpg', '81-2-IMG_2025.jpg', '82-1-DSC01002.jpg', '83-8-IMG_2030.jpg',
+            '84-21-DSC01023.jpg', '85-3-DSC01004.jpg', '86-5-IMG_1994.jpg', '87-IMG_0461.jpg',
+            '88-IMG_0462.jpg', '89-IMG_0463.jpg', '9-103-DSC01156.jpg', '90-IMG_0464.jpg', '91-IMG_0465.jpg',
+            '92-IMG_0466.jpg', '93-IMG_0467.jpg', '94-IMG_0468.jpg', '95-IMG_0469.jpg', '96-IMG_0470.jpg',
+            '97-IMG_0471.jpg', '98-IMG_0472.jpg', '99-IMG_0473.jpg'
+        ];
+        const photos = sistersFiles.map(file => `images/gallery/Charity Week | Day 4 | Sisters/${file}`);
+        return photos;
+    }
+
     // Diagnostic function to test image loading
     testImagePath(imagePath) {
         return new Promise((resolve, reject) => {
@@ -2487,11 +2626,86 @@ class EventGallery {
         });
     }
 
-    showEventModal(eventId) {
+    showEventModal(eventId, sectionId = null) {
         this.currentEvent = eventId;
+        this.currentSection = sectionId;
         const event = this.events[eventId];
         if (!event) return;
 
+        // Check if this event has sections (like Charity Week)
+        if (event.hasSections && event.sections) {
+            // If sectionId is provided, show albums for that section
+            if (sectionId && event.sections[sectionId]) {
+                const section = event.sections[sectionId];
+                document.getElementById('event-title').textContent = section.name;
+                
+                const albumsSelection = document.querySelector('.albums-selection');
+                albumsSelection.innerHTML = '<button class="back-to-sections-btn" style="margin-bottom: 20px; padding: 10px 20px; background: #4a7c59; color: white; border: none; border-radius: 5px; cursor: pointer;"><i class="fas fa-arrow-left"></i> Back to Sections</button>';
+                
+                const backBtn = albumsSelection.querySelector('.back-to-sections-btn');
+                backBtn.addEventListener('click', () => {
+                    this.showEventModal(eventId);
+                });
+                
+                Object.entries(section.albums).forEach(([albumId, album]) => {
+                    this.createAlbumChoice(albumsSelection, eventId, albumId, album, event, sectionId);
+                });
+                
+                document.getElementById('event-modal').style.display = 'flex';
+                return;
+            }
+            
+            // Show sections
+            document.getElementById('event-title').textContent = event.name;
+            
+            const albumsSelection = document.querySelector('.albums-selection');
+            albumsSelection.innerHTML = '';
+            
+            Object.entries(event.sections).forEach(([sectionId, section]) => {
+                const totalPhotos = Object.values(section.albums).reduce((sum, album) => sum + (album.count || 0), 0);
+                const previewAlbums = Object.values(section.albums).slice(0, 2);
+                const previewHtml = previewAlbums.map(album => {
+                    if (album.photos && album.photos.length > 0) {
+                        const previewPhoto = album.photos[0];
+                        const blobUrl = this.getThumbnailPath(previewPhoto);
+                        return `<img data-src="${blobUrl}" alt="Preview" class="album-preview-thumb lazy-thumb" loading="lazy">`;
+                    }
+                    return '';
+                }).filter(html => html).join('');
+                
+                const choice = document.createElement('div');
+                choice.className = `album-choice section-choice section-choice-${sectionId}`;
+                choice.innerHTML = `
+                    <div class="album-preview-thumbs">
+                        ${previewHtml}
+                    </div>
+                    <div class="album-choice-content">
+                        <h4>${section.name}</h4>
+                        <p>${totalPhotos} photos • ${Object.keys(section.albums).length} albums</p>
+                        <button class="choose-album-btn">
+                            <i class="fas fa-folder-open"></i>
+                            View Section
+                        </button>
+                    </div>
+                `;
+                
+                choice.addEventListener('click', () => {
+                    this.showEventModal(eventId, sectionId);
+                });
+                
+                albumsSelection.appendChild(choice);
+                
+                // Initialize lazy loading for preview thumbnails
+                choice.querySelectorAll('.lazy-thumb').forEach(img => {
+                    this.loadThumbnail(img);
+                });
+            });
+            
+            document.getElementById('event-modal').style.display = 'flex';
+            return;
+        }
+
+        // Regular event with direct albums
         // Update modal content
         document.getElementById('event-title').textContent = event.name;
         
@@ -2500,6 +2714,14 @@ class EventGallery {
         albumsSelection.innerHTML = '';
 
         Object.entries(event.albums).forEach(([albumId, album]) => {
+            this.createAlbumChoice(albumsSelection, eventId, albumId, album, event);
+        });
+
+        // Show modal
+        document.getElementById('event-modal').style.display = 'flex';
+    }
+
+    createAlbumChoice(albumsSelection, eventId, albumId, album, event, sectionId = null) {
             const choice = document.createElement('div');
             choice.className = `album-choice album-choice-${albumId}`;
             
@@ -2579,7 +2801,7 @@ class EventGallery {
                 choice.addEventListener('click', () => {
                     // Track album click
                     trackClick('gallery', eventId, albumId);
-                    this.showAlbumPreview(eventId, albumId);
+                    this.showAlbumPreview(eventId, albumId, sectionId);
                 });
                 
                 // Initialize lazy loading for preview thumbnails
@@ -2589,21 +2811,28 @@ class EventGallery {
             }
             
             albumsSelection.appendChild(choice);
-        });
-
-        // Show modal
-        document.getElementById('event-modal').style.display = 'flex';
     }
 
-    showAlbumPreview(eventId, albumId) {
+    showAlbumPreview(eventId, albumId, sectionId = null) {
         this.currentEvent = eventId;
         this.currentAlbum = albumId;
+        this.currentSection = sectionId;
         
         const event = this.events[eventId];
-        const album = event.albums[albumId];
+        let album;
+        
+        // Get album from section if sectionId is provided, otherwise from event.albums
+        if (sectionId && event.sections && event.sections[sectionId]) {
+            album = event.sections[sectionId].albums[albumId];
+        } else {
+            album = event.albums[albumId];
+        }
+        
+        if (!album) return;
         
         // Update modal content
-        document.getElementById('album-modal-title').textContent = `${event.name} | ${album.name}`;
+        const sectionName = sectionId && event.sections && event.sections[sectionId] ? event.sections[sectionId].name : event.name;
+        document.getElementById('album-modal-title').textContent = `${sectionName} | ${album.name}`;
         document.getElementById('album-modal-count').textContent = `${album.count} photos`;
         
         // Start rotating preview
