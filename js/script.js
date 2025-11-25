@@ -2991,7 +2991,9 @@ class EventGallery {
 
     getThumbnailPath(originalPath) {
         // Temporarily use original images directly to fix 404 errors
+        // If path is already encoded (contains %), use as-is, otherwise let browser handle encoding
         console.log('Loading image from:', originalPath);
+        // Browser will automatically encode URLs when setting src attribute, so return as-is
         return originalPath;
     }
 
