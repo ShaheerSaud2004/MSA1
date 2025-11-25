@@ -521,6 +521,7 @@ class EventGallery {
         this.currentAlbum = null;
         this.rotationInterval = null;
         this.blobUrlMapping = null;
+        // Load blob mapping asynchronously - it will be used when images are displayed
         this.loadBlobUrlMapping();
         this.init();
     }
@@ -530,9 +531,9 @@ class EventGallery {
             const response = await fetch('art-gala-blob-urls.json');
             if (response.ok) {
                 this.blobUrlMapping = await response.json();
-                console.log('Art Gala blob URL mapping loaded', Object.keys(this.blobUrlMapping.brothers || {}).length, 'brothers,', Object.keys(this.blobUrlMapping.sisters || {}).length, 'sisters');
+                console.log('Art Gala blob URL mapping loaded:', Object.keys(this.blobUrlMapping.brothers || {}).length, 'brothers,', Object.keys(this.blobUrlMapping.sisters || {}).length, 'sisters');
             } else {
-                console.warn('Blob URL mapping file not found, status:', response.status);
+                console.warn('Blob URL mapping file not found, status:', response.status, '- will use local paths');
             }
         } catch (error) {
             console.warn('Could not load blob URL mapping, using local paths:', error);
@@ -2995,10 +2996,16 @@ class EventGallery {
     }
 
     getThumbnailPath(originalPath) {
-        // Temporarily use original images directly to fix 404 errors
-        // If path is already encoded (contains %), use as-is, otherwise let browser handle encoding
-        console.log('Loading image from:', originalPath);
-        // Browser will automatically encode URLs when setting src attribute, so return as-is
+        // Check if this is an Art Gala image and we have blob URLs loaded
+        if (originalPath.includes('Art Gala') && this.blobUrlMapping) {
+            const blobUrl = this.getBlobUrl(originalPath);
+            if (blobUrl !== originalPath) {
+                // Return blob URL if found
+                return blobUrl;
+            }
+        }
+        // For other images or if blob URL not found, use original path
+        // Browser will automatically encode URLs when setting src attribute
         return originalPath;
     }
 
