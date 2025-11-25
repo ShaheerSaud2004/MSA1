@@ -2937,9 +2937,10 @@ class EventGallery {
                 };
             };
             
-            // Click to open lightbox (use full-size image)
+            // Click to open lightbox (use full-size image from data-full attribute which has blob URL)
             img.addEventListener('click', () => {
-                this.openLightbox(photo, `${albumName} Photo ${i + 1}`);
+                const fullImagePath = img.getAttribute('data-full') || photo;
+                this.openLightbox(fullImagePath, `${albumName} Photo ${i + 1}`);
             });
             
             // Click download button (use full-size image)
@@ -2983,9 +2984,10 @@ class EventGallery {
             // Set up intersection observer for lazy loading
             this.setupLazyLoad(img, placeholder);
             
-            // Click to open lightbox (use full-size image)
+            // Click to open lightbox (use full-size image from data-full attribute which has blob URL)
             img.addEventListener('click', () => {
-                this.openLightbox(photo, `${albumName} Photo ${i + 1}`);
+                const fullImagePath = img.getAttribute('data-full') || photo;
+                this.openLightbox(fullImagePath, `${albumName} Photo ${i + 1}`);
             });
             
             // Click download button (use full-size image)
