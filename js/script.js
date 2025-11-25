@@ -530,7 +530,9 @@ class EventGallery {
             const response = await fetch('art-gala-blob-urls.json');
             if (response.ok) {
                 this.blobUrlMapping = await response.json();
-                console.log('Art Gala blob URL mapping loaded');
+                console.log('Art Gala blob URL mapping loaded', Object.keys(this.blobUrlMapping.brothers || {}).length, 'brothers,', Object.keys(this.blobUrlMapping.sisters || {}).length, 'sisters');
+            } else {
+                console.warn('Blob URL mapping file not found, status:', response.status);
             }
         } catch (error) {
             console.warn('Could not load blob URL mapping, using local paths:', error);
@@ -546,6 +548,10 @@ class EventGallery {
             // Try sisters
             if (this.blobUrlMapping.sisters && this.blobUrlMapping.sisters[localPath]) {
                 return this.blobUrlMapping.sisters[localPath];
+            }
+            // Debug: log if path not found in mapping
+            if (localPath.includes('Art Gala')) {
+                console.warn('Art Gala path not found in blob mapping:', localPath);
             }
         }
         // Fallback to local path if blob URL not found
@@ -1406,9 +1412,8 @@ class EventGallery {
         ];
         
         const photos = sistersFiles.map(file => {
-            // URL encode the path to handle pipe character properly
-            const path = `images/gallery/GBM | Sisters/${file}`;
-            return encodeURI(path);
+            // Path with pipe character - browser will handle encoding automatically
+            return `images/gallery/GBM | Sisters/${file}`;
         });
         console.log('GBM Sisters photos generated:', photos.slice(0, 3)); // Log first 3 for debugging
         return photos;
