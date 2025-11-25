@@ -2906,9 +2906,12 @@ class EventGallery {
             const item = document.createElement('div');
             item.className = 'full-album-item';
             
+            // Get blob URL for full-size image too (for lightbox)
+            const fullImagePath = this.getThumbnailPath(photo);
+            
             // Create image directly without placeholder for immediate display
             item.innerHTML = `
-                <img src="${thumbnailPath}" data-full="${photo}" alt="${albumName} Photo ${i + 1}" class="loaded">
+                <img src="${thumbnailPath}" data-full="${fullImagePath}" alt="${albumName} Photo ${i + 1}" class="loaded">
                 <button class="download-overlay" title="Download Photo">
                     <i class="fas fa-download"></i>
                 </button>
@@ -2958,6 +2961,8 @@ class EventGallery {
         for (let i = startIndex; i < endIndex; i++) {
             const photo = this.currentAlbumPhotos[i];
             const thumbnailPath = this.getThumbnailPath(photo);
+            // Get blob URL for full-size image too (for lightbox)
+            const fullImagePath = this.getThumbnailPath(photo);
             const item = document.createElement('div');
             item.className = 'full-album-item';
             
@@ -2966,7 +2971,7 @@ class EventGallery {
                 <div class="photo-placeholder" style="animation: none; opacity: 0.5;">
                     <i class="fas fa-image"></i>
                 </div>
-                <img data-src="${thumbnailPath}" data-full="${photo}" alt="${albumName} Photo ${i + 1}" class="lazy-load" style="display: none;">
+                <img data-src="${thumbnailPath}" data-full="${fullImagePath}" alt="${albumName} Photo ${i + 1}" class="lazy-load" style="display: none;">
                 <button class="download-overlay" title="Download Photo">
                     <i class="fas fa-download"></i>
                 </button>
@@ -3070,12 +3075,15 @@ class EventGallery {
             const item = document.createElement('div');
             item.className = 'full-album-item';
             
+            // Get blob URL for full-size image too (for lightbox)
+            const fullImagePath = this.getThumbnailPath(photo);
+            
             // Create placeholder first, then lazy load
             item.innerHTML = `
                 <div class="image-placeholder">
                     <div class="placeholder-spinner"></div>
                 </div>
-                <img data-src="${thumbnailPath}" data-full="${photo}" alt="${albumName} Photo ${i + 1}" class="lazy-image" style="display: none;">
+                <img data-src="${thumbnailPath}" data-full="${fullImagePath}" alt="${albumName} Photo ${i + 1}" class="lazy-image" style="display: none;">
                 <button class="download-overlay" title="Download Photo">
                     <i class="fas fa-download"></i>
                 </button>
