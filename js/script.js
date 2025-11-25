@@ -2631,7 +2631,9 @@ class EventGallery {
                 const img = previewItem.querySelector('img');
                 
                 previewItem.addEventListener('click', () => {
-                    this.openLightbox(photo, `Preview ${i + 1}`);
+                    // Use blob URL if available
+                    const fullImagePath = this.getThumbnailPath(photo);
+                    this.openLightbox(fullImagePath, `Preview ${i + 1}`);
                 });
                 
                 carouselTrack.appendChild(previewItem);
@@ -3147,7 +3149,9 @@ class EventGallery {
                     
                     // Add click handler
                     image.addEventListener('click', () => {
-                        this.openLightbox(photo, `${albumName} Photo ${photoNumber}`);
+                        // Use blob URL if available from data-full or get it
+                        const fullImagePath = image.getAttribute('data-full') || this.getThumbnailPath(photo);
+                        this.openLightbox(fullImagePath, `${albumName} Photo ${photoNumber}`);
                     });
                     
                     observer.unobserve(image);
@@ -3217,7 +3221,9 @@ class EventGallery {
         
         // Click handler
         img.addEventListener('click', () => {
-            this.openLightbox(photo, `${albumName} Photo ${index + 1}`);
+            // Use blob URL if available
+            const fullImagePath = this.getThumbnailPath(photo);
+            this.openLightbox(fullImagePath, `${albumName} Photo ${index + 1}`);
         });
         
         // Download button
