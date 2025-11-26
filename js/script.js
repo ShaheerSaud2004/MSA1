@@ -4368,22 +4368,42 @@ class PhotoNotificationHandler {
         
         const email = emailInput.value.trim();
         const phone = phoneInput.value.trim();
+        const submitBtn = document.querySelector('#photoNotificationForm button[type="submit"]');
+        
+        // Disable submit button
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+        }
         
         // Validate: at least one field must be filled
         if (!email && !phone) {
             this.showMessage(messageDiv, '⚠️ Please enter either an email or phone number', 'error');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Subscribe to Updates';
+            }
             return;
         }
         
         // Validate email format if provided
         if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             this.showMessage(messageDiv, '⚠️ Please enter a valid email address', 'error');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Subscribe to Updates';
+            }
             return;
         }
         
         // Validate phone format if provided
         if (phone && !/^[\d\s\-\+\(\)]{10,}$/.test(phone)) {
             this.showMessage(messageDiv, '⚠️ Please enter a valid phone number', 'error');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Subscribe to Updates';
+            }
             return;
         }
         
@@ -4398,6 +4418,36 @@ class PhotoNotificationHandler {
         // Save to localStorage as backup
         this.saveNotificationData(contactData);
         console.log('Saved to localStorage:', contactData);
+        
+        // Send confirmation email via Formspree if email is provided
+        if (email) {
+            try {
+                const response = await fetch('https://formspree.io/f/meorpqjz', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        phone: phone || 'Not provided',
+                        timestamp: new Date().toLocaleString(),
+                        message: `New subscription request from MSA website`,
+                        _subject: `New MSA Subscription Request`,
+                        _replyto: email,
+                        _autoresponse: `Thank you for subscribing to Rutgers MSA updates! Your email has been recorded and you will receive notifications about upcoming events, new photos, and important announcements.\n\nThank you,\nRutgers MSA Team`
+                    })
+                });
+                
+                if (response.ok) {
+                    console.log('✅ Confirmation email sent via Formspree');
+                } else {
+                    console.warn('⚠️ Formspree email may have failed, but subscription is saved');
+                }
+            } catch (error) {
+                console.error('❌ Error sending Formspree email:', error);
+                // Continue anyway - subscription is still saved
+            }
+        }
         
         // Save to Vercel Blob via API
         try {
@@ -4421,12 +4471,18 @@ class PhotoNotificationHandler {
             // Continue anyway - data is in localStorage
         }
         
-        // Show success message immediately
-        this.showMessage(messageDiv, `🎉 Success! You're now subscribed to photo notifications!`, 'success');
+        // Show success message
+        this.showMessage(messageDiv, `✅ Success! ${email ? 'Check your email for confirmation.' : 'You\'re now subscribed!'}`, 'success');
         
         // Clear the form
         emailInput.value = '';
         phoneInput.value = '';
+        
+        // Re-enable submit button
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Subscribe to Updates';
+        }
         
         // Close modal and return to main screen after success
         setTimeout(() => {
@@ -4438,7 +4494,7 @@ class PhotoNotificationHandler {
             
             // Scroll to top of page to show main content
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 2000);
+        }, 2500);
     }
 
     isValidEmail(email) {

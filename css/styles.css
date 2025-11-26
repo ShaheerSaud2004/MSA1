@@ -5647,35 +5647,34 @@ img.event-logo[src*="hope.jpg"],
 
 .notification-modal-content {
     background: #ffffff;
-    border-radius: 24px;
-    padding: 36px 32px;
-    max-width: 440px;
+    border-radius: 16px;
+    padding: 28px 24px;
+    max-width: 400px;
     width: 90%;
     position: relative;
     box-shadow: 
-        0 24px 64px rgba(0, 0, 0, 0.12),
-        0 8px 24px rgba(0, 0, 0, 0.08);
-    animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        0 20px 50px rgba(0, 0, 0, 0.15),
+        0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: modalSlideIn 0.3s ease-out;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 
 .modal-close-btn {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 12px;
+    right: 12px;
     background: #f5f5f5;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #666;
     cursor: pointer;
-    padding: 8px;
+    padding: 6px;
     border-radius: 50%;
     transition: all 0.2s ease;
     z-index: 10;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -5684,85 +5683,81 @@ img.event-logo[src*="hope.jpg"],
 .modal-close-btn:hover {
     background: #e8e8e8;
     color: #333;
-    transform: rotate(90deg);
 }
 
 .modal-header {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     position: relative;
 }
 
 .modal-icon-wrapper {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 16px;
-    background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
-    border-radius: 16px;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    background: #2c5530;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(44, 85, 48, 0.2);
+    box-shadow: 0 3px 10px rgba(44, 85, 48, 0.25);
 }
 
 .modal-icon-wrapper i {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: white;
 }
 
 .modal-header h3 {
     color: #1a1a1a;
-    font-size: 1.6rem;
-    margin-bottom: 10px;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
     font-weight: 700;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.3px;
 }
 
 .modal-header p {
     color: #666;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.875rem;
+    line-height: 1.5;
     font-weight: 400;
     margin: 0;
-    max-width: 320px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .notification-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .input-label {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: #333;
+    color: #555;
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 4px;
+    gap: 6px;
+    margin-bottom: 2px;
 }
 
 .input-label i {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     color: #2c5530;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .notification-input {
-    padding: 14px 16px;
-    border: 1.5px solid #e5e5e5;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    background: #ffffff;
+    padding: 12px 14px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    background: #fafafa;
     transition: all 0.2s ease;
     outline: none;
     font-weight: 400;
@@ -5777,40 +5772,39 @@ img.event-logo[src*="hope.jpg"],
 .notification-input:focus {
     border-color: #2c5530;
     background: #ffffff;
-    box-shadow: 0 0 0 4px rgba(44, 85, 48, 0.08);
-    transform: translateY(-1px);
+    box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
 }
 
 .input-divider-container {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 4px 0;
+    gap: 10px;
+    margin: 2px 0;
 }
 
 .input-divider-line {
     flex: 1;
     height: 1px;
-    background: #e0e0e0;
+    background: #e5e5e5;
 }
 
 .input-divider-text {
     color: #999;
     font-weight: 500;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .form-note {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #888;
     text-align: center;
-    margin: -4px 0 0;
+    margin: -2px 0 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .form-note i {
