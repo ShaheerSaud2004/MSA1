@@ -1197,12 +1197,12 @@ section {
 
 .heartcat-left .heartcat-image {
     animation-delay: 0s;
-    transform: scaleX(-1); /* Flip horizontally to face right */
+    /* Faces right by default */
 }
 
 .heartcat-right .heartcat-image {
     animation-delay: 1.5s;
-    /* Faces left by default */
+    transform: scaleX(-1); /* Flip horizontally to face left towards teams */
 }
 
 @keyframes floatHeartCat {
