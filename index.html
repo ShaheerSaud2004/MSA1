@@ -1003,14 +1003,56 @@
                 </div>
             </div>
             
-            <!-- Floating Notification Button -->
-            <div class="floating-notification-btn" id="floatingNotificationBtn">
-                <div class="notification-icon">
-                    <i class="fas fa-bell"></i>
+            <!-- Notification Popup Modal -->
+            <div class="notification-modal" id="notificationModal">
+                <div class="notification-modal-overlay"></div>
+                <div class="notification-modal-content">
+                    <button class="modal-close-btn" id="modalCloseBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div class="modal-header">
+                        <div class="modal-icon-wrapper">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3>Stay Connected</h3>
+                        <p>Get notified about upcoming events, new photos, and important announcements</p>
+                    </div>
+                    
+                    <form class="notification-form" id="photoNotificationForm" action="javascript:void(0);" method="post">
+                        <div class="form-group">
+                            <label for="emailInput" class="input-label">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <input type="email" id="emailInput" placeholder="your.email@example.com" class="notification-input">
+                        </div>
+                        
+                        <div class="input-divider-container">
+                            <span class="input-divider-line"></span>
+                            <span class="input-divider-text">OR</span>
+                            <span class="input-divider-line"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phoneInput" class="input-label">
+                                <i class="fas fa-phone"></i> Phone Number
+                            </label>
+                            <input type="tel" id="phoneInput" placeholder="(123) 456-7890" class="notification-input">
+                        </div>
+                        
+                        <p class="form-note">
+                            <i class="fas fa-info-circle"></i> Choose at least one way to stay in touch
+                        </p>
+                        
+                        <button type="submit" class="notification-submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Subscribe to Updates
+                        </button>
+                        
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
                 </div>
-                <div class="notification-text">Get Updates</div>
             </div>
-
 
             <!-- Remind Me Email Modal -->
             <div class="remind-me-modal" id="remindMeModal">
