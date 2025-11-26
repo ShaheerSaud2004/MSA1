@@ -1170,15 +1170,72 @@ section {
 }
 
 /* Special layout for Necessary Teams section (2 cards) */
+/* Heart Teams Container */
+.heart-teams-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.heartcat-side {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heartcat-image {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    animation: floatHeartCat 3s ease-in-out infinite;
+}
+
+.heartcat-left .heartcat-image {
+    animation-delay: 0s;
+}
+
+.heartcat-right .heartcat-image {
+    animation-delay: 1.5s;
+}
+
+@keyframes floatHeartCat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-15px) scale(1.05);
+    }
+}
+
 #necessary-teams .flip-cards-gallery {
     grid-template-columns: repeat(2, 1fr);
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0;
+    flex: 1;
 }
 
 @media (max-width: 768px) {
+    .heart-teams-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .heartcat-side {
+        order: 3;
+    }
+    
+    .heartcat-image {
+        max-width: 150px;
+    }
+    
     #necessary-teams .flip-cards-gallery {
         grid-template-columns: 1fr;
+        order: 1;
     }
 }
 
