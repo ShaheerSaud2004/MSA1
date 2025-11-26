@@ -6309,22 +6309,27 @@ img.event-logo[src*="hope.jpg"],
     .notification-modal-content {
         padding: 28px 20px;
         margin: 20px;
-        border-radius: 18px;
+        border-radius: 20px;
         max-width: 95%;
     }
     
-    .modal-icon {
-        font-size: 2rem;
-        margin-bottom: 10px;
+    .modal-icon-wrapper {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 14px;
+    }
+    
+    .modal-icon-wrapper i {
+        font-size: 1.5rem;
     }
     
     .modal-header h3 {
-        font-size: 1.3rem;
-        margin-bottom: 6px;
+        font-size: 1.4rem;
+        margin-bottom: 8px;
     }
     
     .modal-header p {
-        font-size: 0.9rem;
+        font-size: 0.875rem;
     }
     
     .notification-input {
