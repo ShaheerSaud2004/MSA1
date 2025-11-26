@@ -5647,66 +5647,86 @@ img.event-logo[src*="hope.jpg"],
 
 .notification-modal-content {
     background: #ffffff;
-    border-radius: 20px;
-    padding: 32px 28px;
-    max-width: 420px;
+    border-radius: 24px;
+    padding: 36px 32px;
+    max-width: 440px;
     width: 90%;
     position: relative;
     box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.15),
-        0 8px 25px rgba(0, 0, 0, 0.1);
+        0 24px 64px rgba(0, 0, 0, 0.12),
+        0 8px 24px rgba(0, 0, 0, 0.08);
     animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 
 .modal-close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.9);
+    top: 16px;
+    right: 16px;
+    background: #f5f5f5;
     border: none;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #666;
     cursor: pointer;
     padding: 8px;
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     z-index: 10;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-close-btn:hover {
-    background: rgba(244, 67, 54, 0.1);
-    color: #f44336;
-    transform: scale(1.1);
+    background: #e8e8e8;
+    color: #333;
+    transform: rotate(90deg);
 }
 
 .modal-header {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
     position: relative;
 }
 
-.modal-icon {
-    font-size: 2.5rem;
-    margin-bottom: 12px;
-    color: #2c5530;
+.modal-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(44, 85, 48, 0.2);
+}
+
+.modal-icon-wrapper i {
+    font-size: 1.8rem;
+    color: white;
 }
 
 .modal-header h3 {
-    color: #2c5530;
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+    color: #1a1a1a;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
     font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .modal-header p {
     color: #666;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.6;
     font-weight: 400;
     margin: 0;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .notification-form {
@@ -5722,28 +5742,31 @@ img.event-logo[src*="hope.jpg"],
 }
 
 .input-label {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     font-weight: 600;
-    color: #2c5530;
+    color: #333;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    margin-bottom: 4px;
 }
 
 .input-label i {
-    font-size: 0.9rem;
-    opacity: 0.7;
+    font-size: 0.875rem;
+    color: #2c5530;
+    opacity: 0.8;
 }
 
 .notification-input {
     padding: 14px 16px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 10px;
+    border: 1.5px solid #e5e5e5;
+    border-radius: 12px;
     font-size: 0.95rem;
-    background: #fafafa;
+    background: #ffffff;
     transition: all 0.2s ease;
     outline: none;
     font-weight: 400;
+    color: #333;
 }
 
 .notification-input::placeholder {
@@ -5754,7 +5777,8 @@ img.event-logo[src*="hope.jpg"],
 .notification-input:focus {
     border-color: #2c5530;
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+    box-shadow: 0 0 0 4px rgba(44, 85, 48, 0.08);
+    transform: translateY(-1px);
 }
 
 .input-divider-container {
