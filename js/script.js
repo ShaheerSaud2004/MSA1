@@ -4961,41 +4961,9 @@ class HeroSlideshow {
 document.addEventListener('DOMContentLoaded', () => {
     new HeroSlideshow();
     initializeFlipCards();
-    initializeNotificationModal();
     initializeRemindMeModal();
 });
 
-// Initialize notification modal functionality
-function initializeNotificationModal() {
-    const floatingBtn = document.getElementById('floatingNotificationBtn');
-    const modal = document.getElementById('notificationModal');
-    const closeBtn = document.getElementById('modalCloseBtn');
-    const overlay = document.querySelector('.notification-modal-overlay');
-    
-    if (!floatingBtn || !modal) return;
-    
-    // Open modal
-    floatingBtn.addEventListener('click', function() {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-    
-    // Close modal functions
-    function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-    
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (overlay) overlay.addEventListener('click', closeModal);
-    
-    // Close on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
-    });
-}
 
 // Flip Cards Mobile Touch Support
 function initializeFlipCards() {
@@ -5047,34 +5015,6 @@ function initializeRemindMeModal() {
     const form = document.getElementById('remindMeForm');
     const emailInput = document.getElementById('remindMeEmail');
     const messageDiv = document.getElementById('remindMeMessage');
-    
-    // Function to open notification modal
-    function openNotificationModal() {
-        // Track notification modal open
-        trackClick('notification-modal');
-        
-        const notificationModal = document.getElementById('notificationModal');
-        if (notificationModal) {
-            notificationModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Focus on email input in notification modal
-            const notificationEmailInput = document.getElementById('emailInput');
-            if (notificationEmailInput) {
-                setTimeout(() => notificationEmailInput.focus(), 100);
-            }
-        }
-    }
-    
-    // Attach to remindMeBtn if it exists
-    if (remindMeBtn) {
-        remindMeBtn.addEventListener('click', openNotificationModal);
-    }
-    
-    // Attach to remindMeBtn3 if it exists
-    if (remindMeBtn3) {
-        remindMeBtn3.addEventListener('click', openNotificationModal);
-    }
     
     if (!modal) return;
     
