@@ -905,24 +905,6 @@ class EventGallery {
                     }
                 }
             },
-            'sistersgiving': {
-                name: 'Sistersgiving',
-                poster: 'images/gallery/Photos/Sistersgiving.jpg',
-                albums: {
-                    'sisters': {
-                        name: 'Sisters',
-                        count: 0,
-                        photos: [],
-                        comingSoon: true
-                    },
-                    'brothers': {
-                        name: 'Brothers',
-                        count: 3,
-                        photos: this.generateHappyPlaceholderPhotos(),
-                        comingSoon: true
-                    }
-                }
-            }
             // Future events can be easily added here
         };
     }
@@ -4963,6 +4945,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeFlipCards();
     initializeNotificationModal();
     initializeRemindMeModal();
+    initializeRotatingCats();
 });
 
 // Initialize notification modal functionality
@@ -5028,6 +5011,34 @@ function initializeFlipCards() {
             });
         }
     });
+}
+
+// Initialize rotating cat images
+function initializeRotatingCats() {
+    const catImages = document.querySelectorAll('.rotating-cat');
+    if (catImages.length === 0) return;
+    
+    let currentIndex = 0;
+    
+    function rotateCats() {
+        // Remove active class from current image
+        catImages[currentIndex].classList.remove('active');
+        catImages[currentIndex].classList.add('fade-out');
+        
+        // Move to next image
+        currentIndex = (currentIndex + 1) % catImages.length;
+        
+        // Add active class to next image
+        setTimeout(() => {
+            catImages.forEach(cat => {
+                cat.classList.remove('active', 'fade-out');
+            });
+            catImages[currentIndex].classList.add('active');
+        }, 300);
+    }
+    
+    // Rotate every 3 seconds
+    setInterval(rotateCats, 3000);
 }
 
 // Initialize Remind Me modal functionality
