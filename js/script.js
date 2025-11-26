@@ -5294,5 +5294,52 @@ function initializeEventFilters() {
 // Initialize event filters when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initializeEventFilters();
+    initializeHeartVeins();
 });
+
+// Initialize heart veins interaction
+function initializeHeartVeins() {
+    const marketingCard = document.querySelector('#necessary-teams .marketing-card');
+    const eptCard = document.querySelector('#necessary-teams .ept-card');
+    const marketingVeins = document.querySelectorAll('#necessary-teams .vein-marketing');
+    const eptVeins = document.querySelectorAll('#necessary-teams .vein-ept');
+    
+    if (marketingCard && marketingVeins.length > 0) {
+        marketingCard.addEventListener('mouseenter', () => {
+            marketingVeins.forEach(vein => {
+                vein.style.strokeWidth = '5';
+                vein.style.opacity = '1';
+                vein.style.filter = 'drop-shadow(0 0 15px rgba(255, 107, 107, 1))';
+                vein.style.transition = 'all 0.3s ease';
+            });
+        });
+        
+        marketingCard.addEventListener('mouseleave', () => {
+            marketingVeins.forEach(vein => {
+                vein.style.strokeWidth = '';
+                vein.style.opacity = '';
+                vein.style.filter = '';
+            });
+        });
+    }
+    
+    if (eptCard && eptVeins.length > 0) {
+        eptCard.addEventListener('mouseenter', () => {
+            eptVeins.forEach(vein => {
+                vein.style.strokeWidth = '5';
+                vein.style.opacity = '1';
+                vein.style.filter = 'drop-shadow(0 0 15px rgba(255, 107, 107, 1))';
+                vein.style.transition = 'all 0.3s ease';
+            });
+        });
+        
+        eptCard.addEventListener('mouseleave', () => {
+            eptVeins.forEach(vein => {
+                vein.style.strokeWidth = '';
+                vein.style.opacity = '';
+                vein.style.filter = '';
+            });
+        });
+    }
+}
 
