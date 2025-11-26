@@ -1196,33 +1196,56 @@ section {
 }
 
 .heartcat-left .heartcat-image {
-    animation: floatHeartCat 3s ease-in-out infinite;
+    animation: floatHeartCatLeft 3s ease-in-out infinite;
     animation-delay: 0s;
-    transform: scaleX(-1); /* Flip horizontally to face right towards teams */
 }
 
 .heartcat-left:hover .heartcat-image {
-    transform: scaleX(1) translateY(var(--float-y, 0)); /* Flip back when hovered */
+    animation: floatHeartCatLeftHover 3s ease-in-out infinite;
 }
 
 .heartcat-right .heartcat-image {
-    animation: floatHeartCat 3s ease-in-out infinite;
+    animation: floatHeartCatRight 3s ease-in-out infinite;
     animation-delay: 1.5s;
-    /* Faces left by default */
 }
 
 .heartcat-right:hover .heartcat-image {
-    transform: scaleX(-1) translateY(var(--float-y, 0)); /* Flip when hovered */
+    animation: floatHeartCatRightHover 3s ease-in-out infinite 1.5s;
 }
 
-@keyframes floatHeartCat {
+@keyframes floatHeartCatLeft {
     0%, 100% {
-        --float-y: 0;
-        transform: translateY(0);
+        transform: scaleX(-1) translateY(0); /* Facing right, no vertical movement */
     }
     50% {
-        --float-y: -15px;
-        transform: translateY(-15px);
+        transform: scaleX(-1) translateY(-15px); /* Facing right, floating up */
+    }
+}
+
+@keyframes floatHeartCatLeftHover {
+    0%, 100% {
+        transform: scaleX(1) translateY(0); /* Flipped to face left, no vertical movement */
+    }
+    50% {
+        transform: scaleX(1) translateY(-15px); /* Flipped to face left, floating up */
+    }
+}
+
+@keyframes floatHeartCatRight {
+    0%, 100% {
+        transform: translateY(0); /* Facing left, no vertical movement */
+    }
+    50% {
+        transform: translateY(-15px); /* Facing left, floating up */
+    }
+}
+
+@keyframes floatHeartCatRightHover {
+    0%, 100% {
+        transform: scaleX(-1) translateY(0); /* Flipped to face right, no vertical movement */
+    }
+    50% {
+        transform: scaleX(-1) translateY(-15px); /* Flipped to face right, floating up */
     }
 }
 
