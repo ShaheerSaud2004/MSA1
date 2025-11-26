@@ -1720,8 +1720,9 @@ section {
 
 .heart-svg {
     width: 100%;
-    max-width: 500px;
-    height: 100%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 400 / 350;
     filter: drop-shadow(0 10px 30px rgba(255, 107, 107, 0.3));
 }
 
