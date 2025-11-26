@@ -5121,7 +5121,10 @@ function initializeRemindMeModal() {
     
     // Attach to remindMeBtn3 if it exists
     if (remindMeBtn3) {
+        console.log('✅ Found remindMeBtn3, attaching click handler');
         remindMeBtn3.addEventListener('click', openNotificationModal);
+    } else {
+        console.log('❌ remindMeBtn3 not found in DOM');
     }
     
     if (!modal) return;
