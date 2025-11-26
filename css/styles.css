@@ -1735,7 +1735,7 @@ section {
             rgba(255, 160, 160, 0.4) 50%, 
             rgba(255, 182, 193, 0.45) 75%, 
             rgba(255, 192, 203, 0.4) 100%),
-        url('../images/hearts.gif');
+        url('../images/background1.gif');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
