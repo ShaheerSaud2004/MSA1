@@ -1210,7 +1210,7 @@ section {
 }
 
 .heartcat-right:hover .heartcat-image {
-    animation: floatHeartCatRightHover 3s ease-in-out infinite 1.5s;
+    animation: floatHeartCatRightHover 3s ease-in-out infinite;
 }
 
 @keyframes floatHeartCatLeft {
