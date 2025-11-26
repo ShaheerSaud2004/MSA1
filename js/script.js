@@ -869,6 +869,24 @@ class EventGallery {
                     }
                 }
             },
+            'sistersgiving': {
+                name: 'Sistersgiving',
+                poster: 'images/gallery/Photos/Sistersgiving.jpg',
+                albums: {
+                    'sisters': {
+                        name: 'Sisters',
+                        count: 0,
+                        photos: [],
+                        comingSoon: true
+                    },
+                    'brothers': {
+                        name: 'Brothers',
+                        count: 3,
+                        photos: this.generateHappyPlaceholderPhotos(),
+                        comingSoon: true
+                    }
+                }
+            },
             'brothers-paintball': {
                 name: 'Brothers Social Paintball',
                 poster: 'images/gallery/Photos/Paintball.png',
