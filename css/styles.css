@@ -1197,18 +1197,20 @@ section {
 
 .heartcat-left .heartcat-image {
     animation-delay: 0s;
+    transform: scaleX(-1); /* Flip horizontally to face right */
 }
 
 .heartcat-right .heartcat-image {
     animation-delay: 1.5s;
+    /* Faces left by default */
 }
 
 @keyframes floatHeartCat {
     0%, 100% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
     }
     50% {
-        transform: translateY(-15px) scale(1.05);
+        transform: translateY(-15px);
     }
 }
 
