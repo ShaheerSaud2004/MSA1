@@ -6283,34 +6283,34 @@ img.event-logo[src*="hope.jpg"],
     }
     
     .notification-modal-content {
-        padding: 40px 25px;
+        padding: 28px 20px;
         margin: 20px;
-        border-radius: 20px;
+        border-radius: 18px;
         max-width: 95%;
     }
     
     .modal-icon {
-        font-size: 3rem;
-        margin-bottom: 15px;
+        font-size: 2rem;
+        margin-bottom: 10px;
     }
     
     .modal-header h3 {
-        font-size: 1.6rem;
-        margin-bottom: 8px;
+        font-size: 1.3rem;
+        margin-bottom: 6px;
     }
     
     .modal-header p {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     
     .notification-input {
-        padding: 16px 18px;
+        padding: 12px 14px;
         font-size: 16px; /* Prevents zoom on iOS */
     }
     
     .notification-submit-btn {
-        padding: 16px 25px;
-        font-size: 1rem;
+        padding: 12px 20px;
+        font-size: 0.9rem;
     }
     
     /* Enhanced Remind Me Modal Mobile */
