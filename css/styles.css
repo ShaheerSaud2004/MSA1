@@ -5646,32 +5646,19 @@ img.event-logo[src*="hope.jpg"],
 }
 
 .notification-modal-content {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fcf9 100%);
-    border-radius: 28px;
-    padding: 55px 50px;
-    max-width: 540px;
-    width: 92%;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    max-width: 420px;
+    width: 90%;
     position: relative;
     box-shadow: 
-        0 30px 90px rgba(44, 85, 48, 0.15),
-        0 15px 50px rgba(0, 0, 0, 0.08),
-        0 0 0 1px rgba(255, 255, 255, 0.9),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 8px 25px rgba(0, 0, 0, 0.1);
+    animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     overflow: hidden;
 }
 
-.notification-modal-content::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent 30%, rgba(44, 85, 48, 0.03) 50%, transparent 70%);
-    animation: shimmer 3s ease-in-out infinite;
-    pointer-events: none;
-}
 
 .modal-close-btn {
     position: absolute;
@@ -5697,70 +5684,66 @@ img.event-logo[src*="hope.jpg"],
 
 .modal-header {
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 24px;
     position: relative;
 }
 
 .modal-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    animation: iconPulse 2s ease-in-out infinite;
-    filter: drop-shadow(0 4px 15px rgba(44, 85, 48, 0.2));
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    color: #2c5530;
 }
 
 .modal-header h3 {
-    background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 2rem;
-    margin-bottom: 12px;
-    font-weight: 800;
-    text-shadow: 0 2px 4px rgba(44, 85, 48, 0.1);
+    color: #2c5530;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    font-weight: 700;
 }
 
 .modal-header p {
-    color: #555;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    font-weight: 500;
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-weight: 400;
+    margin: 0;
 }
 
 .notification-form {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 16px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .input-label {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #2c5530;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .input-label i {
-    font-size: 1rem;
-    opacity: 0.8;
+    font-size: 0.9rem;
+    opacity: 0.7;
 }
 
 .notification-input {
-    padding: 18px 20px;
-    border: 2px solid rgba(44, 85, 48, 0.1);
-    border-radius: 15px;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 14px 16px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background: #fafafa;
+    transition: all 0.2s ease;
     outline: none;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .notification-input::placeholder {
@@ -5771,45 +5754,39 @@ img.event-logo[src*="hope.jpg"],
 .notification-input:focus {
     border-color: #2c5530;
     background: #ffffff;
-    box-shadow: 
-        0 0 0 4px rgba(44, 85, 48, 0.1),
-        0 8px 25px rgba(44, 85, 48, 0.1);
-    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
 }
 
 .input-divider-container {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin: 10px 0;
+    gap: 12px;
+    margin: 4px 0;
 }
 
 .input-divider-line {
     flex: 1;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(44, 85, 48, 0.2), transparent);
+    height: 1px;
+    background: #e0e0e0;
 }
 
 .input-divider-text {
-    color: #2c5530;
-    font-weight: 700;
-    font-size: 0.85rem;
+    color: #999;
+    font-weight: 500;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 5px 10px;
-    background: rgba(44, 85, 48, 0.05);
-    border-radius: 20px;
+    letter-spacing: 0.5px;
 }
 
 .form-note {
-    font-size: 0.9rem;
-    color: #666;
+    font-size: 0.8rem;
+    color: #888;
     text-align: center;
-    margin: -10px 0 0;
+    margin: -4px 0 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .form-note i {
@@ -5865,11 +5842,11 @@ img.event-logo[src*="hope.jpg"],
 
 .form-message {
     text-align: center;
-    padding: 15px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-top: 8px;
 }
 
 /* Animations */
