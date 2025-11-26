@@ -1658,12 +1658,17 @@ section {
 /* Beautiful background for The Heart of MSA section */
 #necessary-teams {
     position: relative;
-    background: linear-gradient(135deg, 
-        rgba(255, 182, 193, 0.1) 0%, 
-        rgba(255, 192, 203, 0.15) 25%, 
-        rgba(255, 160, 160, 0.1) 50%, 
-        rgba(255, 182, 193, 0.15) 75%, 
-        rgba(255, 192, 203, 0.1) 100%);
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 182, 193, 0.3) 0%, 
+            rgba(255, 192, 203, 0.35) 25%, 
+            rgba(255, 160, 160, 0.3) 50%, 
+            rgba(255, 182, 193, 0.35) 75%, 
+            rgba(255, 192, 203, 0.3) 100%),
+        url('../images/hearts.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 30px;
     margin: 40px 20px;
     padding: 60px 0;
