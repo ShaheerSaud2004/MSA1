@@ -3894,6 +3894,9 @@ img.event-logo[src*="hope.jpg"],
     padding: 25px;
     box-shadow: 0 10px 30px rgba(44, 85, 48, 0.1);
     border: 1px solid rgba(44, 85, 48, 0.05);
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .upcoming-events-sidebar h5 {
