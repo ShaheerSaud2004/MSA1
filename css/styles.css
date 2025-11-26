@@ -1192,24 +1192,36 @@ section {
     max-width: 200px;
     width: 100%;
     height: auto;
-    animation: floatHeartCat 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
 }
 
 .heartcat-left .heartcat-image {
+    animation: floatHeartCat 3s ease-in-out infinite;
     animation-delay: 0s;
     transform: scaleX(-1); /* Flip horizontally to face right towards teams */
 }
 
+.heartcat-left:hover .heartcat-image {
+    transform: scaleX(1) translateY(var(--float-y, 0)); /* Flip back when hovered */
+}
+
 .heartcat-right .heartcat-image {
+    animation: floatHeartCat 3s ease-in-out infinite;
     animation-delay: 1.5s;
     /* Faces left by default */
 }
 
+.heartcat-right:hover .heartcat-image {
+    transform: scaleX(-1) translateY(var(--float-y, 0)); /* Flip when hovered */
+}
+
 @keyframes floatHeartCat {
     0%, 100% {
+        --float-y: 0;
         transform: translateY(0);
     }
     50% {
+        --float-y: -15px;
         transform: translateY(-15px);
     }
 }
