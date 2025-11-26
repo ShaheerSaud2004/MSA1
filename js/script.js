@@ -5020,21 +5020,33 @@ function initializeRotatingCats() {
     
     let currentIndex = 0;
     
+    // Set initial state - first image visible, others hidden
+    catImages.forEach((cat, index) => {
+        if (index === 0) {
+            cat.classList.add('active');
+        } else {
+            cat.style.opacity = '0';
+            cat.style.transform = 'scale(1.1)';
+        }
+    });
+    
     function rotateCats() {
-        // Remove active class from current image
-        catImages[currentIndex].classList.remove('active');
-        catImages[currentIndex].classList.add('fade-out');
+        // Fade out current image
+        const currentCat = catImages[currentIndex];
+        currentCat.classList.remove('active');
+        currentCat.classList.add('fade-out');
         
         // Move to next image
         currentIndex = (currentIndex + 1) % catImages.length;
         
-        // Add active class to next image
+        // Fade in next image
         setTimeout(() => {
+            const nextCat = catImages[currentIndex];
             catImages.forEach(cat => {
                 cat.classList.remove('active', 'fade-out');
             });
-            catImages[currentIndex].classList.add('active');
-        }, 300);
+            nextCat.classList.add('active');
+        }, 400);
     }
     
     // Rotate every 3 seconds
