@@ -5038,37 +5038,51 @@ function initializeRotatingCats() {
     
     let currentIndex = 0;
     
-    // Set initial state - first image visible, others hidden
+    // Set initial state - first image visible, others hidden but positioned
     catImages.forEach((cat, index) => {
         if (index === 0) {
             cat.classList.add('active');
+            cat.style.opacity = '1';
+            cat.style.zIndex = '2';
         } else {
             cat.style.opacity = '0';
-            cat.style.transform = 'scale(1.1)';
+            cat.style.zIndex = '1';
+            cat.style.transform = 'scale(1)';
         }
     });
     
     function rotateCats() {
-        // Fade out current image
+        // Get current and next images
         const currentCat = catImages[currentIndex];
-        currentCat.classList.remove('active');
-        currentCat.classList.add('fade-out');
+        const nextIndex = (currentIndex + 1) % catImages.length;
+        const nextCat = catImages[nextIndex];
         
-        // Move to next image
-        currentIndex = (currentIndex + 1) % catImages.length;
+        // Prepare next image (behind current, ready to fade in)
+        nextCat.style.zIndex = '1';
+        nextCat.style.opacity = '0';
+        nextCat.style.transform = 'scale(1.05)';
         
-        // Fade in next image
-        setTimeout(() => {
-            const nextCat = catImages[currentIndex];
-            catImages.forEach(cat => {
-                cat.classList.remove('active', 'fade-out');
-            });
-            nextCat.classList.add('active');
-        }, 400);
+        // Start fading out current and fading in next simultaneously
+        currentCat.style.transition = 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out';
+        nextCat.style.transition = 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out';
+        
+        // Bring next image to front
+        nextCat.style.zIndex = '2';
+        
+        // Fade out current and fade in next at the same time
+        currentCat.style.opacity = '0';
+        currentCat.style.transform = 'scale(0.95)';
+        nextCat.style.opacity = '1';
+        nextCat.style.transform = 'scale(1)';
+        
+        // Update current index
+        currentIndex = nextIndex;
     }
     
-    // Rotate every 3 seconds
-    setInterval(rotateCats, 3000);
+    // Start rotation after a short delay, then rotate every 3 seconds
+    setTimeout(() => {
+        setInterval(rotateCats, 3000);
+    }, 100);
 }
 
 // Initialize Remind Me modal functionality
