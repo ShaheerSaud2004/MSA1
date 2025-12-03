@@ -28,7 +28,7 @@ const artworks = [
 
 // Function to create artwork card HTML
 function createArtworkCard(artwork) {
-    const imagePath = `../ArtGalaArtpieces/${artwork.filename}`;
+    const imagePath = `/ArtGalaArtpieces/${artwork.filename}`;
     const badgeHTML = artwork.badge ? `<div class="artwork-badge">${artwork.badge}</div>` : '';
     const instagramHTML = artwork.instagram ? `<div class="artwork-instagram">${artwork.instagram}</div>` : '';
     const priceHTML = artwork.price ? `<div class="artwork-price">$${artwork.price.toLocaleString()}</div>` : '';
