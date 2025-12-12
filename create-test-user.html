@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Test User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            background: #2c5530;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #4a7c59;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create Test User</h1>
+    <p>Click the button below to create a test user account.</p>
+    <button onclick="createTestUser()">Create Test User</button>
+    <div id="result"></div>
+
+    <script>
+        async function createTestUser() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Creating test user...</p>';
+            
+            try {
+                const response = await fetch('/api/auth/seed-test-user', {
+                    method: 'GET'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ Test User Created!</h3>
+                        <p><strong>Email:</strong> ${data.credentials.email}</p>
+                        <p><strong>Password:</strong> ${data.credentials.password}</p>
+                        <p>You can now use these credentials to log in at <a href="/community/">/community/</a></p>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

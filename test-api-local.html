@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Locally</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #2c5530;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #4a7c59;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        h1 {
+            color: #2c5530;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.online {
+            background: #28a745;
+            color: white;
+        }
+        .status.offline {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Local API Test <span id="serverStatus" class="status offline">Checking...</span></h1>
+    
+    <div class="test-box">
+        <h2>Step 1: Check Server Status</h2>
+        <button onclick="checkServer()">Check if Vercel Dev is Running</button>
+        <div id="serverResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>Step 2: Test API Endpoints</h2>
+        <button onclick="testBasicAPI()">Test Basic API (/api/test)</button>
+        <button onclick="testLoginAPI()">Test Login API (/api/auth/login)</button>
+        <button onclick="testSignupAPI()">Test Signup API (/api/auth/signup)</button>
+        <div id="apiResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>Step 3: Test Login Flow</h2>
+        <p>Email: <input type="email" id="testEmail" value="test@rutgers.edu" placeholder="test@rutgers.edu"></p>
+        <p>Password: <input type="password" id="testPassword" value="test1234" placeholder="test1234"></p>
+        <button onclick="testLogin()">Test Login</button>
+        <div id="loginResult"></div>
+    </div>
+
+    <div class="test-box info">
+        <h3>💡 Instructions</h3>
+        <ol>
+            <li>Make sure <code>vercel dev</code> is running in terminal</li>
+            <li>Click "Check if Vercel Dev is Running"</li>
+            <li>If server is online, test the API endpoints</li>
+            <li>Try the login flow</li>
+        </ol>
+        <p><strong>To start server:</strong> Run <code>vercel dev</code> in terminal</p>
+    </div>
+
+    <script>
+        // Check server status on load
+        window.addEventListener('load', () => {
+            checkServer();
+        });
+
+        async function checkServer() {
+            const resultDiv = document.getElementById('serverResult');
+            const statusSpan = document.getElementById('serverStatus');
+            
+            resultDiv.innerHTML = '<div class="result info">Checking server...</div>';
+            
+            try {
+                const response = await fetch('/api/test');
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusSpan.textContent = 'ONLINE';
+                    statusSpan.className = 'status online';
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+✅ Server is running!
+Method: ${data.method}
+Time: ${data.timestamp}
+Path: ${data.path}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusSpan.textContent = 'OFFLINE';
+                statusSpan.className = 'status offline';
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Server is not running!
+
+Error: ${error.message}
+
+To fix:
+1. Open terminal in project root
+2. Run: vercel dev
+3. Wait for "Ready! Available at http://localhost:3000"
+4. Refresh this page
+                    </div>
+                `;
+            }
+        }
+
+        async function testBasicAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            resultDiv.innerHTML = '<div class="result info">Testing...</div>';
+            
+            try {
+                const response = await fetch('/api/test');
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+✅ Basic API works!
+${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Basic API failed!
+Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testLoginAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            resultDiv.innerHTML = '<div class="result info">Testing login API...</div>';
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'test@test.com',
+                        password: 'test1234'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+✅ Login API is accessible!
+Status: ${response.status}
+Response: ${JSON.stringify(data, null, 2)}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result ${data.success ? 'success' : 'error'}">
+${data.success ? '✅' : '⚠️'} Login API responded
+Status: ${response.status}
+Response: ${JSON.stringify(data, null, 2)}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Login API failed!
+Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testSignupAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            resultDiv.innerHTML = '<div class="result info">Testing signup API...</div>';
+            
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        firstName: 'Test',
+                        lastName: 'User',
+                        email: `test${Date.now()}@test.com`,
+                        password: 'test1234',
+                        year: 'freshman',
+                        major: 'Test'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="result ${data.success ? 'success' : 'error'}">
+${data.success ? '✅' : '⚠️'} Signup API responded
+Status: ${response.status}
+Response: ${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Signup API failed!
+Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testLogin() {
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+            const resultDiv = document.getElementById('loginResult');
+            
+            resultDiv.innerHTML = '<div class="result info">Testing login...</div>';
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+✅ Login successful!
+User: ${data.user.firstName} ${data.user.lastName}
+Email: ${data.user.email}
+Token: ${data.token.substring(0, 20)}...
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+❌ Login failed: ${data.error}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Network error: ${error.message}
+Make sure vercel dev is running!
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+

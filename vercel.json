@@ -4,6 +4,18 @@
   "functions": {
     "api/subscribe.js": {
       "maxDuration": 10
+    },
+    "api/auth/login.js": {
+      "maxDuration": 10
+    },
+    "api/auth/signup.js": {
+      "maxDuration": 10
+    },
+    "api/auth/check.js": {
+      "maxDuration": 10
+    },
+    "api/auth/seed-test-user.js": {
+      "maxDuration": 10
     }
   },
   "headers": [

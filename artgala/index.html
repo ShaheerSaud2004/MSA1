@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gala 2025 - Rutgers MSA</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="../images/logos/msa-logo.svg" type="image/svg+xml">
+    <!-- Google Fonts for Art Gala -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="artgala-page">
+    <!-- Navigation -->
+    <nav class="navbar artgala-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html">
+                    <img src="../images/logos/MSA.png" alt="Rutgers MSA Logo" class="logo-img">
+                    <span class="logo-text">Rutgers MSA</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#artworks" class="nav-link">Artworks</a></li>
+                <li class="nav-item"><a href="#faq" class="nav-link">FAQ</a></li>
+                <li class="nav-item"><a href="#organizations" class="nav-link">Impact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Entry Screen -->
+    <section class="artgala-hero">
+        <div class="hero-entry-screen">
+            <img src="../EmpyArtGala.png" alt="Art Gala 2025" class="entry-screen-img">
+            <div class="hero-overlay-content">
+                <div class="hero-text-content">
+                    <p class="hero-collab">rusubmissions x rumsa.hope</p>
+                    <h1 class="hero-year">2025</h1>
+                    <h2 class="hero-title">Art Gala</h2>
+                    <p class="hero-date">11/9/2025</p>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="artgala-about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Celebrating Art & Community</h2>
+                <p class="section-description">
+                    The Rutgers MSA Art Gala brought together talented artists and community members 
+                    to celebrate creativity while supporting meaningful causes. Through the sale of 
+                    beautiful artworks, we raised funds to support organizations making a difference 
+                    in our communities and around the world.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Information Section -->
+    <section id="faq" class="info-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-question">Who Can Attend Art Gala?</div>
+                    <div class="info-answer">
+                        Art Gala is open for anyone to donate a piece, bid on art, and attend! Rutgers' students, alumni, and families are welcome. All attendees are required to purchase a ticket to enter. Additional information on where and how to purchase a ticket will be made available on our Instagram soon.
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-question">How Can I Bid on a Piece?</div>
+                    <div class="info-answer">
+                        Art Gala is run auction-style. You must bid on a piece and compete with other attendees for it. All bids will happen in-person.
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-question">What Can I Submit?</div>
+                    <div class="info-answer">
+                        We accept all types of art like canvas paintings, prints, textile pieces (like clothing, crochet or embroidery), pottery, sculpture, and even services like baked goods and photography sessions. Make sure your submissions align with Islamic values!
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-question">Where Can I Submit my Pieces?</div>
+                    <div class="info-answer">
+                        Art collection will begin on October 16th and will be available weekly at MSA Thursdays and Rutgers Jumu'ah. Stay on the lookout for additional drop-off information on our story! If these drop-off timings are inconvenient for you, reach out to @rusubmissions or @rumsa.hope to arrange a different timing/location.
+                    </div>
+                </div>
+            </div>
+            <div class="info-footer">rusubmissions x rumsa.hope</div>
+        </div>
+    </section>
+
+    <!-- Artworks Gallery Section -->
+    <section id="artworks" class="artworks-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Artworks</h2>
+                <p class="section-subtitle">Honoring the talented artists who contributed their work</p>
+            </div>
+            <div class="sort-controls">
+                <button class="sort-btn" id="sortBtn" data-sort="none">
+                    <i class="fas fa-sort"></i>
+                    <span>Sort by Price</span>
+                </button>
+            </div>
+            <div class="artworks-grid" id="artworksGrid">
+                <!-- Artworks will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Organizations Section -->
+    <section id="organizations" class="organizations-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Making an Impact</h2>
+                <p class="section-subtitle">Together, we raised funds to support meaningful causes</p>
+            </div>
+            
+            <!-- Prominent Fundraising Stat -->
+            <div class="impact-hero">
+                <div class="impact-stat-wrapper">
+                    <div class="impact-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="impact-content">
+                        <div class="impact-label">Total Raised</div>
+                        <div class="impact-number">$35,323</div>
+                        <div class="impact-description">for charitable organizations</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organizations -->
+            <div class="organizations-intro">
+                <h3 class="orgs-title">Beneficiary Organizations</h3>
+                <p class="orgs-subtitle">Your support directly benefits these incredible organizations</p>
+            </div>
+            
+            <div class="organizations-grid">
+                <div class="org-card" id="lacocina">
+                    <div class="org-header">
+                        <div class="org-logo-container">
+                            <img src="../LaCocina.png" alt="La Cocina Comunitaria" class="org-logo">
+                        </div>
+                        <h3 class="org-name">La Cocina Comunitaria</h3>
+                    </div>
+                    <div class="org-content">
+                        <p class="org-description">
+                            La Cocina works to solve problems of equity in business ownership for women, 
+                            immigrants, and people of color. They provide affordable kitchen space, 
+                            hands-on training, mentorship, and market opportunities to help entrepreneurs 
+                            formalize and grow their food businesses.
+                        </p>
+                    </div>
+                </div>
+                <div class="org-card" id="pcrf">
+                    <div class="org-header">
+                        <div class="org-logo-container">
+                            <img src="../PCRF.png" alt="Palestine Children's Relief Fund" class="org-logo">
+                        </div>
+                        <h3 class="org-name">Palestine Children's Relief Fund</h3>
+                    </div>
+                    <div class="org-content">
+                        <p class="org-description">
+                            PCRF is a nonprofit organization founded in 1991 that provides free medical 
+                            care to thousands of injured and ill children who lack local access to care 
+                            within the local health care system. They have sent over 2,000 children abroad 
+                            for free medical care and have established pediatric cancer departments in Palestine.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="artgala-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Rutgers MSA. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="https://instagram.com/rutgersmsa" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://youtube.com/@rutgersmsa" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

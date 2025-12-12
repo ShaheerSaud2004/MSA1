@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSA Community - Rutgers MSA</title>
+    <link rel="stylesheet" href="css/community.css">
+    <link rel="icon" href="../images/logos/MSA.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="community-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html">
+                    <img src="../images/logos/MSA.png" alt="Rutgers MSA Logo" class="logo-img">
+                    <span class="logo-text">Rutgers MSA</span>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="back-to-website">
+                    <i class="fas fa-arrow-left"></i> Back to Website
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Community Landing Page -->
+    <div class="community-landing">
+        <div class="landing-container">
+            <!-- Left Side - Welcome -->
+            <div class="landing-welcome">
+                <div class="welcome-content">
+                    <div class="arabic-calligraphy">
+                        <p class="arabic-text">وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ</p>
+                        <p class="arabic-translation">"And cooperate in righteousness and piety" - Quran 5:2</p>
+                    </div>
+                    <h1>Welcome to MSA Community</h1>
+                    <p class="welcome-subtitle">Connect, engage, and grow with your Rutgers MSA family</p>
+                    
+                    <div class="community-features">
+                        <div class="feature-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h3>Connect</h3>
+                                <p>Build friendships and find like-minded students</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-comments"></i>
+                            <div>
+                                <h3>Engage</h3>
+                                <p>Join discussions, share thoughts, and stay updated</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <div>
+                                <h3>Participate</h3>
+                                <p>RSVP to events and see who's attending</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <h3>Grow</h3>
+                                <p>Join study groups, find mentors, and learn together</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Login/Signup -->
+            <div class="landing-auth">
+                <div class="auth-container">
+                    <!-- Tabs -->
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Login</button>
+                        <button class="auth-tab" data-tab="signup">Sign Up</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div class="auth-form active" id="loginForm">
+                        <h2>Welcome Back!</h2>
+                        <p class="form-subtitle">Login to access the MSA Community</p>
+                        
+                        <form id="loginFormElement">
+                            <div class="form-group">
+                                <label for="loginEmail">
+                                    <i class="fas fa-envelope"></i> Email
+                                </label>
+                                <input type="email" id="loginEmail" placeholder="your.email@rutgers.edu" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="loginPassword">
+                                    <i class="fas fa-lock"></i> Password
+                                </label>
+                                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                                <a href="#" class="forgot-password">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" class="auth-submit-btn">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </button>
+                        </form>
+
+                        <div class="auth-divider">
+                            <span>OR</span>
+                        </div>
+
+                        <div class="social-auth">
+                            <button class="social-btn google-btn">
+                                <i class="fab fa-google"></i> Continue with Google
+                            </button>
+                            <button class="social-btn github-btn">
+                                <i class="fab fa-github"></i> Continue with GitHub
+                            </button>
+                        </div>
+
+                        <div class="auth-message" id="loginMessage"></div>
+                    </div>
+
+                    <!-- Signup Form -->
+                    <div class="auth-form" id="signupForm">
+                        <h2>Join the Community!</h2>
+                        <p class="form-subtitle">Create your account to get started</p>
+                        
+                        <form id="signupFormElement">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="signupFirstName">
+                                        <i class="fas fa-user"></i> First Name
+                                    </label>
+                                    <input type="text" id="signupFirstName" placeholder="John" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="signupLastName">
+                                        <i class="fas fa-user"></i> Last Name
+                                    </label>
+                                    <input type="text" id="signupLastName" placeholder="Doe" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signupEmail">
+                                    <i class="fas fa-envelope"></i> Email
+                                </label>
+                                <input type="email" id="signupEmail" placeholder="your.email@rutgers.edu" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signupPassword">
+                                    <i class="fas fa-lock"></i> Password
+                                </label>
+                                <input type="password" id="signupPassword" placeholder="Create a password" required>
+                                <small>At least 8 characters</small>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="signupYear">
+                                        <i class="fas fa-calendar"></i> Year
+                                    </label>
+                                    <select id="signupYear" required>
+                                        <option value="">Select Year</option>
+                                        <option value="freshman">Freshman</option>
+                                        <option value="sophomore">Sophomore</option>
+                                        <option value="junior">Junior</option>
+                                        <option value="senior">Senior</option>
+                                        <option value="graduate">Graduate</option>
+                                        <option value="alumni">Alumni</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="signupMajor">
+                                        <i class="fas fa-graduation-cap"></i> Major
+                                    </label>
+                                    <input type="text" id="signupMajor" placeholder="Computer Science" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="signupAgree" required>
+                                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="auth-submit-btn">
+                                <i class="fas fa-user-plus"></i> Create Account
+                            </button>
+                        </form>
+
+                        <div class="auth-divider">
+                            <span>OR</span>
+                        </div>
+
+                        <div class="social-auth">
+                            <button class="social-btn google-btn">
+                                <i class="fab fa-google"></i> Continue with Google
+                            </button>
+                            <button class="social-btn github-btn">
+                                <i class="fab fa-github"></i> Continue with GitHub
+                            </button>
+                        </div>
+
+                        <div class="auth-message" id="signupMessage"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access (for logged in users - hidden by default) -->
+    <div class="quick-access" id="quickAccess" style="display: none;">
+        <div class="quick-access-content">
+            <h3>Welcome back!</h3>
+            <a href="dashboard.html" class="quick-access-btn">
+                <i class="fas fa-home"></i> Go to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script src="js/community.js"></script>
+</body>
+</html>
+
