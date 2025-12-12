@@ -1,125 +1,431 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test API Locally</title>
+    <title>Complete API Route Tester</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #f5f5f5;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .test-box {
-            background: white;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
-            border-radius: 8px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 15px;
+            transition: all 0.3s;
+        }
+        .status-badge.online {
+            background: #10b981;
+            color: white;
+        }
+        .status-badge.offline {
+            background: #ef4444;
+            color: white;
+        }
+        .status-badge.checking {
+            background: #f59e0b;
+            color: white;
+        }
+        .test-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
             margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .test-section h2 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        .route-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .route-card {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+        .route-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .route-method {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .method-get { background: #10b981; color: white; }
+        .method-post { background: #3b82f6; color: white; }
+        .route-path {
+            font-family: monospace;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #374151;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
         }
         button {
-            background: #2c5530;
+            background: #667eea;
             color: white;
             padding: 12px 24px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
-            margin: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
         }
         button:hover {
-            background: #4a7c59;
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
         }
         .result {
             margin-top: 15px;
             padding: 15px;
             border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
             white-space: pre-wrap;
-            font-family: monospace;
-            font-size: 14px;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
         }
-        .success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        .result.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
         }
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        .result.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
         }
-        .info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
+        .result.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
         }
-        h1 {
-            color: #2c5530;
+        .info-box {
+            background: #fef3c7;
+            border: 1px solid #fbbf24;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
         }
-        .status {
-            display: inline-block;
-            padding: 4px 8px;
+        .info-box h3 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+        .info-box ol {
+            margin-left: 20px;
+            color: #78350f;
+        }
+        .info-box code {
+            background: #fde68a;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-left: 10px;
+            font-family: monospace;
         }
-        .status.online {
-            background: #28a745;
-            color: white;
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        .status.offline {
-            background: #dc3545;
-            color: white;
+        .quick-actions button {
+            flex: 1;
+            margin-top: 0;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>🧪 Local API Test <span id="serverStatus" class="status offline">Checking...</span></h1>
-    
-    <div class="test-box">
-        <h2>Step 1: Check Server Status</h2>
-        <button onclick="checkServer()">Check if Vercel Dev is Running</button>
-        <div id="serverResult"></div>
-    </div>
+    <div class="container">
+        <h1>🧪 Complete API Route Tester <span id="serverStatus" class="status-badge checking">Checking...</span></h1>
+        
+        <div class="info-box">
+            <h3>💡 How to Use</h3>
+            <ol>
+                <li>Make sure <code>vercel dev</code> is running in your terminal</li>
+                <li>Click "Check Server Status" to verify the server is online</li>
+                <li>Test individual routes using the forms below</li>
+                <li>Use "Test All Routes" to run a quick check on all endpoints</li>
+            </ol>
+            <p style="margin-top: 10px;"><strong>Start server:</strong> <code>npm run dev</code> or <code>vercel dev</code></p>
+        </div>
 
-    <div class="test-box">
-        <h2>Step 2: Test API Endpoints</h2>
-        <button onclick="testBasicAPI()">Test Basic API (/api/test)</button>
-        <button onclick="testLoginAPI()">Test Login API (/api/auth/login)</button>
-        <button onclick="testSignupAPI()">Test Signup API (/api/auth/signup)</button>
-        <div id="apiResult"></div>
-    </div>
+        <div class="test-section">
+            <h2>Server Status</h2>
+            <button onclick="checkServer()">Check Server Status</button>
+            <div id="serverResult"></div>
+        </div>
 
-    <div class="test-box">
-        <h2>Step 3: Test Login Flow</h2>
-        <p>Email: <input type="email" id="testEmail" value="test@rutgers.edu" placeholder="test@rutgers.edu"></p>
-        <p>Password: <input type="password" id="testPassword" value="test1234" placeholder="test1234"></p>
-        <button onclick="testLogin()">Test Login</button>
-        <div id="loginResult"></div>
-    </div>
+        <div class="test-section">
+            <h2>Quick Actions</h2>
+            <div class="quick-actions">
+                <button onclick="testAllRoutes()">Test All Routes</button>
+                <button onclick="seedTestUser()">Seed Test User</button>
+                <button onclick="clearResults()">Clear All Results</button>
+            </div>
+        </div>
 
-    <div class="test-box info">
-        <h3>💡 Instructions</h3>
-        <ol>
-            <li>Make sure <code>vercel dev</code> is running in terminal</li>
-            <li>Click "Check if Vercel Dev is Running"</li>
-            <li>If server is online, test the API endpoints</li>
-            <li>Try the login flow</li>
-        </ol>
-        <p><strong>To start server:</strong> Run <code>vercel dev</code> in terminal</p>
+        <div class="test-section">
+            <h2>Authentication Routes</h2>
+            <div class="route-grid">
+                <!-- Test Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-get">GET</span>
+                        <span class="route-path">/api/test</span>
+                    </div>
+                    <button onclick="testRoute('GET', '/api/test')">Test</button>
+                    <div id="result-/api/test"></div>
+                </div>
+
+                <!-- Login Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-post">POST</span>
+                        <span class="route-path">/api/auth/login</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="login-email" value="test@rutgers.edu" placeholder="test@rutgers.edu">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="login-password" value="test1234" placeholder="test1234">
+                    </div>
+                    <button onclick="testLogin()">Test Login</button>
+                    <div id="result-/api/auth/login"></div>
+                </div>
+
+                <!-- Signup Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-post">POST</span>
+                        <span class="route-path">/api/auth/signup</span>
+                    </div>
+                    <div class="form-group">
+                        <label>First Name:</label>
+                        <input type="text" id="signup-firstName" value="John">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name:</label>
+                        <input type="text" id="signup-lastName" value="Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="signup-email" value="" placeholder="unique@rutgers.edu">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="signup-password" value="test1234">
+                    </div>
+                    <div class="form-group">
+                        <label>Year:</label>
+                        <select id="signup-year">
+                            <option value="freshman">Freshman</option>
+                            <option value="sophomore">Sophomore</option>
+                            <option value="junior">Junior</option>
+                            <option value="senior">Senior</option>
+                            <option value="graduate">Graduate</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Major:</label>
+                        <input type="text" id="signup-major" value="Computer Science">
+                    </div>
+                    <button onclick="testSignup()">Test Signup</button>
+                    <div id="result-/api/auth/signup"></div>
+                </div>
+
+                <!-- Auth Check Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-post">POST</span>
+                        <span class="route-path">/api/auth/check</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Token:</label>
+                        <input type="text" id="check-token" placeholder="Paste token from login">
+                    </div>
+                    <div class="form-group">
+                        <label>User ID:</label>
+                        <input type="text" id="check-userId" placeholder="Paste user ID from login">
+                    </div>
+                    <button onclick="testAuthCheck()">Test Auth Check</button>
+                    <div id="result-/api/auth/check"></div>
+                </div>
+
+                <!-- Seed Test User Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-post">POST</span>
+                        <span class="route-path">/api/auth/seed-test-user</span>
+                    </div>
+                    <button onclick="seedTestUser()">Seed Test User</button>
+                    <div id="result-/api/auth/seed-test-user"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Subscription Routes</h2>
+            <div class="route-grid">
+                <!-- Subscribe Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-post">POST</span>
+                        <span class="route-path">/api/subscribe</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="subscribe-email" value="" placeholder="user@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone (optional):</label>
+                        <input type="tel" id="subscribe-phone" value="" placeholder="+1234567890">
+                    </div>
+                    <button onclick="testSubscribe()">Test Subscribe</button>
+                    <div id="result-/api/subscribe"></div>
+                </div>
+
+                <!-- Get Subscriptions Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-get">GET</span>
+                        <span class="route-path">/api/get-subscriptions</span>
+                    </div>
+                    <button onclick="testRoute('GET', '/api/get-subscriptions')">Test</button>
+                    <div id="result-/api/get-subscriptions"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Analytics Routes</h2>
+            <div class="route-grid">
+                <!-- Track Click Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-post">POST</span>
+                        <span class="route-path">/api/track-click</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Section:</label>
+                        <input type="text" id="track-section" value="gallery" placeholder="gallery">
+                    </div>
+                    <div class="form-group">
+                        <label>Event (optional):</label>
+                        <input type="text" id="track-event" value="" placeholder="hope-drive">
+                    </div>
+                    <div class="form-group">
+                        <label>Album (optional):</label>
+                        <input type="text" id="track-album" value="" placeholder="brothers">
+                    </div>
+                    <button onclick="testTrackClick()">Test Track Click</button>
+                    <div id="result-/api/track-click"></div>
+                </div>
+
+                <!-- Get Analytics Route -->
+                <div class="route-card">
+                    <div class="route-header">
+                        <span class="route-method method-get">GET</span>
+                        <span class="route-path">/api/get-analytics</span>
+                    </div>
+                    <button onclick="testRoute('GET', '/api/get-analytics')">Test</button>
+                    <div id="result-/api/get-analytics"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Check server status on load
+        let authToken = null;
+        let userId = null;
+
+        // Check server on load
         window.addEventListener('load', () => {
             checkServer();
         });
 
         async function checkServer() {
-            const resultDiv = document.getElementById('serverResult');
             const statusSpan = document.getElementById('serverStatus');
+            const resultDiv = document.getElementById('serverResult');
             
+            statusSpan.textContent = 'Checking...';
+            statusSpan.className = 'status-badge checking';
             resultDiv.innerHTML = '<div class="result info">Checking server...</div>';
             
             try {
@@ -128,7 +434,7 @@
                 
                 if (data.success) {
                     statusSpan.textContent = 'ONLINE';
-                    statusSpan.className = 'status online';
+                    statusSpan.className = 'status-badge online';
                     resultDiv.innerHTML = `
                         <div class="result success">
 ✅ Server is running!
@@ -140,7 +446,7 @@ Path: ${data.path}
                 }
             } catch (error) {
                 statusSpan.textContent = 'OFFLINE';
-                statusSpan.className = 'status offline';
+                statusSpan.className = 'status-badge offline';
                 resultDiv.innerHTML = `
                     <div class="result error">
 ❌ Server is not running!
@@ -157,108 +463,35 @@ To fix:
             }
         }
 
-        async function testBasicAPI() {
-            const resultDiv = document.getElementById('apiResult');
+        async function testRoute(method, path, body = null) {
+            const resultDiv = document.getElementById(`result-${path}`);
             resultDiv.innerHTML = '<div class="result info">Testing...</div>';
             
             try {
-                const response = await fetch('/api/test');
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                };
+                
+                if (body) {
+                    options.body = JSON.stringify(body);
+                }
+                
+                const response = await fetch(path, options);
                 const data = await response.json();
                 
                 resultDiv.innerHTML = `
-                    <div class="result success">
-✅ Basic API works!
+                    <div class="result ${response.ok ? 'success' : 'error'}">
+Status: ${response.status} ${response.statusText}
 ${JSON.stringify(data, null, 2)}
                     </div>
                 `;
             } catch (error) {
                 resultDiv.innerHTML = `
                     <div class="result error">
-❌ Basic API failed!
-Error: ${error.message}
-                    </div>
-                `;
-            }
-        }
-
-        async function testLoginAPI() {
-            const resultDiv = document.getElementById('apiResult');
-            resultDiv.innerHTML = '<div class="result info">Testing login API...</div>';
-            
-            try {
-                const response = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: 'test@test.com',
-                        password: 'test1234'
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    resultDiv.innerHTML = `
-                        <div class="result success">
-✅ Login API is accessible!
-Status: ${response.status}
-Response: ${JSON.stringify(data, null, 2)}
-                        </div>
-                    `;
-                } else {
-                    resultDiv.innerHTML = `
-                        <div class="result ${data.success ? 'success' : 'error'}">
-${data.success ? '✅' : '⚠️'} Login API responded
-Status: ${response.status}
-Response: ${JSON.stringify(data, null, 2)}
-                        </div>
-                    `;
-                }
-            } catch (error) {
-                resultDiv.innerHTML = `
-                    <div class="result error">
-❌ Login API failed!
-Error: ${error.message}
-                    </div>
-                `;
-            }
-        }
-
-        async function testSignupAPI() {
-            const resultDiv = document.getElementById('apiResult');
-            resultDiv.innerHTML = '<div class="result info">Testing signup API...</div>';
-            
-            try {
-                const response = await fetch('/api/auth/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        firstName: 'Test',
-                        lastName: 'User',
-                        email: `test${Date.now()}@test.com`,
-                        password: 'test1234',
-                        year: 'freshman',
-                        major: 'Test'
-                    })
-                });
-                
-                const data = await response.json();
-                
-                resultDiv.innerHTML = `
-                    <div class="result ${data.success ? 'success' : 'error'}">
-${data.success ? '✅' : '⚠️'} Signup API responded
-Status: ${response.status}
-Response: ${JSON.stringify(data, null, 2)}
-                    </div>
-                `;
-            } catch (error) {
-                resultDiv.innerHTML = `
-                    <div class="result error">
-❌ Signup API failed!
+❌ Request failed!
 Error: ${error.message}
                     </div>
                 `;
@@ -266,49 +499,256 @@ Error: ${error.message}
         }
 
         async function testLogin() {
-            const email = document.getElementById('testEmail').value;
-            const password = document.getElementById('testPassword').value;
-            const resultDiv = document.getElementById('loginResult');
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const resultDiv = document.getElementById('result-/api/auth/login');
             
             resultDiv.innerHTML = '<div class="result info">Testing login...</div>';
             
             try {
                 const response = await fetch('/api/auth/login', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
                 
                 const data = await response.json();
                 
-                if (data.success) {
-                    resultDiv.innerHTML = `
-                        <div class="result success">
-✅ Login successful!
-User: ${data.user.firstName} ${data.user.lastName}
-Email: ${data.user.email}
-Token: ${data.token.substring(0, 20)}...
-                        </div>
-                    `;
-                } else {
-                    resultDiv.innerHTML = `
-                        <div class="result error">
-❌ Login failed: ${data.error}
-                        </div>
-                    `;
+                if (data.success && data.token) {
+                    authToken = data.token;
+                    userId = data.user.id;
+                    document.getElementById('check-token').value = data.token;
+                    document.getElementById('check-userId').value = data.user.id;
                 }
+                
+                resultDiv.innerHTML = `
+                    <div class="result ${response.ok ? 'success' : 'error'}">
+Status: ${response.status}
+${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
             } catch (error) {
                 resultDiv.innerHTML = `
                     <div class="result error">
-❌ Network error: ${error.message}
-Make sure vercel dev is running!
+❌ Login failed!
+Error: ${error.message}
                     </div>
                 `;
             }
         }
+
+        async function testSignup() {
+            const firstName = document.getElementById('signup-firstName').value;
+            const lastName = document.getElementById('signup-lastName').value;
+            const email = document.getElementById('signup-email').value || `test${Date.now()}@rutgers.edu`;
+            const password = document.getElementById('signup-password').value;
+            const year = document.getElementById('signup-year').value;
+            const major = document.getElementById('signup-major').value;
+            const resultDiv = document.getElementById('result-/api/auth/signup');
+            
+            resultDiv.innerHTML = '<div class="result info">Testing signup...</div>';
+            
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, password, year, major })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.token) {
+                    authToken = data.token;
+                    userId = data.user.id;
+                    document.getElementById('check-token').value = data.token;
+                    document.getElementById('check-userId').value = data.user.id;
+                }
+                
+                resultDiv.innerHTML = `
+                    <div class="result ${response.ok ? 'success' : 'error'}">
+Status: ${response.status}
+${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Signup failed!
+Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testAuthCheck() {
+            const token = document.getElementById('check-token').value;
+            const userId = document.getElementById('check-userId').value;
+            const resultDiv = document.getElementById('result-/api/auth/check');
+            
+            if (!token || !userId) {
+                resultDiv.innerHTML = '<div class="result error">Please provide both token and user ID</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="result info">Testing auth check...</div>';
+            
+            try {
+                const response = await fetch('/api/auth/check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, userId })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="result ${response.ok ? 'success' : 'error'}">
+Status: ${response.status}
+${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Auth check failed!
+Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function seedTestUser() {
+            const resultDiv = document.getElementById('result-/api/auth/seed-test-user');
+            resultDiv.innerHTML = '<div class="result info">Seeding test user...</div>';
+            
+            try {
+                const response = await fetch('/api/auth/seed-test-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('login-email').value = data.credentials.email;
+                    document.getElementById('login-password').value = data.credentials.password;
+                }
+                
+                resultDiv.innerHTML = `
+                    <div class="result ${response.ok ? 'success' : 'error'}">
+Status: ${response.status}
+${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Seed failed!
+Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testSubscribe() {
+            const email = document.getElementById('subscribe-email').value;
+            const phone = document.getElementById('subscribe-phone').value;
+            const resultDiv = document.getElementById('result-/api/subscribe');
+            
+            if (!email && !phone) {
+                resultDiv.innerHTML = '<div class="result error">Please provide email or phone</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="result info">Testing subscribe...</div>';
+            
+            try {
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, phone })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="result ${response.ok ? 'success' : 'error'}">
+Status: ${response.status}
+${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Subscribe failed!
+Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testTrackClick() {
+            const section = document.getElementById('track-section').value;
+            const event = document.getElementById('track-event').value;
+            const album = document.getElementById('track-album').value;
+            const resultDiv = document.getElementById('result-/api/track-click');
+            
+            if (!section) {
+                resultDiv.innerHTML = '<div class="result error">Section is required</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="result info">Testing track click...</div>';
+            
+            try {
+                const response = await fetch('/api/track-click', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        section, 
+                        event: event || null, 
+                        album: album || null,
+                        userAgent: navigator.userAgent
+                    })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="result ${response.ok ? 'success' : 'error'}">
+Status: ${response.status}
+${JSON.stringify(data, null, 2)}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Track click failed!
+Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testAllRoutes() {
+            const routes = [
+                { method: 'GET', path: '/api/test' },
+                { method: 'GET', path: '/api/get-subscriptions' },
+                { method: 'GET', path: '/api/get-analytics' }
+            ];
+            
+            for (const route of routes) {
+                await testRoute(route.method, route.path);
+                await new Promise(resolve => setTimeout(resolve, 500)); // Small delay between requests
+            }
+            
+            alert('All route tests completed! Check the results above.');
+        }
+
+        function clearResults() {
+            const resultDivs = document.querySelectorAll('[id^="result-"]');
+            resultDivs.forEach(div => div.innerHTML = '');
+        }
     </script>
 </body>
 </html>
-
