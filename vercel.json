@@ -16,6 +16,21 @@
     },
     "api/auth/seed-test-user.js": {
       "maxDuration": 10
+    },
+    "api/posts/create.js": {
+      "maxDuration": 10
+    },
+    "api/posts/get.js": {
+      "maxDuration": 10
+    },
+    "api/events/rsvp.js": {
+      "maxDuration": 10
+    },
+    "api/messages/send.js": {
+      "maxDuration": 10
+    },
+    "api/messages/get.js": {
+      "maxDuration": 10
     }
   },
   "headers": [

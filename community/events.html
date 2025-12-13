@@ -441,22 +441,32 @@
             const card = btn.closest('.event-card-full');
             const countSpan = card.querySelector('.attendee-count');
             const eventName = card.querySelector('h3').textContent;
+            // Create event ID from name (in production, use actual event IDs)
+            const eventId = eventName.toLowerCase().replace(/\s+/g, '_');
             let count = parseInt(countSpan.textContent);
             
             if (btn.classList.contains('rsvpd')) {
+                // Cancel RSVP
+                const newCount = await saveRSVP(eventId, 'cancel');
+                if (newCount !== undefined) {
+                    count = newCount;
+                } else {
+                    count--;
+                }
                 btn.classList.remove('rsvpd');
                 card.classList.remove('rsvpd');
                 btn.textContent = 'RSVP';
-                count--;
-                // Track cancellation
-                await trackEventRSVP(eventName, 'cancel');
             } else {
+                // RSVP
+                const newCount = await saveRSVP(eventId, 'rsvp');
+                if (newCount !== undefined) {
+                    count = newCount;
+                } else {
+                    count++;
+                }
                 btn.classList.add('rsvpd');
                 card.classList.add('rsvpd');
                 btn.textContent = 'RSVP\'d ✓';
-                count++;
-                // Track RSVP
-                await trackEventRSVP(eventName, 'rsvp');
             }
             countSpan.textContent = count;
         }
@@ -470,22 +480,31 @@
             return null;
         }
         
-        // Track event RSVP
-        async function trackEventRSVP(eventName, action) {
+        // Save RSVP to backend
+        async function saveRSVP(eventId, action) {
+            const user = getCurrentUser();
+            if (!user) return;
+            
             try {
-                await fetch('/api/track-click', {
+                const response = await fetch('/api/events/rsvp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        section: 'events',
-                        event: eventName,
-                        album: action,
-                        timestamp: new Date().toISOString(),
-                        userAgent: navigator.userAgent
+                        userId: user.id,
+                        eventId: eventId,
+                        action: action // 'rsvp' or 'cancel'
                     })
                 });
+                
+                const data = await response.json();
+                if (data.success) {
+                    console.log('RSVP saved successfully:', data);
+                    return data.rsvpCount;
+                } else {
+                    console.error('Error saving RSVP:', data.error);
+                }
             } catch (error) {
-                console.error('Error tracking RSVP:', error);
+                console.error('Error saving RSVP:', error);
             }
         }
         

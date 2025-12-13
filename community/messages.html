@@ -508,25 +508,41 @@
                 return;
             }
             
-            const messagesContainer = document.getElementById('chatMessages');
-            const now = new Date();
-            const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            // Get current chat recipient
+            const chatName = document.getElementById('chatName').textContent;
+            // In production, use actual user IDs - for now use name mapping
+            const recipientMap = {
+                'Sarah Ahmed': 'user_sarah_ahmed',
+                'Ahmed Khan': 'user_ahmed_khan',
+                'Fatima Ali': 'user_fatima_ali',
+                'Omar Yusuf': 'user_omar_yusuf',
+                'Aisha Malik': 'user_aisha_malik'
+            };
+            const toUserId = recipientMap[chatName] || 'user_unknown';
             
-            // Track message sent
+            // Save message to backend
             try {
-                await fetch('/api/track-click', {
+                const response = await fetch('/api/messages/send', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        section: 'messages',
-                        event: 'message_sent',
-                        timestamp: new Date().toISOString(),
-                        userAgent: navigator.userAgent
+                        fromUserId: user.id,
+                        toUserId: toUserId,
+                        content: text
                     })
                 });
+                
+                const data = await response.json();
+                if (!data.success) {
+                    console.error('Error sending message:', data.error);
+                }
             } catch (error) {
-                console.error('Error tracking message:', error);
+                console.error('Error sending message:', error);
             }
+            
+            const messagesContainer = document.getElementById('chatMessages');
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
             
             const newMessage = document.createElement('div');
             newMessage.className = 'message sent';

@@ -555,11 +555,19 @@
                 return;
             }
             
+            // Extract tags from text
+            const tagRegex = /#(\w+)/g;
+            const tags = [];
+            let match;
+            while ((match = tagRegex.exec(text)) !== null) {
+                tags.push(match[1]);
+            }
+            
             // Save to backend
-            try {
-                await savePostToBackend({ text, userId: user.id });
-            } catch (error) {
-                console.error('Error saving post:', error);
+            const savedPost = await savePostToBackend(text, tags);
+            if (!savedPost) {
+                alert('Error saving post. Please try again.');
+                return;
             }
             
             // Create new post element
@@ -627,18 +635,28 @@
         }
         
         // Save post to backend
-        async function savePostToBackend(postData) {
+        async function savePostToBackend(text, tags) {
+            const user = getCurrentUser();
+            if (!user) return;
+            
             try {
-                await fetch('/api/track-click', {
+                const response = await fetch('/api/posts/create', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        section: 'community_feed',
-                        event: 'post_created',
-                        timestamp: new Date().toISOString(),
-                        userAgent: navigator.userAgent
+                        userId: user.id,
+                        content: text,
+                        tags: tags || []
                     })
                 });
+                
+                const data = await response.json();
+                if (data.success) {
+                    console.log('Post saved successfully:', data);
+                    return data.post;
+                } else {
+                    console.error('Error saving post:', data.error);
+                }
             } catch (error) {
                 console.error('Error saving post:', error);
             }
