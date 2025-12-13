@@ -578,6 +578,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.getElementById('mobileOverlay');
             if (sidebar && sidebar.classList.contains('mobile-open')) {
                 sidebar.classList.remove('mobile-open');
+                document.body.classList.remove('menu-open');
                 if (overlay) overlay.classList.remove('active');
                 const toggle = document.getElementById('mobileMenuToggle');
                 if (toggle) {
@@ -591,4 +592,135 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Mobile App Walkthrough/Setup
+function showMobileWalkthrough() {
+    // Check if user has seen walkthrough
+    const hasSeenWalkthrough = localStorage.getItem('msa_walkthrough_seen');
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    
+    if (hasSeenWalkthrough || !isMobile) {
+        return;
+    }
+    
+    const walkthrough = document.createElement('div');
+    walkthrough.id = 'mobileWalkthrough';
+    walkthrough.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    walkthrough.innerHTML = `
+        <div style="background: white; border-radius: 20px; max-width: 400px; width: 100%; 
+                    padding: 2rem 1.5rem; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+            <button onclick="closeWalkthrough()" style="position: absolute; top: 1rem; right: 1rem; 
+                    background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; 
+                    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <i class="fas fa-mobile-alt" style="font-size: 3rem; color: #2c5530; margin-bottom: 1rem;"></i>
+                <h2 style="margin: 0 0 0.5rem 0; color: #2c5530; font-size: 1.5rem;">Welcome to MSA Community!</h2>
+                <p style="margin: 0; color: #666; font-size: 0.95rem;">Let's get you started</p>
+            </div>
+            
+            <div style="text-align: left; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;">
+                    <div style="background: #2c5530; color: white; width: 32px; height: 32px; 
+                                border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+                                flex-shrink: 0; font-weight: bold;">1</div>
+                    <div>
+                        <h3 style="margin: 0 0 0.25rem 0; font-size: 1rem; color: #2c3e50;">Explore the Feed</h3>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;">See posts from your MSA community members</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;">
+                    <div style="background: #2c5530; color: white; width: 32px; height: 32px; 
+                                border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+                                flex-shrink: 0; font-weight: bold;">2</div>
+                    <div>
+                        <h3 style="margin: 0 0 0.25rem 0; font-size: 1rem; color: #2c3e50;">Join Events</h3>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;">RSVP to upcoming MSA events and activities</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;">
+                    <div style="background: #2c5530; color: white; width: 32px; height: 32px; 
+                                border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+                                flex-shrink: 0; font-weight: bold;">3</div>
+                    <div>
+                        <h3 style="margin: 0 0 0.25rem 0; font-size: 1rem; color: #2c3e50;">Connect & Message</h3>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;">Chat with other members and build connections</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="background: #2c5530; color: white; width: 32px; height: 32px; 
+                                border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+                                flex-shrink: 0; font-weight: bold;">4</div>
+                    <div>
+                        <h3 style="margin: 0 0 0.25rem 0; font-size: 1rem; color: #2c3e50;">Add to Home Screen</h3>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;">Install the app for quick access</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="closeWalkthrough()" style="background: #2c5530; color: white; border: none; 
+                    padding: 0.75rem 2rem; border-radius: 25px; font-size: 1rem; font-weight: 600; 
+                    cursor: pointer; width: 100%; transition: all 0.3s;" 
+                    onmouseover="this.style.background='#4a7c59'" 
+                    onmouseout="this.style.background='#2c5530'">
+                Get Started
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(walkthrough);
+}
+
+function closeWalkthrough() {
+    const walkthrough = document.getElementById('mobileWalkthrough');
+    if (walkthrough) {
+        walkthrough.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            walkthrough.remove();
+            localStorage.setItem('msa_walkthrough_seen', 'true');
+        }, 300);
+    }
+}
+
+// Add fade animations
+const walkthroughStyle = document.createElement('style');
+walkthroughStyle.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+`;
+document.head.appendChild(walkthroughStyle);
+
+// Show walkthrough on first visit (mobile only)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(showMobileWalkthrough, 1000);
+    });
+} else {
+    setTimeout(showMobileWalkthrough, 1000);
+}
 
