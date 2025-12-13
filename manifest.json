@@ -1,0 +1,50 @@
+{
+  "name": "Rutgers MSA Community",
+  "short_name": "MSA Community",
+  "description": "Connect, engage, and grow with your Rutgers MSA family",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2c5530",
+  "theme_color": "#2c5530",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/logos/rumsa-favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/logos/rumsa-favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["social", "education", "community"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Community",
+      "short_name": "Community",
+      "description": "Access the MSA Community",
+      "url": "/community/",
+      "icons": [{ "src": "images/logos/rumsa-favicon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Events",
+      "short_name": "Events",
+      "description": "View upcoming events",
+      "url": "/community/events.html",
+      "icons": [{ "src": "images/logos/rumsa-favicon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Feed",
+      "short_name": "Feed",
+      "description": "View community feed",
+      "url": "/community/feed.html",
+      "icons": [{ "src": "images/logos/rumsa-favicon.png", "sizes": "192x192" }]
+    }
+  ]
+}
+
