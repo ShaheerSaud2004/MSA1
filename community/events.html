@@ -443,32 +443,43 @@
             const eventName = card.querySelector('h3').textContent;
             // Create event ID from name (in production, use actual event IDs)
             const eventId = eventName.toLowerCase().replace(/\s+/g, '_');
-            let count = parseInt(countSpan.textContent);
+            const originalCount = parseInt(countSpan.textContent);
+            const isRSVPd = btn.classList.contains('rsvpd');
             
-            if (btn.classList.contains('rsvpd')) {
-                // Cancel RSVP
-                const newCount = await saveRSVP(eventId, 'cancel');
-                if (newCount !== undefined) {
-                    count = newCount;
+            // Disable button during request
+            btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.textContent = '...';
+            
+            try {
+                const action = isRSVPd ? 'cancel' : 'rsvp';
+                const result = await saveRSVP(eventId, action);
+                
+                if (result.success) {
+                    // Update UI
+                    if (isRSVPd) {
+                        btn.classList.remove('rsvpd');
+                        card.classList.remove('rsvpd');
+                        btn.textContent = 'RSVP';
+                        countSpan.textContent = result.rsvpCount || (originalCount - 1);
+                    } else {
+                        btn.classList.add('rsvpd');
+                        card.classList.add('rsvpd');
+                        btn.textContent = 'RSVP\'d ✓';
+                        countSpan.textContent = result.rsvpCount || (originalCount + 1);
+                    }
                 } else {
-                    count--;
+                    // Revert on error
+                    alert(result.error || 'Failed to update RSVP. Please try again.');
+                    btn.textContent = originalText;
                 }
-                btn.classList.remove('rsvpd');
-                card.classList.remove('rsvpd');
-                btn.textContent = 'RSVP';
-            } else {
-                // RSVP
-                const newCount = await saveRSVP(eventId, 'rsvp');
-                if (newCount !== undefined) {
-                    count = newCount;
-                } else {
-                    count++;
-                }
-                btn.classList.add('rsvpd');
-                card.classList.add('rsvpd');
-                btn.textContent = 'RSVP\'d ✓';
+            } catch (error) {
+                console.error('RSVP error:', error);
+                alert('Network error. Please check your connection and try again.');
+                btn.textContent = originalText;
+            } finally {
+                btn.disabled = false;
             }
-            countSpan.textContent = count;
         }
         
         // Load RSVP status for events on page load
@@ -521,29 +532,55 @@
         // Save RSVP to backend
         async function saveRSVP(eventId, action) {
             const user = getCurrentUser();
-            if (!user) return;
-            
-            try {
-                const response = await fetch('/api/events/rsvp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        userId: user.id,
-                        eventId: eventId,
-                        action: action // 'rsvp' or 'cancel'
-                    })
-                });
-                
-                const data = await response.json();
-                if (data.success) {
-                    console.log('RSVP saved successfully:', data);
-                    return data.rsvpCount;
-                } else {
-                    console.error('Error saving RSVP:', data.error);
-                }
-            } catch (error) {
-                console.error('Error saving RSVP:', error);
+            if (!user) {
+                return { success: false, error: 'User not logged in' };
             }
+            
+            // Try multiple API paths
+            const apiPaths = [
+                '/api/events/rsvp',
+                '../api/events/rsvp',
+                'api/events/rsvp'
+            ];
+            
+            for (const path of apiPaths) {
+                try {
+                    const response = await fetch(path, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            userId: user.id,
+                            eventId: eventId,
+                            action: action // 'rsvp' or 'cancel'
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            console.log('RSVP saved successfully:', data);
+                            return {
+                                success: true,
+                                rsvpCount: data.rsvpCount,
+                                data: data
+                            };
+                        } else {
+                            return {
+                                success: false,
+                                error: data.error || 'Failed to save RSVP'
+                            };
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error with ${path}:`, error);
+                    continue;
+                }
+            }
+            
+            return {
+                success: false,
+                error: 'Failed to connect to server. Please try again.'
+            };
         }
         
         function filterEvents(filter) {

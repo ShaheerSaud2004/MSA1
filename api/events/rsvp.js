@@ -18,6 +18,7 @@ export default async function handler(req, res) {
   try {
     const { userId, eventId, action } = req.body; // action: 'rsvp' or 'cancel'
 
+    // Validate input
     if (!userId || !eventId || !action) {
       return res.status(400).json({ 
         success: false,
@@ -25,18 +26,53 @@ export default async function handler(req, res) {
       });
     }
 
+    if (action !== 'rsvp' && action !== 'cancel') {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Action must be either "rsvp" or "cancel"' 
+      });
+    }
+
+    // Validate user exists
+    try {
+      const userBlobs = await list({ prefix: `users/${userId}` });
+      if (userBlobs.length === 0) {
+        return res.status(404).json({ 
+          success: false,
+          error: 'User not found' 
+        });
+      }
+    } catch (error) {
+      return res.status(404).json({ 
+        success: false,
+        error: 'User not found' 
+      });
+    }
+
     // Get or create event RSVP data
     const filename = `events/${eventId}/rsvps.json`;
-    let rsvpData = { eventId, rsvps: [], cancellations: [] };
+    let rsvpData = { 
+      eventId, 
+      rsvps: [], 
+      cancellations: [],
+      createdAt: new Date().toISOString()
+    };
 
     try {
       const { blobs } = await list({ prefix: filename });
       if (blobs.length > 0) {
         const response = await fetch(blobs[0].url);
-        rsvpData = await response.json();
+        const existingData = await response.json();
+        // Ensure arrays exist
+        rsvpData = {
+          ...existingData,
+          rsvps: existingData.rsvps || [],
+          cancellations: existingData.cancellations || []
+        };
       }
     } catch (error) {
-      // File doesn't exist yet, create new one
+      // File doesn't exist yet, use default
+      console.log('Creating new RSVP file for event:', eventId);
     }
 
     if (action === 'rsvp') {
