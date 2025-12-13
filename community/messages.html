@@ -210,6 +210,100 @@
             margin-bottom: 1rem;
             opacity: 0.3;
         }
+        .new-message-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .new-message-modal.active {
+            display: flex;
+        }
+        .new-message-content {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .new-message-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .new-message-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+        .close-modal-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 0.5rem;
+        }
+        .new-message-search {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .new-message-search input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .new-message-search input:focus {
+            outline: none;
+            border-color: var(--msa-green);
+        }
+        .users-list {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+        .user-select-item {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .user-select-item:hover {
+            background: var(--bg-light);
+        }
+        .user-select-item:last-child {
+            border-bottom: none;
+        }
+        .user-select-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .user-select-info h4 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+        }
+        .user-select-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
     </style>
 </head>
 <body>
@@ -312,7 +406,7 @@
                 <div class="conversations-list">
                     <div class="conversations-header">
                         <h2 style="margin: 0; font-size: 1.25rem;">Conversations</h2>
-                        <button class="new-message-btn" onclick="alert('New message feature coming soon!')">
+                        <button class="new-message-btn" onclick="openNewMessageModal()">
                             <i class="fas fa-plus"></i> New
                         </button>
                     </div>
@@ -379,8 +473,8 @@
                         <div class="chat-user-info">
                             <img src="../images/team/SS.jpg" alt="Sarah" class="user-avatar" id="chatAvatar">
                             <div>
-                                <h3 style="margin: 0; font-size: 1.1rem;" id="chatName">Sarah Ahmed</h3>
-                                <p style="margin: 0; font-size: 0.85rem; color: var(--text-light);">Online</p>
+                                <h3 style="margin: 0; font-size: 1.1rem;" id="chatName">Select a conversation</h3>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--text-light);" id="chatStatus">Start a new message or select existing</p>
                             </div>
                         </div>
                         <button class="nav-link" style="border: none; background: none; cursor: pointer;">
@@ -388,6 +482,10 @@
                         </button>
                     </div>
                     <div class="chat-messages" id="chatMessages">
+                        <div class="empty-chat">
+                            <i class="fas fa-comments"></i>
+                            <p>Select a conversation to start messaging</p>
+                        </div>
                         <div class="message">
                             <img src="../images/team/SS.jpg" alt="Sarah" class="message-avatar">
                             <div>
@@ -419,6 +517,24 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- New Message Modal -->
+    <div class="new-message-modal" id="newMessageModal">
+        <div class="new-message-content">
+            <div class="new-message-header">
+                <h2>New Message</h2>
+                <button class="close-modal-btn" onclick="closeNewMessageModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="new-message-search">
+                <input type="text" id="userSearchInput" placeholder="Search for a person..." onkeyup="searchUsers()">
+            </div>
+            <div class="users-list" id="usersList">
+                <!-- Users will be loaded here -->
+            </div>
+        </div>
     </div>
 
     <script src="js/community.js"></script>
@@ -574,6 +690,13 @@
             
             // Show message in UI immediately
             const messagesContainer = document.getElementById('chatMessages');
+            
+            // Remove empty chat message if present
+            const emptyChat = messagesContainer.querySelector('.empty-chat');
+            if (emptyChat) {
+                emptyChat.remove();
+            }
+            
             const now = new Date();
             const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
             
@@ -590,6 +713,18 @@
             messagesContainer.appendChild(newMessage);
             input.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // If we have a conversation, update it with the new message
+            if (currentConversation && messageSaved) {
+                currentConversation.messages.push({
+                    id: `msg_${Date.now()}`,
+                    fromUserId: user.id,
+                    toUserId: toUserId,
+                    content: text,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+            }
             
             // Reload conversations to update the list
             setTimeout(() => {
@@ -680,22 +815,33 @@
             // Update chat header
             document.getElementById('chatName').textContent = `${otherUser.firstName} ${otherUser.lastName}`;
             document.getElementById('chatAvatar').src = '../images/team/Lad.jpg';
+            document.getElementById('chatStatus').textContent = 'Online';
             
             // Update messages
             const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.innerHTML = conversation.messages.map(msg => {
-                const isSent = msg.fromUserId === currentUser.id;
-                const time = new Date(msg.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-                return `
-                    <div class="message ${isSent ? 'sent' : ''}">
-                        <img src="../images/team/${isSent ? 'Lad' : 'SS'}.jpg" alt="${isSent ? 'You' : otherUser.firstName}" class="message-avatar">
-                        <div>
-                            <div class="message-content">${msg.content}</div>
-                            <div class="message-time">${time}</div>
+            
+            if (conversation.messages && conversation.messages.length > 0) {
+                messagesContainer.innerHTML = conversation.messages.map(msg => {
+                    const isSent = msg.fromUserId === currentUser.id;
+                    const time = new Date(msg.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                    return `
+                        <div class="message ${isSent ? 'sent' : ''}">
+                            <img src="../images/team/${isSent ? 'Lad' : 'SS'}.jpg" alt="${isSent ? 'You' : otherUser.firstName}" class="message-avatar">
+                            <div>
+                                <div class="message-content">${msg.content}</div>
+                                <div class="message-time">${time}</div>
+                            </div>
                         </div>
+                    `;
+                }).join('');
+            } else {
+                messagesContainer.innerHTML = `
+                    <div class="empty-chat">
+                        <i class="fas fa-comments"></i>
+                        <p>No messages yet. Start the conversation!</p>
                     </div>
                 `;
-            }).join('');
+            }
             
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
             
@@ -728,6 +874,141 @@
         window.addEventListener('load', () => {
             loadConversations();
         });
+        
+        // New Message Modal Functions
+        async function openNewMessageModal() {
+            const modal = document.getElementById('newMessageModal');
+            modal.classList.add('active');
+            await loadUsersForMessaging();
+        }
+        
+        function closeNewMessageModal() {
+            const modal = document.getElementById('newMessageModal');
+            modal.classList.remove('active');
+            document.getElementById('userSearchInput').value = '';
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('newMessageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'newMessageModal') {
+                closeNewMessageModal();
+            }
+        });
+        
+        async function loadUsersForMessaging() {
+            const user = getCurrentUser();
+            if (!user) {
+                alert('Please log in to send messages!');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/users/list?excludeUserId=${user.id}`);
+                const data = await response.json();
+                
+                if (data.success && data.users) {
+                    displayUsersForMessaging(data.users);
+                } else {
+                    document.getElementById('usersList').innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-light);">No users found</div>';
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+                document.getElementById('usersList').innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-light);">Error loading users</div>';
+            }
+        }
+        
+        function displayUsersForMessaging(users) {
+            const usersList = document.getElementById('usersList');
+            
+            if (users.length === 0) {
+                usersList.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-light);">No users found</div>';
+                return;
+            }
+            
+            usersList.innerHTML = users.map(user => `
+                <div class="user-select-item" onclick="startConversation('${user.id}', '${user.firstName}', '${user.lastName}')">
+                    <img src="../images/team/Lad.jpg" alt="${user.firstName}" class="user-select-avatar">
+                    <div class="user-select-info">
+                        <h4>${user.firstName} ${user.lastName}</h4>
+                        <p>${user.major || 'Member'} • ${user.year || ''}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        async function searchUsers() {
+            const search = document.getElementById('userSearchInput').value;
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            try {
+                const response = await fetch(`/api/users/list?excludeUserId=${user.id}&search=${encodeURIComponent(search)}`);
+                const data = await response.json();
+                
+                if (data.success && data.users) {
+                    displayUsersForMessaging(data.users);
+                }
+            } catch (error) {
+                console.error('Error searching users:', error);
+            }
+        }
+        
+        async function startConversation(userId, firstName, lastName) {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+            
+            // Close modal
+            closeNewMessageModal();
+            
+            // Check if conversation already exists
+            try {
+                const response = await fetch(`/api/messages/get?userId=${currentUser.id}`);
+                const data = await response.json();
+                
+                if (data.success && data.conversations) {
+                    const existingConv = data.conversations.find(conv => 
+                        conv.participants.includes(userId)
+                    );
+                    
+                    if (existingConv) {
+                        // Open existing conversation
+                        openChatFromBackend(existingConv);
+                        // Highlight it in the list
+                        document.querySelectorAll('.conversation-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking existing conversation:', error);
+            }
+            
+            // Create new conversation by sending a welcome message
+            try {
+                const response = await fetch('/api/messages/send', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fromUserId: currentUser.id,
+                        toUserId: userId,
+                        content: '👋 Hi!'
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    // Open the new conversation
+                    openChatFromBackend(data.conversation);
+                    // Reload conversations list
+                    loadConversations();
+                }
+            } catch (error) {
+                console.error('Error starting conversation:', error);
+                alert('Failed to start conversation. Please try again.');
+            }
+        }
     </script>
 </body>
 </html>
