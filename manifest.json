@@ -2,12 +2,19 @@
   "name": "Rutgers MSA Community",
   "short_name": "MSA Community",
   "description": "Connect, engage, and grow with your Rutgers MSA family",
-  "start_url": "/",
+  "start_url": "/community/index.html",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#2c5530",
   "theme_color": "#2c5530",
   "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "images/logos/rumsa-favicon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "images/logos/rumsa-favicon.png",
       "sizes": "192x192",
