@@ -657,23 +657,48 @@
             // Save message to backend
             let messageSaved = false;
             try {
-                const response = await fetch('/api/messages/send', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        fromUserId: user.id,
-                        toUserId: toUserId,
-                        content: text
-                    })
-                });
+                // Try multiple API paths
+                const apiPaths = [
+                    '/api/messages/send',
+                    '../api/messages/send',
+                    'api/messages/send'
+                ];
                 
-                const data = await response.json();
+                let response = null;
+                let data = null;
+                
+                for (const path of apiPaths) {
+                    try {
+                        response = await fetch(path, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                fromUserId: user.id,
+                                toUserId: toUserId,
+                                content: text
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            data = await response.json();
+                            break;
+                        }
+                    } catch (err) {
+                        console.log(`Tried ${path}, failed, trying next...`);
+                        continue;
+                    }
+                }
+                
+                if (!response || !response.ok || !data) {
+                    throw new Error('Failed to send message to all API paths');
+                }
+                
                 if (data.success) {
                     messageSaved = true;
                     console.log('Message saved to backend:', data);
                     
                     // If we have a current conversation, reload it to show the new message
-                    if (currentConversation) {
+                    if (currentConversation && data.conversation) {
                         setTimeout(() => {
                             openChatFromBackend(data.conversation);
                         }, 300);
@@ -685,7 +710,8 @@
                 }
             } catch (error) {
                 console.error('Error sending message:', error);
-                alert('Network error. Message may not have been saved.');
+                // Still show message in UI even if backend fails
+                console.log('Message shown in UI but may not be saved to backend');
             }
             
             // Show message in UI immediately
@@ -753,12 +779,43 @@
             if (!user) return;
             
             try {
-                const response = await fetch(`/api/messages/get?userId=${user.id}`);
-                const data = await response.json();
+                // Try multiple API paths
+                const apiPaths = [
+                    `/api/messages/get?userId=${user.id}`,
+                    `../api/messages/get?userId=${user.id}`,
+                    `api/messages/get?userId=${user.id}`
+                ];
+                
+                let response = null;
+                let data = null;
+                
+                for (const path of apiPaths) {
+                    try {
+                        response = await fetch(path);
+                        if (response.ok) {
+                            data = await response.json();
+                            break;
+                        }
+                    } catch (err) {
+                        console.log(`Tried ${path}, failed, trying next...`);
+                        continue;
+                    }
+                }
+                
+                if (!response || !response.ok) {
+                    throw new Error('Failed to fetch conversations from all API paths');
+                }
                 
                 if (data.success && data.conversations && data.conversations.length > 0) {
                     const conversationsList = document.getElementById('conversationsList');
                     conversationsList.innerHTML = '';
+                    
+                    // Hide sample conversations
+                    document.querySelectorAll('.conversation-item').forEach(item => {
+                        if (item.onclick && item.onclick.toString().includes('openChat')) {
+                            item.style.display = 'none';
+                        }
+                    });
                     
                     data.conversations.forEach((conversation, index) => {
                         const otherUser = conversation.otherUser || { firstName: 'User', lastName: '' };
@@ -797,6 +854,7 @@
                     console.log(`Loaded ${data.conversations.length} conversations from backend`);
                 } else {
                     console.log('No conversations from backend, showing sample conversations');
+                    // Keep sample conversations visible
                 }
             } catch (error) {
                 console.error('Error loading conversations:', error);
@@ -872,6 +930,15 @@
         
         // Load conversations when page loads
         window.addEventListener('load', () => {
+            // Check if user is logged in
+            const user = getCurrentUser();
+            if (!user) {
+                // Redirect to login if not logged in
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Load conversations from backend
             loadConversations();
         });
         
@@ -903,18 +970,52 @@
                 return;
             }
             
+            // Show loading state
+            document.getElementById('usersList').innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-light);"><i class="fas fa-spinner fa-spin"></i> Loading users...</div>';
+            
             try {
-                const response = await fetch(`/api/users/list?excludeUserId=${user.id}`);
-                const data = await response.json();
+                // Try multiple API paths
+                const apiPaths = [
+                    `/api/users/list?excludeUserId=${user.id}`,
+                    `../api/users/list?excludeUserId=${user.id}`,
+                    `api/users/list?excludeUserId=${user.id}`
+                ];
+                
+                let response = null;
+                let data = null;
+                
+                for (const path of apiPaths) {
+                    try {
+                        response = await fetch(path);
+                        if (response.ok) {
+                            data = await response.json();
+                            break;
+                        }
+                    } catch (err) {
+                        console.log(`Tried ${path}, failed, trying next...`);
+                        continue;
+                    }
+                }
+                
+                if (!response || !response.ok) {
+                    throw new Error('Failed to fetch users from all API paths');
+                }
                 
                 if (data.success && data.users) {
                     displayUsersForMessaging(data.users);
                 } else {
-                    document.getElementById('usersList').innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-light);">No users found</div>';
+                    document.getElementById('usersList').innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-light);">No users found. Be the first to sign up!</div>';
                 }
             } catch (error) {
                 console.error('Error loading users:', error);
-                document.getElementById('usersList').innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-light);">Error loading users</div>';
+                document.getElementById('usersList').innerHTML = `
+                    <div style="padding: 2rem; text-align: center; color: var(--text-light);">
+                        <p>Error loading users. Please try again.</p>
+                        <button onclick="loadUsersForMessaging()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--msa-green); color: white; border: none; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-redo"></i> Retry
+                        </button>
+                    </div>
+                `;
             }
         }
         
