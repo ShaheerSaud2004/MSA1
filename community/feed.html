@@ -629,6 +629,9 @@
             // Reload posts to show the new one from backend
             setTimeout(() => {
                 loadPostsFromBackend();
+                
+                // Start auto-refresh for posts (every 10 seconds)
+                startPostPolling();
             }, 1000);
         }
         
@@ -762,29 +765,70 @@
         
         // Load posts from backend on page load
         async function loadPostsFromBackend() {
+            const postsContainer = document.getElementById('feedPosts');
+            if (!postsContainer) return;
+            
+            // Show loading state
+            const loadingIndicator = document.createElement('div');
+            loadingIndicator.id = 'postsLoading';
+            loadingIndicator.style.cssText = 'text-align: center; padding: 2rem; color: var(--text-light);';
+            loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading posts...';
+            postsContainer.insertBefore(loadingIndicator, postsContainer.firstChild);
+            
             try {
-                const response = await fetch('/api/posts/get');
-                const data = await response.json();
+                // Try multiple API paths
+                const apiPaths = [
+                    '/api/posts/get',
+                    '../api/posts/get',
+                    'api/posts/get'
+                ];
                 
-                if (data.success && data.posts && data.posts.length > 0) {
-                    // Clear sample posts and show real posts
-                    const postsContainer = document.getElementById('feedPosts');
-                    const samplePosts = postsContainer.querySelectorAll('.feed-post');
+                let response = null;
+                let data = null;
+                
+                for (const path of apiPaths) {
+                    try {
+                        response = await fetch(path);
+                        if (response.ok) {
+                            data = await response.json();
+                            break;
+                        }
+                    } catch (err) {
+                        console.log(`Tried ${path}, failed, trying next...`);
+                        continue;
+                    }
+                }
+                
+                // Remove loading indicator
+                const loading = document.getElementById('postsLoading');
+                if (loading) loading.remove();
+                
+                if (data && data.success && data.posts && data.posts.length > 0) {
+                    // Get existing post IDs to avoid duplicates
+                    const existingPostIds = new Set(
+                        Array.from(postsContainer.querySelectorAll('[data-post-id]'))
+                            .map(el => el.getAttribute('data-post-id'))
+                    );
                     
-                    // Add real posts at the top
-                    data.posts.forEach(post => {
+                    // Add new posts at the top (only if they don't exist)
+                    const newPosts = data.posts.filter(post => !existingPostIds.has(post.id));
+                    newPosts.forEach(post => {
                         const postElement = createPostElement(post);
                         postsContainer.insertBefore(postElement, postsContainer.firstChild);
                     });
                     
-                    // Keep sample posts at bottom for demo
-                    console.log(`Loaded ${data.posts.length} posts from backend`);
+                    console.log(`Loaded ${newPosts.length} new posts from backend (${data.posts.length} total)`);
                 } else {
                     console.log('No posts from backend, showing sample posts');
                 }
             } catch (error) {
                 console.error('Error loading posts:', error);
-                // Keep sample posts if backend fails
+                const loading = document.getElementById('postsLoading');
+                if (loading) {
+                    loading.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error loading posts. Showing sample posts.';
+                    loading.style.color = '#dc3545';
+                    setTimeout(() => loading.remove(), 3000);
+                }
             }
         }
         
@@ -868,9 +912,128 @@
             return time.toLocaleDateString();
         }
         
+        // Auto-refresh posts polling
+        let postPollInterval = null;
+        let lastPostCheck = null;
+        
+        function startPostPolling() {
+            // Poll every 10 seconds for new posts
+            if (postPollInterval) {
+                clearInterval(postPollInterval);
+            }
+            
+            postPollInterval = setInterval(async () => {
+                try {
+                    const apiPaths = [
+                        `/api/posts/get?t=${Date.now()}`,
+                        `../api/posts/get?t=${Date.now()}`,
+                        `api/posts/get?t=${Date.now()}`
+                    ];
+                    
+                    for (const path of apiPaths) {
+                        try {
+                            const response = await fetch(path);
+                            if (response.ok) {
+                                const data = await response.json();
+                                
+                                if (data.success && data.posts) {
+                                    // Check for new posts
+                                    const existingPostIds = new Set(
+                                        Array.from(document.querySelectorAll('[data-post-id]'))
+                                            .map(el => el.getAttribute('data-post-id'))
+                                    );
+                                    
+                                    const newPosts = data.posts.filter(post => 
+                                        !existingPostIds.has(post.id)
+                                    );
+                                    
+                                    if (newPosts.length > 0) {
+                                        // Add new posts at the top
+                                        const postsContainer = document.getElementById('feedPosts');
+                                        newPosts.forEach(post => {
+                                            const postElement = createPostElement(post);
+                                            postsContainer.insertBefore(postElement, postsContainer.firstChild);
+                                        });
+                                        
+                                        // Show notification
+                                        if (newPosts.length === 1) {
+                                            showNotification(`New post from ${newPosts[0].author?.firstName || 'someone'}`);
+                                        } else {
+                                            showNotification(`${newPosts.length} new posts`);
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        } catch (err) {
+                            continue;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error polling posts:', error);
+                }
+            }, 10000); // Poll every 10 seconds
+        }
+        
+        function stopPostPolling() {
+            if (postPollInterval) {
+                clearInterval(postPollInterval);
+                postPollInterval = null;
+            }
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 1rem;
+                background: #2c5530;
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Add notification animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
         // Load posts when page loads
         window.addEventListener('load', () => {
             loadPostsFromBackend();
+            startPostPolling();
+            lastPostCheck = Date.now();
+        });
+        
+        // Stop polling when page is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopPostPolling();
+            } else {
+                startPostPolling();
+                loadPostsFromBackend(); // Refresh when coming back
+            }
         });
     </script>
 </body>

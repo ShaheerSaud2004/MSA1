@@ -1249,6 +1249,83 @@
             return time.toLocaleDateString();
         }
         
+        // Real-time message polling
+        let messagePollInterval = null;
+        let lastMessageCheck = null;
+        
+        function startMessagePolling() {
+            // Poll every 3 seconds for new messages
+            if (messagePollInterval) {
+                clearInterval(messagePollInterval);
+            }
+            
+            messagePollInterval = setInterval(async () => {
+                const user = getCurrentUser();
+                if (!user) return;
+                
+                try {
+                    const apiPaths = [
+                        `/api/messages/get?userId=${user.id}&t=${Date.now()}`,
+                        `../api/messages/get?userId=${user.id}&t=${Date.now()}`,
+                        `api/messages/get?userId=${user.id}&t=${Date.now()}`
+                    ];
+                    
+                    for (const path of apiPaths) {
+                        try {
+                            const response = await fetch(path);
+                            if (response.ok) {
+                                const data = await response.json();
+                                
+                                if (data.success && data.conversations) {
+                                    // Check if there are new messages
+                                    const hasNewMessages = data.conversations.some(conv => {
+                                        const lastMsg = conv.messages[conv.messages.length - 1];
+                                        if (!lastMsg) return false;
+                                        const msgTime = new Date(lastMsg.timestamp).getTime();
+                                        return !lastMessageCheck || msgTime > lastMessageCheck;
+                                    });
+                                    
+                                    if (hasNewMessages) {
+                                        // Update last check time
+                                        lastMessageCheck = Date.now();
+                                        
+                                        // Reload conversations if not viewing a specific chat
+                                        if (!currentConversation) {
+                                            loadConversations();
+                                        } else {
+                                            // Check if current conversation has new messages
+                                            const currentConv = data.conversations.find(c => 
+                                                c.id === currentConversation.id
+                                            );
+                                            if (currentConv) {
+                                                const newMsgCount = currentConv.messages.length - 
+                                                    (currentConversation.messages?.length || 0);
+                                                if (newMsgCount > 0) {
+                                                    openChatFromBackend(currentConv);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        } catch (err) {
+                            continue;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error polling messages:', error);
+                }
+            }, 3000); // Poll every 3 seconds
+        }
+        
+        function stopMessagePolling() {
+            if (messagePollInterval) {
+                clearInterval(messagePollInterval);
+                messagePollInterval = null;
+            }
+        }
+        
         // Load conversations when page loads
         window.addEventListener('load', () => {
             // Check if user is logged in
@@ -1261,6 +1338,21 @@
             
             // Load conversations from backend
             loadConversations();
+            
+            // Start polling for new messages
+            startMessagePolling();
+            
+            // Update last check time
+            lastMessageCheck = Date.now();
+        });
+        
+        // Stop polling when page is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopMessagePolling();
+            } else {
+                startMessagePolling();
+            }
         });
         
         // New Message Modal Functions

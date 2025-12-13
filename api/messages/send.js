@@ -25,6 +25,30 @@ export default async function handler(req, res) {
       });
     }
 
+    // Validate user IDs
+    if (fromUserId === toUserId) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Cannot send message to yourself' 
+      });
+    }
+
+    // Validate content
+    const trimmedContent = content.trim();
+    if (!trimmedContent || trimmedContent.length === 0) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Message content cannot be empty' 
+      });
+    }
+
+    if (trimmedContent.length > 5000) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Message content is too long (max 5000 characters)' 
+      });
+    }
+
     // Create conversation ID (sorted to ensure same ID for both users)
     const conversationId = [fromUserId, toUserId].sort().join('_');
 
@@ -32,7 +56,7 @@ export default async function handler(req, res) {
     const filename = `messages/${conversationId}.json`;
     let conversation = { 
       id: conversationId,
-      participants: [fromUserId, toUserId],
+      participants: [fromUserId, toUserId].sort(),
       messages: []
     };
 
@@ -40,10 +64,14 @@ export default async function handler(req, res) {
       const { blobs } = await list({ prefix: filename });
       if (blobs.length > 0) {
         const response = await fetch(blobs[0].url);
-        conversation = await response.json();
+        const existingConversation = await response.json();
+        // Ensure participants array is sorted
+        existingConversation.participants = existingConversation.participants.sort();
+        conversation = existingConversation;
       }
     } catch (error) {
-      // Conversation doesn't exist yet
+      // Conversation doesn't exist yet, use default
+      console.log('Creating new conversation:', conversationId);
     }
 
     // Add new message
@@ -51,13 +79,23 @@ export default async function handler(req, res) {
       id: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       fromUserId,
       toUserId,
-      content,
+      content: trimmedContent,
       timestamp: new Date().toISOString(),
       read: false
     };
 
+    // Ensure messages array exists
+    if (!conversation.messages) {
+      conversation.messages = [];
+    }
+
     conversation.messages.push(message);
     conversation.updatedAt = new Date().toISOString();
+    conversation.lastMessage = {
+      content: trimmedContent,
+      timestamp: message.timestamp,
+      fromUserId
+    };
     
     // Save to Vercel Blob storage
     const dataString = JSON.stringify(conversation, null, 2);

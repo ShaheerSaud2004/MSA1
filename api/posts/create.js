@@ -18,12 +18,36 @@ export default async function handler(req, res) {
   try {
     const { userId, content, tags } = req.body;
 
+    // Validate input
     if (!userId || !content) {
       return res.status(400).json({ 
         success: false,
         error: 'User ID and content are required' 
       });
     }
+
+    // Validate and sanitize content
+    const trimmedContent = content.trim();
+    if (trimmedContent.length === 0) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Post content cannot be empty' 
+      });
+    }
+
+    if (trimmedContent.length > 10000) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Post content is too long (max 10000 characters)' 
+      });
+    }
+
+    // Validate tags
+    const validTags = Array.isArray(tags) 
+      ? tags.filter(tag => typeof tag === 'string' && tag.trim().length > 0 && tag.length <= 50)
+            .map(tag => tag.trim().toLowerCase())
+            .slice(0, 10) // Max 10 tags
+      : [];
 
     // Get user to verify they exist
     const { blobs } = await list({ prefix: `users/${userId}` });
@@ -37,8 +61,8 @@ export default async function handler(req, res) {
     const postData = {
       id: `post_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       userId,
-      content,
-      tags: tags || [],
+      content: trimmedContent,
+      tags: validTags,
       likes: [],
       comments: [],
       shares: 0,
