@@ -347,6 +347,26 @@
                             <span class="conversation-time">3h ago</span>
                         </div>
                     </div>
+                    <div class="conversation-item" onclick="openChat('omar')">
+                        <img src="../images/team/Lad.jpg" alt="Omar" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-name">Omar Yusuf</div>
+                            <div class="conversation-preview">Thanks for the help with the assignment!</div>
+                        </div>
+                        <div class="conversation-meta">
+                            <span class="conversation-time">5h ago</span>
+                        </div>
+                    </div>
+                    <div class="conversation-item" onclick="openChat('aisha')">
+                        <img src="../images/team/SS.jpg" alt="Aisha" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-name">Aisha Malik</div>
+                            <div class="conversation-preview">Are you going to the event this weekend?</div>
+                        </div>
+                        <div class="conversation-meta">
+                            <span class="conversation-time">1d ago</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Chat Area -->
@@ -432,6 +452,24 @@
                         { sender: false, text: 'See you at MSA Thursday!', time: '11:30 AM' },
                         { sender: true, text: 'Looking forward to it!', time: '11:32 AM' }
                     ]
+                },
+                'omar': {
+                    name: 'Omar Yusuf',
+                    avatar: '../images/team/Lad.jpg',
+                    messages: [
+                        { sender: false, text: 'Thanks for the help with the assignment! Really appreciate it.', time: '10:15 AM' },
+                        { sender: true, text: 'No problem! Happy to help anytime.', time: '10:20 AM' },
+                        { sender: false, text: 'If you need anything, just let me know!', time: '10:22 AM' }
+                    ]
+                },
+                'aisha': {
+                    name: 'Aisha Malik',
+                    avatar: '../images/team/SS.jpg',
+                    messages: [
+                        { sender: false, text: 'Are you going to the event this weekend?', time: 'Yesterday 3:45 PM' },
+                        { sender: true, text: 'Yes! Are you?', time: 'Yesterday 4:00 PM' },
+                        { sender: false, text: 'Yes! See you there!', time: 'Yesterday 4:05 PM' }
+                    ]
                 }
             };
             
@@ -456,15 +494,39 @@
             if (badge) badge.remove();
         }
         
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('messageInput');
             const text = input.value.trim();
             
             if (!text) return;
             
+            // Check if user is logged in
+            const user = getCurrentUser();
+            if (!user) {
+                alert('Please log in to send messages!');
+                window.location.href = 'index.html';
+                return;
+            }
+            
             const messagesContainer = document.getElementById('chatMessages');
             const now = new Date();
             const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            
+            // Track message sent
+            try {
+                await fetch('/api/track-click', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        section: 'messages',
+                        event: 'message_sent',
+                        timestamp: new Date().toISOString(),
+                        userAgent: navigator.userAgent
+                    })
+                });
+            } catch (error) {
+                console.error('Error tracking message:', error);
+            }
             
             const newMessage = document.createElement('div');
             newMessage.className = 'message sent';
@@ -479,6 +541,15 @@
             messagesContainer.appendChild(newMessage);
             input.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Get current user helper
+        function getCurrentUser() {
+            const user = localStorage.getItem('msa_user');
+            if (user) {
+                return JSON.parse(user);
+            }
+            return null;
         }
         
         function handleKeyPress(e) {

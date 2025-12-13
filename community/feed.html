@@ -442,19 +442,124 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Post 4 -->
+                <div class="feed-post" data-category="all study">
+                    <div class="post-header">
+                        <img src="../images/team/BS.jpg" alt="User" class="post-avatar">
+                        <div class="post-author">
+                            <h4>Ahmed Khan</h4>
+                            <p>Engineering • Senior</p>
+                            <span class="post-time">3 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Just finished my midterm! Alhamdulillah. If anyone needs help with Engineering courses, feel free to reach out. Always happy to help! 💪</p>
+                        <div class="post-tags">
+                            <span class="tag">#Engineering</span>
+                            <span class="tag">#StudyHelp</span>
+                            <span class="tag">#Community</span>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <i class="far fa-heart"></i> <span class="like-count">18</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <i class="fas fa-comment"></i> <span class="comment-count">3</span>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                    <div class="comment-section" id="comments-4">
+                        <div class="comment-input-group">
+                            <img src="../images/team/Lad.jpg" alt="You" class="comment-avatar">
+                            <input type="text" class="comment-input" placeholder="Write a comment...">
+                            <button class="comment-btn" onclick="addComment(this)">Post</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 5 -->
+                <div class="feed-post" data-category="all events trending">
+                    <div class="post-header">
+                        <img src="../images/team/hope.jpg" alt="User" class="post-avatar">
+                        <div class="post-author">
+                            <h4>Fatima Ali</h4>
+                            <p>Computer Science • Sophomore</p>
+                            <span class="post-time">5 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Community Service Day was amazing! So grateful to be part of such an amazing community. JazakAllah khair to everyone who came out! 🙏</p>
+                        <div class="post-tags">
+                            <span class="tag">#CommunityService</span>
+                            <span class="tag">#Volunteer</span>
+                            <span class="tag">#Grateful</span>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <i class="fas fa-heart" style="color: #e74c3c;"></i> <span class="like-count">67</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <i class="fas fa-comment"></i> <span class="comment-count">15</span>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                    <div class="comment-section" id="comments-5">
+                        <div class="comment-input-group">
+                            <img src="../images/team/Lad.jpg" alt="You" class="comment-avatar">
+                            <input type="text" class="comment-input" placeholder="Write a comment...">
+                            <button class="comment-btn" onclick="addComment(this)">Post</button>
+                        </div>
+                        <div class="comments-list">
+                            <div class="comment-item">
+                                <img src="../images/team/SS.jpg" alt="User" class="comment-avatar">
+                                <div class="comment-content">
+                                    <div class="comment-author">Sarah Ahmed</div>
+                                    <div class="comment-text">It was such a great experience! Can't wait for the next one!</div>
+                                    <div class="comment-actions">
+                                        <span class="comment-action" onclick="likeComment(this)">Like</span>
+                                        <span class="comment-action">Reply</span>
+                                        <span class="post-time">4 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
 
     <script src="js/community.js"></script>
     <script>
-        function createPost() {
+        async function createPost() {
             const input = document.getElementById('postInput');
             const text = input.value.trim();
             
             if (!text) {
                 alert('Please write something to post!');
                 return;
+            }
+            
+            // Check if user is logged in
+            const user = getCurrentUser();
+            if (!user) {
+                alert('Please log in to post!');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Save to backend
+            try {
+                await savePostToBackend({ text, userId: user.id });
+            } catch (error) {
+                console.error('Error saving post:', error);
             }
             
             // Create new post element
@@ -470,7 +575,7 @@
                 <div class="post-header">
                     <img src="../images/team/Lad.jpg" alt="You" class="post-avatar">
                     <div class="post-author">
-                        <h4>You</h4>
+                        <h4>${user.firstName || 'You'}</h4>
                         <p>Member</p>
                         <span class="post-time">${timeAgo}</span>
                     </div>
@@ -510,6 +615,33 @@
                 btn.textContent = originalText;
                 btn.disabled = false;
             }, 2000);
+        }
+        
+        // Get current user helper
+        function getCurrentUser() {
+            const user = localStorage.getItem('msa_user');
+            if (user) {
+                return JSON.parse(user);
+            }
+            return null;
+        }
+        
+        // Save post to backend
+        async function savePostToBackend(postData) {
+            try {
+                await fetch('/api/track-click', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        section: 'community_feed',
+                        event: 'post_created',
+                        timestamp: new Date().toISOString(),
+                        userAgent: navigator.userAgent
+                    })
+                });
+            } catch (error) {
+                console.error('Error saving post:', error);
+            }
         }
         
         function toggleLike(btn) {

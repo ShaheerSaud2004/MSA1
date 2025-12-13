@@ -196,8 +196,8 @@
 
             <!-- Friends Tabs -->
             <div class="friends-tabs">
-                <button class="friend-tab active" onclick="filterFriends('all')">All Friends (24)</button>
-                <button class="friend-tab" onclick="filterFriends('requests')">Requests (3)</button>
+                <button class="friend-tab active" onclick="filterFriends('all')">All Friends (26)</button>
+                <button class="friend-tab" onclick="filterFriends('requests')">Requests (2)</button>
                 <button class="friend-tab" onclick="filterFriends('suggestions')">Suggestions</button>
             </div>
 
@@ -257,6 +257,64 @@
                     <div class="friend-name">Mohammed Hassan</div>
                     <div class="friend-info">Business • Freshman</div>
                     <div class="mutual-friends">2 mutual friends</div>
+                    <div class="friend-actions">
+                        <button class="friend-action-btn primary" onclick="sendRequest(this)">
+                            <i class="fas fa-user-plus"></i> Add Friend
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More Friends -->
+                <div class="friend-card" data-category="all">
+                    <img src="../images/team/Lad.jpg" alt="Omar" class="friend-avatar">
+                    <div class="friend-name">Omar Yusuf</div>
+                    <div class="friend-info">Computer Science • Junior</div>
+                    <div class="mutual-friends">6 mutual friends</div>
+                    <div class="friend-actions">
+                        <button class="friend-action-btn primary" onclick="messageFriend('Omar')">
+                            <i class="fas fa-envelope"></i> Message
+                        </button>
+                        <button class="friend-action-btn secondary" onclick="viewProfile('Omar')">
+                            <i class="fas fa-user"></i> Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="friend-card" data-category="all">
+                    <img src="../images/team/SS.jpg" alt="Aisha" class="friend-avatar">
+                    <div class="friend-name">Aisha Malik</div>
+                    <div class="friend-info">Biology • Sophomore</div>
+                    <div class="mutual-friends">4 mutual friends</div>
+                    <div class="friend-actions">
+                        <button class="friend-action-btn primary" onclick="messageFriend('Aisha')">
+                            <i class="fas fa-envelope"></i> Message
+                        </button>
+                        <button class="friend-action-btn secondary" onclick="viewProfile('Aisha')">
+                            <i class="fas fa-user"></i> Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="friend-card" data-category="requests">
+                    <img src="../images/team/BS.jpg" alt="Hassan" class="friend-avatar">
+                    <div class="friend-name">Hassan Ali</div>
+                    <div class="friend-info">Engineering • Freshman</div>
+                    <div class="mutual-friends">1 mutual friend</div>
+                    <div class="friend-actions">
+                        <button class="friend-action-btn primary" onclick="acceptRequest(this)">
+                            <i class="fas fa-check"></i> Accept
+                        </button>
+                        <button class="friend-action-btn secondary" onclick="declineRequest(this)">
+                            <i class="fas fa-times"></i> Decline
+                        </button>
+                    </div>
+                </div>
+
+                <div class="friend-card" data-category="suggestions">
+                    <img src="../images/team/hope.jpg" alt="Zainab" class="friend-avatar">
+                    <div class="friend-name">Zainab Ibrahim</div>
+                    <div class="friend-info">Business • Junior</div>
+                    <div class="mutual-friends">5 mutual friends</div>
                     <div class="friend-actions">
                         <button class="friend-action-btn primary" onclick="sendRequest(this)">
                             <i class="fas fa-user-plus"></i> Add Friend

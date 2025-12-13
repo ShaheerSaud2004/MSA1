@@ -31,13 +31,24 @@ document.addEventListener('DOMContentLoaded', function() {
         signupForm.addEventListener('submit', handleSignup);
     }
 
-    // Check if user is logged in
+    // Check if user is logged in on all pages
     checkAuthStatus();
 
-    // Logout handler
+    // Logout handler (for all pages)
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', handleLogout);
+    }
+    
+    // Check auth on dashboard pages
+    const dashboardPages = ['dashboard.html', 'feed.html', 'events.html', 'messages.html', 
+                           'groups.html', 'friends.html', 'directory.html', 'resources.html', 'study-groups.html'];
+    const currentPage = window.location.pathname.split('/').pop();
+    if (dashboardPages.includes(currentPage)) {
+        const user = getCurrentUser();
+        if (!user) {
+            window.location.href = 'index.html';
+        }
     }
 });
 
@@ -379,12 +390,62 @@ async function checkAuthStatus() {
             localStorage.removeItem('msa_user');
         }
     } else {
-        // Not logged in - if on dashboard, redirect to login
-        if (window.location.pathname.includes('dashboard.html')) {
+        // Not logged in - if on any dashboard page, redirect to login
+        const dashboardPages = ['dashboard.html', 'feed.html', 'events.html', 'messages.html', 
+                               'groups.html', 'friends.html', 'directory.html', 'resources.html', 'study-groups.html'];
+        const currentPage = window.location.pathname.split('/').pop();
+        if (dashboardPages.includes(currentPage)) {
             window.location.href = 'index.html';
+            return false;
         }
     }
     return false;
+}
+
+// Get current user from localStorage
+function getCurrentUser() {
+    const user = localStorage.getItem('msa_user');
+    if (user) {
+        return JSON.parse(user);
+    }
+    return null;
+}
+
+// Save post to backend (using track-click API for now)
+async function savePostToBackend(postData) {
+    try {
+        await fetch('/api/track-click', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                section: 'community_feed',
+                event: 'post_created',
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            })
+        });
+    } catch (error) {
+        console.error('Error saving post:', error);
+    }
+}
+
+// Track event RSVP
+async function trackEventRSVP(eventName, action) {
+    try {
+        await fetch('/api/track-click', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                section: 'events',
+                event: eventName,
+                album: action, // 'rsvp' or 'cancel'
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            })
+        });
+    } catch (error) {
+        console.error('Error tracking RSVP:', error);
+    }
 }
 
 // Handle Logout

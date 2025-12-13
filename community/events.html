@@ -429,9 +429,18 @@
 
     <script src="js/community.js"></script>
     <script>
-        function toggleRSVP(btn) {
+        async function toggleRSVP(btn) {
+            // Check if user is logged in
+            const user = getCurrentUser();
+            if (!user) {
+                alert('Please log in to RSVP!');
+                window.location.href = 'index.html';
+                return;
+            }
+            
             const card = btn.closest('.event-card-full');
             const countSpan = card.querySelector('.attendee-count');
+            const eventName = card.querySelector('h3').textContent;
             let count = parseInt(countSpan.textContent);
             
             if (btn.classList.contains('rsvpd')) {
@@ -439,13 +448,45 @@
                 card.classList.remove('rsvpd');
                 btn.textContent = 'RSVP';
                 count--;
+                // Track cancellation
+                await trackEventRSVP(eventName, 'cancel');
             } else {
                 btn.classList.add('rsvpd');
                 card.classList.add('rsvpd');
                 btn.textContent = 'RSVP\'d ✓';
                 count++;
+                // Track RSVP
+                await trackEventRSVP(eventName, 'rsvp');
             }
             countSpan.textContent = count;
+        }
+        
+        // Get current user helper
+        function getCurrentUser() {
+            const user = localStorage.getItem('msa_user');
+            if (user) {
+                return JSON.parse(user);
+            }
+            return null;
+        }
+        
+        // Track event RSVP
+        async function trackEventRSVP(eventName, action) {
+            try {
+                await fetch('/api/track-click', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        section: 'events',
+                        event: eventName,
+                        album: action,
+                        timestamp: new Date().toISOString(),
+                        userAgent: navigator.userAgent
+                    })
+                });
+            } catch (error) {
+                console.error('Error tracking RSVP:', error);
+            }
         }
         
         function filterEvents(filter) {
