@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - MSA Community</title>
+    <link rel="stylesheet" href="css/community.css">
+    <link rel="icon" href="../images/logos/msa-logo.svg" type="image/svg+xml">
+    <link rel="icon" href="../images/logos/rumsa-favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .resources-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .upload-resource-btn {
+            background: var(--msa-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .resource-categories {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .category-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .category-btn.active {
+            background: var(--msa-green);
+            color: white;
+            border-color: var(--msa-green);
+        }
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .resource-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .resource-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--msa-green) 0%, var(--msa-green-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .resource-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .resource-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        .resource-action {
+            background: var(--msa-green);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .resource-action:hover {
+            background: var(--msa-green-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="community-nav dashboard-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="../images/logos/MSA.png" alt="Rutgers MSA Logo" class="logo-img">
+                    <span class="logo-text">MSA Community</span>
+                </a>
+            </div>
+            <div class="nav-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search resources...">
+            </div>
+            <div class="nav-actions">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-globe"></i> <span>Website</span>
+                </a>
+                <div class="notifications-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="user-menu">
+                    <img src="../images/team/Lad.jpg" alt="Profile" class="user-avatar">
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="feed.html" class="sidebar-item">
+                    <i class="fas fa-stream"></i>
+                    <span>Feed</span>
+                </a>
+                <a href="events.html" class="sidebar-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Events</span>
+                    <span class="badge">5</span>
+                </a>
+                <a href="messages.html" class="sidebar-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="badge">2</span>
+                </a>
+                <a href="groups.html" class="sidebar-item">
+                    <i class="fas fa-users"></i>
+                    <span>Groups</span>
+                </a>
+                <a href="friends.html" class="sidebar-item">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Friends</span>
+                </a>
+                <a href="directory.html" class="sidebar-item">
+                    <i class="fas fa-address-book"></i>
+                    <span>Directory</span>
+                </a>
+                <a href="resources.html" class="sidebar-item active">
+                    <i class="fas fa-book"></i>
+                    <span>Resources</span>
+                </a>
+                <a href="study-groups.html" class="sidebar-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Study Groups</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Website
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <div class="resources-header">
+                <h1 style="margin: 0; color: var(--text-dark);">Resources</h1>
+                <button class="upload-resource-btn" onclick="alert('Upload resource feature coming soon!')">
+                    <i class="fas fa-upload"></i> Upload Resource
+                </button>
+            </div>
+
+            <!-- Categories -->
+            <div class="resource-categories">
+                <button class="category-btn active" onclick="filterResources('all')">All</button>
+                <button class="category-btn" onclick="filterResources('academic')">Academic</button>
+                <button class="category-btn" onclick="filterResources('islamic')">Islamic</button>
+                <button class="category-btn" onclick="filterResources('career')">Career</button>
+                <button class="category-btn" onclick="filterResources('study')">Study Guides</button>
+            </div>
+
+            <!-- Resources Grid -->
+            <div class="resources-grid" id="resourcesGrid">
+                <div class="resource-card" data-category="academic study">
+                    <div class="resource-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="resource-title">CS112 Study Guide</div>
+                    <div class="resource-description">Comprehensive study guide for CS112 covering all major topics and practice problems.</div>
+                    <div class="resource-meta">
+                        <span><i class="fas fa-download"></i> 234 downloads</span>
+                        <button class="resource-action" onclick="downloadResource('CS112 Guide')">Download</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="islamic">
+                    <div class="resource-icon"><i class="fas fa-book-quran"></i></div>
+                    <div class="resource-title">Quran Translation Guide</div>
+                    <div class="resource-description">Helpful guide for understanding Quran translations and tafsir resources.</div>
+                    <div class="resource-meta">
+                        <span><i class="fas fa-download"></i> 189 downloads</span>
+                        <button class="resource-action" onclick="downloadResource('Quran Guide')">Download</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="career">
+                    <div class="resource-icon"><i class="fas fa-briefcase"></i></div>
+                    <div class="resource-title">Resume Template</div>
+                    <div class="resource-description">Professional resume template designed for students and recent graduates.</div>
+                    <div class="resource-meta">
+                        <span><i class="fas fa-download"></i> 456 downloads</span>
+                        <button class="resource-action" onclick="downloadResource('Resume Template')">Download</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="academic study">
+                    <div class="resource-icon"><i class="fas fa-calculator"></i></div>
+                    <div class="resource-title">Calculus Formula Sheet</div>
+                    <div class="resource-description">Quick reference guide for all calculus formulas and theorems.</div>
+                    <div class="resource-meta">
+                        <span><i class="fas fa-download"></i> 312 downloads</span>
+                        <button class="resource-action" onclick="downloadResource('Calculus Sheet')">Download</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="islamic">
+                    <div class="resource-icon"><i class="fas fa-pray"></i></div>
+                    <div class="resource-title">Prayer Times Guide</div>
+                    <div class="resource-description">Guide to calculating prayer times and understanding the prayer schedule.</div>
+                    <div class="resource-meta">
+                        <span><i class="fas fa-download"></i> 278 downloads</span>
+                        <button class="resource-action" onclick="downloadResource('Prayer Guide')">Download</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="career">
+                    <div class="resource-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="resource-title">Interview Tips</div>
+                    <div class="resource-description">Comprehensive guide to acing job interviews with practice questions and tips.</div>
+                    <div class="resource-meta">
+                        <span><i class="fas fa-download"></i> 201 downloads</span>
+                        <button class="resource-action" onclick="downloadResource('Interview Tips')">Download</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/community.js"></script>
+    <script>
+        function filterResources(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const cards = document.querySelectorAll('.resource-card');
+            cards.forEach(card => {
+                const categories = card.getAttribute('data-category');
+                if (category === 'all' || categories.includes(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        function downloadResource(name) {
+            alert(`Downloading ${name}... (Feature coming soon!)`);
+        }
+    </script>
+</body>
+</html>
+

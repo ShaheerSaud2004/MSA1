@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - MSA Community</title>
+    <link rel="stylesheet" href="css/community.css">
+    <link rel="icon" href="../images/logos/msa-logo.svg" type="image/svg+xml">
+    <link rel="icon" href="../images/logos/rumsa-favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .messages-container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 1.5rem;
+            height: calc(100vh - 200px);
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .conversations-list {
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            background: var(--bg-light);
+        }
+        .conversations-header {
+            padding: 1.5rem;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .new-message-btn {
+            background: var(--msa-green);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .conversation-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .conversation-item:hover {
+            background: white;
+        }
+        .conversation-item.active {
+            background: white;
+            border-left: 3px solid var(--msa-green);
+        }
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .conversation-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .conversation-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+        .conversation-preview {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .conversation-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+        .conversation-time {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+        .unread-badge {
+            background: var(--msa-green);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: #f5f5f5;
+        }
+        .message {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 70%;
+        }
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .message-content {
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .message.sent .message-content {
+            background: var(--msa-green);
+            color: white;
+        }
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+        .message.sent .message-time {
+            color: rgba(255,255,255,0.8);
+        }
+        .chat-input-area {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 1rem;
+            resize: none;
+        }
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--msa-green);
+        }
+        .send-btn {
+            background: var(--msa-green);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .send-btn:hover {
+            background: var(--msa-green-light);
+        }
+        .empty-chat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-light);
+        }
+        .empty-chat i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="community-nav dashboard-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="../images/logos/MSA.png" alt="Rutgers MSA Logo" class="logo-img">
+                    <span class="logo-text">MSA Community</span>
+                </a>
+            </div>
+            <div class="nav-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search messages...">
+            </div>
+            <div class="nav-actions">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-globe"></i> <span>Website</span>
+                </a>
+                <div class="notifications-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="user-menu">
+                    <img src="../images/team/Lad.jpg" alt="Profile" class="user-avatar">
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="feed.html" class="sidebar-item">
+                    <i class="fas fa-stream"></i>
+                    <span>Feed</span>
+                </a>
+                <a href="events.html" class="sidebar-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Events</span>
+                    <span class="badge">5</span>
+                </a>
+                <a href="messages.html" class="sidebar-item active">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="badge">2</span>
+                </a>
+                <a href="groups.html" class="sidebar-item">
+                    <i class="fas fa-users"></i>
+                    <span>Groups</span>
+                </a>
+                <a href="friends.html" class="sidebar-item">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Friends</span>
+                </a>
+                <a href="directory.html" class="sidebar-item">
+                    <i class="fas fa-address-book"></i>
+                    <span>Directory</span>
+                </a>
+                <a href="resources.html" class="sidebar-item">
+                    <i class="fas fa-book"></i>
+                    <span>Resources</span>
+                </a>
+                <a href="study-groups.html" class="sidebar-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Study Groups</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Website
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <h1 style="margin-bottom: 1.5rem; color: var(--text-dark);">Messages</h1>
+            
+            <div class="messages-container">
+                <!-- Conversations List -->
+                <div class="conversations-list">
+                    <div class="conversations-header">
+                        <h2 style="margin: 0; font-size: 1.25rem;">Conversations</h2>
+                        <button class="new-message-btn" onclick="alert('New message feature coming soon!')">
+                            <i class="fas fa-plus"></i> New
+                        </button>
+                    </div>
+                    <div class="conversation-item active" onclick="openChat('sarah')">
+                        <img src="../images/team/SS.jpg" alt="Sarah" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-name">Sarah Ahmed</div>
+                            <div class="conversation-preview">Hey! Are you coming to the study group?</div>
+                        </div>
+                        <div class="conversation-meta">
+                            <span class="conversation-time">2m ago</span>
+                            <span class="unread-badge">2</span>
+                        </div>
+                    </div>
+                    <div class="conversation-item" onclick="openChat('ahmed')">
+                        <img src="../images/team/BS.jpg" alt="Ahmed" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-name">Ahmed Khan</div>
+                            <div class="conversation-preview">Thanks for the notes! Really helpful</div>
+                        </div>
+                        <div class="conversation-meta">
+                            <span class="conversation-time">1h ago</span>
+                        </div>
+                    </div>
+                    <div class="conversation-item" onclick="openChat('fatima')">
+                        <img src="../images/team/hope.jpg" alt="Fatima" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-name">Fatima Ali</div>
+                            <div class="conversation-preview">See you at MSA Thursday!</div>
+                        </div>
+                        <div class="conversation-meta">
+                            <span class="conversation-time">3h ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Area -->
+                <div class="chat-area">
+                    <div class="chat-header">
+                        <div class="chat-user-info">
+                            <img src="../images/team/SS.jpg" alt="Sarah" class="user-avatar" id="chatAvatar">
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.1rem;" id="chatName">Sarah Ahmed</h3>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--text-light);">Online</p>
+                            </div>
+                        </div>
+                        <button class="nav-link" style="border: none; background: none; cursor: pointer;">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message">
+                            <img src="../images/team/SS.jpg" alt="Sarah" class="message-avatar">
+                            <div>
+                                <div class="message-content">Hey! Are you coming to the study group this weekend?</div>
+                                <div class="message-time">2:30 PM</div>
+                            </div>
+                        </div>
+                        <div class="message sent">
+                            <img src="../images/team/Lad.jpg" alt="You" class="message-avatar">
+                            <div>
+                                <div class="message-content">Yes! I'll be there. What time are we meeting?</div>
+                                <div class="message-time">2:32 PM</div>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <img src="../images/team/SS.jpg" alt="Sarah" class="message-avatar">
+                            <div>
+                                <div class="message-content">We're thinking 2 PM at the library. Does that work for you?</div>
+                                <div class="message-time">2:35 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" id="messageInput" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+                        <button class="send-btn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/community.js"></script>
+    <script>
+        function openChat(user) {
+            // Update active conversation
+            document.querySelectorAll('.conversation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update chat header and messages based on user
+            const chats = {
+                'sarah': {
+                    name: 'Sarah Ahmed',
+                    avatar: '../images/team/SS.jpg',
+                    messages: [
+                        { sender: false, text: 'Hey! Are you coming to the study group this weekend?', time: '2:30 PM' },
+                        { sender: true, text: 'Yes! I\'ll be there. What time are we meeting?', time: '2:32 PM' },
+                        { sender: false, text: 'We\'re thinking 2 PM at the library. Does that work for you?', time: '2:35 PM' }
+                    ]
+                },
+                'ahmed': {
+                    name: 'Ahmed Khan',
+                    avatar: '../images/team/BS.jpg',
+                    messages: [
+                        { sender: false, text: 'Thanks for the notes! Really helpful', time: '1:15 PM' },
+                        { sender: true, text: 'No problem! Happy to help', time: '1:20 PM' }
+                    ]
+                },
+                'fatima': {
+                    name: 'Fatima Ali',
+                    avatar: '../images/team/hope.jpg',
+                    messages: [
+                        { sender: false, text: 'See you at MSA Thursday!', time: '11:30 AM' },
+                        { sender: true, text: 'Looking forward to it!', time: '11:32 AM' }
+                    ]
+                }
+            };
+            
+            const chat = chats[user];
+            document.getElementById('chatName').textContent = chat.name;
+            document.getElementById('chatAvatar').src = chat.avatar;
+            
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML = chat.messages.map(msg => `
+                <div class="message ${msg.sender ? 'sent' : ''}">
+                    <img src="${msg.sender ? '../images/team/Lad.jpg' : chat.avatar}" alt="${msg.sender ? 'You' : chat.name}" class="message-avatar">
+                    <div>
+                        <div class="message-content">${msg.text}</div>
+                        <div class="message-time">${msg.time}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Remove unread badge
+            const activeItem = event.currentTarget;
+            const badge = activeItem.querySelector('.unread-badge');
+            if (badge) badge.remove();
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            const messagesContainer = document.getElementById('chatMessages');
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            
+            const newMessage = document.createElement('div');
+            newMessage.className = 'message sent';
+            newMessage.innerHTML = `
+                <img src="../images/team/Lad.jpg" alt="You" class="message-avatar">
+                <div>
+                    <div class="message-content">${text}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(newMessage);
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
+

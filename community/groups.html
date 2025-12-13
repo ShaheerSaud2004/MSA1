@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups - MSA Community</title>
+    <link rel="stylesheet" href="css/community.css">
+    <link rel="icon" href="../images/logos/msa-logo.svg" type="image/svg+xml">
+    <link rel="icon" href="../images/logos/rumsa-favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .groups-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .create-group-btn {
+            background: var(--msa-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .group-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .group-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .group-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .group-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--msa-green) 0%, var(--msa-green-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .group-info h3 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.1rem;
+        }
+        .group-meta {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        .group-description {
+            color: var(--text-dark);
+            margin: 1rem 0;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        .group-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .group-members {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        .join-group-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--msa-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .join-group-btn:hover {
+            background: var(--msa-green-light);
+        }
+        .join-group-btn.joined {
+            background: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="community-nav dashboard-nav">
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="../images/logos/MSA.png" alt="Rutgers MSA Logo" class="logo-img">
+                    <span class="logo-text">MSA Community</span>
+                </a>
+            </div>
+            <div class="nav-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search groups...">
+            </div>
+            <div class="nav-actions">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-globe"></i> <span>Website</span>
+                </a>
+                <div class="notifications-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="user-menu">
+                    <img src="../images/team/Lad.jpg" alt="Profile" class="user-avatar">
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="user-dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="feed.html" class="sidebar-item">
+                    <i class="fas fa-stream"></i>
+                    <span>Feed</span>
+                </a>
+                <a href="events.html" class="sidebar-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Events</span>
+                    <span class="badge">5</span>
+                </a>
+                <a href="messages.html" class="sidebar-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="badge">2</span>
+                </a>
+                <a href="groups.html" class="sidebar-item active">
+                    <i class="fas fa-users"></i>
+                    <span>Groups</span>
+                </a>
+                <a href="friends.html" class="sidebar-item">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Friends</span>
+                </a>
+                <a href="directory.html" class="sidebar-item">
+                    <i class="fas fa-address-book"></i>
+                    <span>Directory</span>
+                </a>
+                <a href="resources.html" class="sidebar-item">
+                    <i class="fas fa-book"></i>
+                    <span>Resources</span>
+                </a>
+                <a href="study-groups.html" class="sidebar-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Study Groups</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Website
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <div class="groups-header">
+                <h1 style="margin: 0; color: var(--text-dark);">Groups</h1>
+                <button class="create-group-btn" onclick="alert('Create Group feature coming soon!')">
+                    <i class="fas fa-plus"></i> Create Group
+                </button>
+            </div>
+
+            <div class="groups-grid">
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon"><i class="fas fa-laptop-code"></i></div>
+                        <div class="group-info">
+                            <h3>Computer Science</h3>
+                            <div class="group-meta">Public Group • 245 members</div>
+                        </div>
+                    </div>
+                    <div class="group-description">
+                        Connect with other CS students! Share resources, study together, and discuss career opportunities.
+                    </div>
+                    <div class="group-footer">
+                        <div class="group-members"><i class="fas fa-users"></i> 245 members</div>
+                        <button class="join-group-btn" onclick="toggleJoin(this)">Join</button>
+                    </div>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon"><i class="fas fa-book-quran"></i></div>
+                        <div class="group-info">
+                            <h3>Quran Study</h3>
+                            <div class="group-meta">Public Group • 189 members</div>
+                        </div>
+                    </div>
+                    <div class="group-description">
+                        Weekly Quran study sessions and discussions. All levels welcome!
+                    </div>
+                    <div class="group-footer">
+                        <div class="group-members"><i class="fas fa-users"></i> 189 members</div>
+                        <button class="join-group-btn joined" onclick="toggleJoin(this)">Joined ✓</button>
+                    </div>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon"><i class="fas fa-dumbbell"></i></div>
+                        <div class="group-info">
+                            <h3>MSA Sports</h3>
+                            <div class="group-meta">Public Group • 156 members</div>
+                        </div>
+                    </div>
+                    <div class="group-description">
+                        Join us for basketball, soccer, and other sports activities. Stay active with the community!
+                    </div>
+                    <div class="group-footer">
+                        <div class="group-members"><i class="fas fa-users"></i> 156 members</div>
+                        <button class="join-group-btn" onclick="toggleJoin(this)">Join</button>
+                    </div>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon"><i class="fas fa-palette"></i></div>
+                        <div class="group-info">
+                            <h3>Arts & Creativity</h3>
+                            <div class="group-meta">Public Group • 98 members</div>
+                        </div>
+                    </div>
+                    <div class="group-description">
+                        Share your art, photography, and creative projects with the community!
+                    </div>
+                    <div class="group-footer">
+                        <div class="group-members"><i class="fas fa-users"></i> 98 members</div>
+                        <button class="join-group-btn" onclick="toggleJoin(this)">Join</button>
+                    </div>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                        <div class="group-info">
+                            <h3>Community Service</h3>
+                            <div class="group-meta">Public Group • 203 members</div>
+                        </div>
+                    </div>
+                    <div class="group-description">
+                        Organize and participate in community service events and volunteer opportunities.
+                    </div>
+                    <div class="group-footer">
+                        <div class="group-members"><i class="fas fa-users"></i> 203 members</div>
+                        <button class="join-group-btn joined" onclick="toggleJoin(this)">Joined ✓</button>
+                    </div>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="group-info">
+                            <h3>Graduate Students</h3>
+                            <div class="group-meta">Private Group • 67 members</div>
+                        </div>
+                    </div>
+                    <div class="group-description">
+                        Connect with other graduate students in the MSA community.
+                    </div>
+                    <div class="group-footer">
+                        <div class="group-members"><i class="fas fa-users"></i> 67 members</div>
+                        <button class="join-group-btn" onclick="toggleJoin(this)">Request Join</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/community.js"></script>
+    <script>
+        function toggleJoin(btn) {
+            if (btn.classList.contains('joined')) {
+                btn.classList.remove('joined');
+                btn.textContent = 'Join';
+            } else {
+                btn.classList.add('joined');
+                btn.textContent = 'Joined ✓';
+            }
+        }
+    </script>
+</body>
+</html>
+
