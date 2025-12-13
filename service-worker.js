@@ -30,7 +30,25 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        // Filter out invalid URLs before caching
+        const validUrls = urlsToCache.filter(url => {
+          // Only cache same-origin URLs
+          try {
+            const urlObj = new URL(url, self.location.origin);
+            return urlObj.origin === self.location.origin || url.startsWith('http');
+          } catch {
+            return false;
+          }
+        });
+        
+        return Promise.allSettled(
+          validUrls.map(url => 
+            cache.add(url).catch(err => {
+              console.log(`Failed to cache ${url}:`, err);
+              return null;
+            })
+          )
+        );
       })
       .catch((error) => {
         console.error('Cache install failed:', error);
@@ -58,37 +76,60 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
-  // Skip caching for API calls
-  if (event.request.url.includes('/api/')) {
-    return;
+  const request = event.request;
+  const url = new URL(request.url);
+  
+  // Skip caching for:
+  // - API calls
+  // - POST/PUT/DELETE requests (only cache GET)
+  // - Chrome extension URLs
+  // - External domains (only cache same-origin)
+  // - Non-GET requests
+  if (request.url.includes('/api/') ||
+      request.method !== 'GET' ||
+      request.url.startsWith('chrome-extension://') ||
+      request.url.startsWith('moz-extension://') ||
+      url.origin !== self.location.origin) {
+    return; // Let browser handle normally
   }
 
   event.respondWith(
-    caches.match(event.request)
+    caches.match(request)
       .then((response) => {
         // Return cached version or fetch from network
-        return response || fetch(event.request).then((response) => {
+        return response || fetch(request).then((response) => {
           // Don't cache non-successful responses
           if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }
 
-          // Clone the response
-          const responseToCache = response.clone();
+          // Only cache same-origin GET requests
+          if (response.type === 'basic' && request.method === 'GET') {
+            // Clone the response
+            const responseToCache = response.clone();
 
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+                try {
+                  cache.put(request, responseToCache);
+                } catch (error) {
+                  console.log('Cache put failed (non-critical):', error);
+                }
+              })
+              .catch((error) => {
+                console.log('Cache error (non-critical):', error);
+              });
+          }
 
           return response;
         });
       })
       .catch(() => {
         // If both cache and network fail, return offline page
-        if (event.request.destination === 'document') {
+        if (request.destination === 'document') {
           return caches.match('/index.html');
         }
+        return fetch(request); // Fallback to network
       })
   );
 });
