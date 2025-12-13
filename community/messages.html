@@ -316,6 +316,10 @@
                             <i class="fas fa-plus"></i> New
                         </button>
                     </div>
+                    <div id="conversationsList">
+                        <!-- Conversations loaded from backend -->
+                        <!-- Sample conversations below as fallback -->
+                    </div>
                     <div class="conversation-item active" onclick="openChat('sarah')">
                         <img src="../images/team/SS.jpg" alt="Sarah" class="conversation-avatar">
                         <div class="conversation-info">
@@ -419,6 +423,10 @@
 
     <script src="js/community.js"></script>
     <script>
+        // Store current conversation for sending messages
+        let currentConversation = null;
+        let currentToUserId = null;
+        
         function openChat(user) {
             // Update active conversation
             document.querySelectorAll('.conversation-item').forEach(item => {
@@ -426,11 +434,12 @@
             });
             event.currentTarget.classList.add('active');
             
-            // Update chat header and messages based on user
+            // Sample chat data (fallback)
             const chats = {
                 'sarah': {
                     name: 'Sarah Ahmed',
                     avatar: '../images/team/SS.jpg',
+                    userId: 'user_sarah_ahmed',
                     messages: [
                         { sender: false, text: 'Hey! Are you coming to the study group this weekend?', time: '2:30 PM' },
                         { sender: true, text: 'Yes! I\'ll be there. What time are we meeting?', time: '2:32 PM' },
@@ -440,6 +449,7 @@
                 'ahmed': {
                     name: 'Ahmed Khan',
                     avatar: '../images/team/BS.jpg',
+                    userId: 'user_ahmed_khan',
                     messages: [
                         { sender: false, text: 'Thanks for the notes! Really helpful', time: '1:15 PM' },
                         { sender: true, text: 'No problem! Happy to help', time: '1:20 PM' }
@@ -448,6 +458,7 @@
                 'fatima': {
                     name: 'Fatima Ali',
                     avatar: '../images/team/hope.jpg',
+                    userId: 'user_fatima_ali',
                     messages: [
                         { sender: false, text: 'See you at MSA Thursday!', time: '11:30 AM' },
                         { sender: true, text: 'Looking forward to it!', time: '11:32 AM' }
@@ -456,6 +467,7 @@
                 'omar': {
                     name: 'Omar Yusuf',
                     avatar: '../images/team/Lad.jpg',
+                    userId: 'user_omar_yusuf',
                     messages: [
                         { sender: false, text: 'Thanks for the help with the assignment! Really appreciate it.', time: '10:15 AM' },
                         { sender: true, text: 'No problem! Happy to help anytime.', time: '10:20 AM' },
@@ -465,6 +477,7 @@
                 'aisha': {
                     name: 'Aisha Malik',
                     avatar: '../images/team/SS.jpg',
+                    userId: 'user_aisha_malik',
                     messages: [
                         { sender: false, text: 'Are you going to the event this weekend?', time: 'Yesterday 3:45 PM' },
                         { sender: true, text: 'Yes! Are you?', time: 'Yesterday 4:00 PM' },
@@ -474,6 +487,9 @@
             };
             
             const chat = chats[user];
+            if (!chat) return;
+            
+            currentToUserId = chat.userId;
             document.getElementById('chatName').textContent = chat.name;
             document.getElementById('chatAvatar').src = chat.avatar;
             
@@ -508,19 +524,22 @@
                 return;
             }
             
-            // Get current chat recipient
-            const chatName = document.getElementById('chatName').textContent;
-            // In production, use actual user IDs - for now use name mapping
-            const recipientMap = {
-                'Sarah Ahmed': 'user_sarah_ahmed',
-                'Ahmed Khan': 'user_ahmed_khan',
-                'Fatima Ali': 'user_fatima_ali',
-                'Omar Yusuf': 'user_omar_yusuf',
-                'Aisha Malik': 'user_aisha_malik'
-            };
-            const toUserId = recipientMap[chatName] || 'user_unknown';
+            // Get recipient ID - use current conversation or fallback to name mapping
+            let toUserId = currentToUserId;
+            if (!toUserId) {
+                const chatName = document.getElementById('chatName').textContent;
+                const recipientMap = {
+                    'Sarah Ahmed': 'user_sarah_ahmed',
+                    'Ahmed Khan': 'user_ahmed_khan',
+                    'Fatima Ali': 'user_fatima_ali',
+                    'Omar Yusuf': 'user_omar_yusuf',
+                    'Aisha Malik': 'user_aisha_malik'
+                };
+                toUserId = recipientMap[chatName] || 'user_unknown';
+            }
             
             // Save message to backend
+            let messageSaved = false;
             try {
                 const response = await fetch('/api/messages/send', {
                     method: 'POST',
@@ -533,13 +552,27 @@
                 });
                 
                 const data = await response.json();
-                if (!data.success) {
+                if (data.success) {
+                    messageSaved = true;
+                    console.log('Message saved to backend:', data);
+                    
+                    // If we have a current conversation, reload it to show the new message
+                    if (currentConversation) {
+                        setTimeout(() => {
+                            openChatFromBackend(data.conversation);
+                        }, 300);
+                    }
+                } else {
                     console.error('Error sending message:', data.error);
+                    alert('Failed to send message. Please try again.');
+                    return;
                 }
             } catch (error) {
                 console.error('Error sending message:', error);
+                alert('Network error. Message may not have been saved.');
             }
             
+            // Show message in UI immediately
             const messagesContainer = document.getElementById('chatMessages');
             const now = new Date();
             const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
@@ -557,6 +590,11 @@
             messagesContainer.appendChild(newMessage);
             input.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Reload conversations to update the list
+            setTimeout(() => {
+                loadConversations();
+            }, 500);
         }
         
         // Get current user helper
@@ -573,6 +611,123 @@
                 sendMessage();
             }
         }
+        
+        // Load conversations from backend
+        async function loadConversations() {
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            try {
+                const response = await fetch(`/api/messages/get?userId=${user.id}`);
+                const data = await response.json();
+                
+                if (data.success && data.conversations && data.conversations.length > 0) {
+                    const conversationsList = document.getElementById('conversationsList');
+                    conversationsList.innerHTML = '';
+                    
+                    data.conversations.forEach((conversation, index) => {
+                        const otherUser = conversation.otherUser || { firstName: 'User', lastName: '' };
+                        const lastMessage = conversation.messages[conversation.messages.length - 1];
+                        const timeAgo = getTimeAgo(lastMessage?.timestamp);
+                        
+                        const conversationItem = document.createElement('div');
+                        conversationItem.className = 'conversation-item';
+                        if (index === 0) conversationItem.classList.add('active');
+                        conversationItem.addEventListener('click', (e) => {
+                            openChatFromBackend(conversation);
+                            document.querySelectorAll('.conversation-item').forEach(item => {
+                                item.classList.remove('active');
+                            });
+                            conversationItem.classList.add('active');
+                        });
+                        conversationItem.innerHTML = `
+                            <img src="../images/team/Lad.jpg" alt="${otherUser.firstName}" class="conversation-avatar">
+                            <div class="conversation-info">
+                                <div class="conversation-name">${otherUser.firstName} ${otherUser.lastName}</div>
+                                <div class="conversation-preview">${lastMessage?.content || 'No messages yet'}</div>
+                            </div>
+                            <div class="conversation-meta">
+                                <span class="conversation-time">${timeAgo}</span>
+                            </div>
+                        `;
+                        
+                        conversationsList.appendChild(conversationItem);
+                    });
+                    
+                    // Open first conversation if available
+                    if (data.conversations.length > 0) {
+                        openChatFromBackend(data.conversations[0]);
+                    }
+                    
+                    console.log(`Loaded ${data.conversations.length} conversations from backend`);
+                } else {
+                    console.log('No conversations from backend, showing sample conversations');
+                }
+            } catch (error) {
+                console.error('Error loading conversations:', error);
+                // Keep sample conversations if backend fails
+            }
+        }
+        
+        function openChatFromBackend(conversation) {
+            const otherUser = conversation.otherUser || { firstName: 'User', lastName: '', id: 'unknown' };
+            const currentUser = getCurrentUser();
+            
+            // Store current conversation for sending messages
+            currentConversation = conversation;
+            currentToUserId = otherUser.id;
+            
+            // Update chat header
+            document.getElementById('chatName').textContent = `${otherUser.firstName} ${otherUser.lastName}`;
+            document.getElementById('chatAvatar').src = '../images/team/Lad.jpg';
+            
+            // Update messages
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML = conversation.messages.map(msg => {
+                const isSent = msg.fromUserId === currentUser.id;
+                const time = new Date(msg.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                return `
+                    <div class="message ${isSent ? 'sent' : ''}">
+                        <img src="../images/team/${isSent ? 'Lad' : 'SS'}.jpg" alt="${isSent ? 'You' : otherUser.firstName}" class="message-avatar">
+                        <div>
+                            <div class="message-content">${msg.content}</div>
+                            <div class="message-time">${time}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Update active conversation
+            document.querySelectorAll('.conversation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+        }
+        
+        function getTimeAgo(timestamp) {
+            if (!timestamp) return 'Just now';
+            const now = new Date();
+            const time = new Date(timestamp);
+            const diff = now - time;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+            return time.toLocaleDateString();
+        }
+        
+        // Load conversations when page loads
+        window.addEventListener('load', () => {
+            loadConversations();
+        });
     </script>
 </body>
 </html>

@@ -315,6 +315,8 @@
 
             <!-- Feed Posts -->
             <div id="feedPosts">
+                <!-- Posts will be loaded here from backend -->
+                <!-- Sample posts shown below as fallback -->
                 <!-- Post 1 -->
                 <div class="feed-post" data-category="all events">
                     <div class="post-header">
@@ -623,6 +625,11 @@
                 btn.textContent = originalText;
                 btn.disabled = false;
             }, 2000);
+            
+            // Reload posts to show the new one from backend
+            setTimeout(() => {
+                loadPostsFromBackend();
+            }, 1000);
         }
         
         // Get current user helper
@@ -751,6 +758,119 @@
             if (e.key === 'Enter' && e.ctrlKey) {
                 createPost();
             }
+        });
+        
+        // Load posts from backend on page load
+        async function loadPostsFromBackend() {
+            try {
+                const response = await fetch('/api/posts/get');
+                const data = await response.json();
+                
+                if (data.success && data.posts && data.posts.length > 0) {
+                    // Clear sample posts and show real posts
+                    const postsContainer = document.getElementById('feedPosts');
+                    const samplePosts = postsContainer.querySelectorAll('.feed-post');
+                    
+                    // Add real posts at the top
+                    data.posts.forEach(post => {
+                        const postElement = createPostElement(post);
+                        postsContainer.insertBefore(postElement, postsContainer.firstChild);
+                    });
+                    
+                    // Keep sample posts at bottom for demo
+                    console.log(`Loaded ${data.posts.length} posts from backend`);
+                } else {
+                    console.log('No posts from backend, showing sample posts');
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                // Keep sample posts if backend fails
+            }
+        }
+        
+        function createPostElement(post) {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'feed-post';
+            postDiv.setAttribute('data-category', 'all');
+            postDiv.setAttribute('data-post-id', post.id);
+            
+            const author = post.author || { firstName: 'User', lastName: '', year: '', major: '' };
+            const timeAgo = getTimeAgo(post.createdAt);
+            const tags = post.tags || [];
+            
+            postDiv.innerHTML = `
+                <div class="post-header">
+                    <img src="../images/team/Lad.jpg" alt="${author.firstName}" class="post-avatar">
+                    <div class="post-author">
+                        <h4>${author.firstName} ${author.lastName}</h4>
+                        <p>${author.major || 'Member'} • ${author.year || ''}</p>
+                        <span class="post-time">${timeAgo}</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>${post.content}</p>
+                    ${tags.length > 0 ? `<div class="post-tags">${tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}</div>` : ''}
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                        <i class="far fa-heart"></i> <span class="like-count">${post.likes?.length || 0}</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleComments(this)">
+                        <i class="fas fa-comment"></i> <span class="comment-count">${post.comments?.length || 0}</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                </div>
+                <div class="comment-section" id="comments-${post.id}">
+                    <div class="comment-input-group">
+                        <img src="../images/team/Lad.jpg" alt="You" class="comment-avatar">
+                        <input type="text" class="comment-input" placeholder="Write a comment...">
+                        <button class="comment-btn" onclick="addComment(this)">Post</button>
+                    </div>
+                    ${post.comments && post.comments.length > 0 ? `
+                        <div class="comments-list">
+                            ${post.comments.map(comment => `
+                                <div class="comment-item">
+                                    <img src="../images/team/Lad.jpg" alt="User" class="comment-avatar">
+                                    <div class="comment-content">
+                                        <div class="comment-author">${comment.authorName || 'User'}</div>
+                                        <div class="comment-text">${comment.content}</div>
+                                        <div class="comment-actions">
+                                            <span class="comment-action" onclick="likeComment(this)">Like</span>
+                                            <span class="comment-action">Reply</span>
+                                            <span class="post-time">${getTimeAgo(comment.timestamp)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            return postDiv;
+        }
+        
+        function getTimeAgo(timestamp) {
+            if (!timestamp) return 'Just now';
+            const now = new Date();
+            const time = new Date(timestamp);
+            const diff = now - time;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+            return time.toLocaleDateString();
+        }
+        
+        // Load posts when page loads
+        window.addEventListener('load', () => {
+            loadPostsFromBackend();
         });
     </script>
 </body>

@@ -31,6 +31,9 @@
     },
     "api/messages/get.js": {
       "maxDuration": 10
+    },
+    "api/events/get.js": {
+      "maxDuration": 10
     }
   },
   "headers": [

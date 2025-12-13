@@ -471,6 +471,44 @@
             countSpan.textContent = count;
         }
         
+        // Load RSVP status for events on page load
+        async function loadEventRSVPs() {
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            const eventCards = document.querySelectorAll('.event-card-full');
+            eventCards.forEach(async (card) => {
+                const eventName = card.querySelector('h3').textContent;
+                const eventId = eventName.toLowerCase().replace(/\s+/g, '_');
+                const rsvpBtn = card.querySelector('.rsvp-btn-full');
+                const countSpan = card.querySelector('.attendee-count');
+                
+                try {
+                    // Get RSVP count
+                    const response = await fetch(`/api/events/get?eventId=${eventId}`);
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        countSpan.textContent = data.rsvpCount;
+                        
+                        // Check if user has RSVP'd
+                        if (data.rsvps.includes(user.id)) {
+                            rsvpBtn.classList.add('rsvpd');
+                            card.classList.add('rsvpd');
+                            rsvpBtn.textContent = 'RSVP\'d ✓';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error loading RSVP status:', error);
+                }
+            });
+        }
+        
+        // Load RSVPs when page loads
+        window.addEventListener('load', () => {
+            loadEventRSVPs();
+        });
+        
         // Get current user helper
         function getCurrentUser() {
             const user = localStorage.getItem('msa_user');

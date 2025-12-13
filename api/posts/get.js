@@ -26,17 +26,30 @@ export default async function handler(req, res) {
           const response = await fetch(blob.url);
           const data = await response.json();
           
-          // Get user info
-          const userBlobs = await list({ prefix: `users/${data.userId}` });
+          // Get user info - try exact match first, then search
+          let userBlobs = await list({ prefix: `users/${data.userId}` });
+          if (userBlobs.length === 0) {
+            // Try searching all users if exact match fails
+            const allUsers = await list({ prefix: 'users/' });
+            userBlobs = allUsers.blobs.filter(blob => {
+              return blob.pathname.includes(data.userId) || 
+                     blob.pathname.replace('users/', '').replace('.json', '') === data.userId;
+            });
+          }
+          
           if (userBlobs.length > 0) {
-            const userResponse = await fetch(userBlobs[0].url);
-            const userData = await userResponse.json();
-            data.author = {
-              firstName: userData.firstName,
-              lastName: userData.lastName,
-              year: userData.year,
-              major: userData.major
-            };
+            try {
+              const userResponse = await fetch(userBlobs[0].url);
+              const userData = await userResponse.json();
+              data.author = {
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                year: userData.year,
+                major: userData.major
+              };
+            } catch (error) {
+              console.error('Error fetching user data:', error);
+            }
           }
           
           return data;
