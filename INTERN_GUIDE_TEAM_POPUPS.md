@@ -5,6 +5,251 @@ This guide will teach you how to create popup pages (also called modals) that ap
 
 ---
 
+## 🧠 STEP 0: Planning & Design (DO THIS FIRST!)
+
+**⚠️ IMPORTANT: Don't start coding yet!** 
+
+Before writing any code, you need to **think and plan**. This is the most important step and will save you tons of time later.
+
+### Why Planning Matters
+
+Think of it like building a house:
+- ❌ **Bad approach:** Start hammering nails without a blueprint
+- ✅ **Good approach:** Draw plans first, then build
+
+Planning helps you:
+- Understand what you're building
+- Avoid mistakes and rework
+- Make sure everything fits together
+- Create a better user experience
+
+---
+
+### Planning Step 1: Content Inventory
+
+**Task:** List what information you have (or need) for each team.
+
+**Create a spreadsheet or document with columns:**
+
+| Team | Description | Features/Activities | Instagram | Events | Images | Other Info |
+|------|-------------|---------------------|-----------|--------|--------|------------|
+| Ladders | ? | ? | @ladders.rumsa | ? | ? | ? |
+| HOPE | ? | ? | @rumsa.hope | ? | ? | ? |
+| Road to Revival | ? | ? | @road2revival | ? | ? | ? |
+| ... | ... | ... | ... | ... | ... | ... |
+
+**Questions to answer:**
+- What does each team do? (Description)
+- What are their main activities? (Features list)
+- What's their Instagram handle?
+- Do they have upcoming events?
+- What images/logos do we have?
+- Any special information? (Quranic ayat, hadith, etc.)
+
+**Action:** Fill this out for ALL teams before coding anything.
+
+---
+
+### Planning Step 2: Design the Popup Layout
+
+**Task:** Sketch or describe what each popup should look like.
+
+**Think about:**
+
+1. **Header Section**
+   - What goes here? (Logo? Team name? Tagline?)
+   - How big should it be?
+   - What color scheme?
+
+2. **Main Content**
+   - Description paragraph - how long?
+   - Features list - bullet points or cards?
+   - Images - where do they go?
+   - Social links - how should they look?
+
+3. **Layout Questions**
+   - One column or two columns?
+   - Should images be on the side or top?
+   - How much spacing between sections?
+   - What's the reading order? (top to bottom)
+
+**Action:** Draw a simple sketch or write a description for ONE team popup. This becomes your template.
+
+---
+
+### Planning Step 3: User Experience (UX) Thinking
+
+**Task:** Think about how users will interact with the popup.
+
+**Questions to consider:**
+
+1. **How do they open it?**
+   - Click on the team card?
+   - Button on the card?
+   - Both?
+
+2. **What happens when it opens?**
+   - Does the page scroll lock?
+   - Does the background darken?
+   - Animation? (fade in, slide in, etc.)
+
+3. **How do they close it?**
+   - X button (required)
+   - Click outside (overlay)?
+   - Escape key?
+   - All of the above?
+
+4. **What if content is long?**
+   - Should it scroll?
+   - How do we indicate there's more content?
+
+5. **Mobile experience?**
+   - How does it look on a phone?
+   - Is it easy to close on mobile?
+   - Can they read everything?
+
+**Action:** Write down your answers to these questions. This is your UX plan.
+
+---
+
+### Planning Step 4: Content Structure
+
+**Task:** Decide what information goes in each popup and in what order.
+
+**Example structure for ONE team (Ladders):**
+
+```
+POPUP CONTENT STRUCTURE:
+
+1. HEADER
+   - Logo/Image
+   - Team Name: "Ladders"
+   - Subtitle: "Professional Development"
+
+2. DESCRIPTION
+   - Paragraph explaining what Ladders does
+   - Mission/purpose
+
+3. WHAT WE DO (Features)
+   - Career Workshops
+   - Networking Events
+   - Mentorship Program
+   - Resume Reviews (maybe?)
+
+4. UPCOMING EVENTS (Optional)
+   - Link to events or list of events
+
+5. SOCIAL & CONTACT
+   - Instagram: @ladders.rumsa
+   - Link to follow
+
+6. CALL TO ACTION (Optional)
+   - "Learn More" button
+   - "Get Involved" button
+```
+
+**Action:** Create this structure for EACH team. Notice what's the same and what's different.
+
+---
+
+### Planning Step 5: Technical Planning
+
+**Task:** Think about the code structure before writing it.
+
+**Questions:**
+
+1. **HTML Structure**
+   - How many divs do you need?
+   - What classes will you use?
+   - Where does the popup go in the HTML?
+
+2. **CSS Organization**
+   - What styles are shared by all popups?
+   - What styles are unique to each team?
+   - How will you organize the CSS file?
+
+3. **JavaScript Logic**
+   - How will you identify which team was clicked?
+   - How will you fill in the content?
+   - What functions do you need?
+
+**Action:** Write a simple outline:
+```
+HTML:
+- Popup overlay div
+- Popup modal div
+  - Close button
+  - Content area
+
+CSS:
+- .popup-overlay (shared)
+- .popup-modal (shared)
+- .popup-content (shared)
+- Team-specific styles (if needed)
+
+JavaScript:
+- openTeamPopup(teamName)
+- closeTeamPopup()
+- getTeamContent(teamName)
+```
+
+---
+
+### Planning Step 6: Prioritization
+
+**Task:** Decide what to build first.
+
+**Recommended order:**
+
+1. **Phase 1: Basic Popup**
+   - Get ONE popup working (pick easiest team)
+   - Basic open/close functionality
+   - Simple content
+
+2. **Phase 2: Content**
+   - Fill in content for all teams
+   - Make sure all teams have popups
+
+3. **Phase 3: Styling**
+   - Make it look good
+   - Match website design
+   - Add animations
+
+4. **Phase 4: Polish**
+   - Mobile responsiveness
+   - Accessibility
+   - Testing
+
+**Action:** Write down your phases and stick to them. Don't try to do everything at once!
+
+---
+
+### Planning Checklist
+
+Before you write ANY code, make sure you've done:
+
+- [ ] Content inventory for all teams
+- [ ] Sketch/description of popup layout
+- [ ] UX decisions (how it opens/closes)
+- [ ] Content structure for each team
+- [ ] Technical outline (HTML/CSS/JS structure)
+- [ ] Phases/priorities decided
+- [ ] Questions answered (or know who to ask)
+
+**Only after checking all these boxes should you start coding!**
+
+---
+
+### Why This Matters
+
+**Real example:**
+- ❌ **Without planning:** Code for 2 hours, realize you forgot something, delete everything, start over
+- ✅ **With planning:** Think for 30 minutes, code for 1 hour, done perfectly
+
+**Time saved:** Hours of frustration and rework!
+
+---
+
 ## 🎯 What You'll Learn
 
 By the end of this guide, you'll know how to:
