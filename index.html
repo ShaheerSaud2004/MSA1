@@ -31,10 +31,13 @@
                 <li class="nav-item"><a href="#teams" class="nav-link">Teams</a></li>
                 <li class="nav-item"><a href="#events" class="nav-link">Events</a></li>
                 <li class="nav-item"><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li class="nav-item"><a href="#gheebah" class="nav-link">Gheebah</a></li>
                 <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                <!-- Community link hidden for now; restore by uncommenting:
                 <li class="nav-item"><a href="community/" class="nav-link community-link">
                     <i class="fas fa-users"></i> Community
                 </a></li>
+                -->
             </ul>
             <div class="hamburger">
                 <span class="bar"></span>
@@ -726,6 +729,14 @@
                     <i class="fas fa-th"></i>
                     All Events
                 </button>
+                <button class="filter-btn" data-filter="fall-2025">
+                    <i class="fas fa-leaf"></i>
+                    Fall 2025
+                </button>
+                <button class="filter-btn" data-filter="spring-2026">
+                    <i class="fas fa-seedling"></i>
+                    Spring 2026
+                </button>
                 <button class="filter-btn" data-filter="msa-thursday">
                     <i class="fas fa-calendar-week"></i>
                     MSA Thursday Events
@@ -739,7 +750,7 @@
             <!-- Event Gallery Grid -->
             <div class="events-gallery-grid">
                 <!-- Fall Kickoff Event Tile -->
-                <div class="event-tile" data-event="fall-kickoff">
+                <div class="event-tile" data-event="fall-kickoff" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/posters/KickoffPoster.png" alt="MSA Fall Kickoff 2025">
                         <div class="event-overlay">
@@ -753,7 +764,7 @@
                 </div>
                 
                 <!-- Freshman Orientation Event Tile -->
-                <div class="event-tile freshman-orientation-tile" data-event="freshman-orientation" data-filter="special">
+                <div class="event-tile freshman-orientation-tile" data-event="freshman-orientation" data-filter="special" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/posters/Freshman Orientation.JPG" alt="Freshman Orientation">
                         <div class="event-overlay">
@@ -767,7 +778,7 @@
                 </div>
                 
                 <!-- Chai and Chats Event Tile -->
-                <div class="event-tile chai-and-chats-tile" data-event="chai-and-chats" data-filter="msa-thursday">
+                <div class="event-tile chai-and-chats-tile" data-event="chai-and-chats" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/posters/Chai and Chats.png" alt="Chai and Chats">
                         <div class="event-overlay">
@@ -781,7 +792,7 @@
                 </div>
                 
                 <!-- Scavenger Hunt Event Tile -->
-                <div class="event-tile scavenger-hunt-tile" data-event="scavenger-hunt" data-filter="msa-thursday">
+                <div class="event-tile scavenger-hunt-tile" data-event="scavenger-hunt" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="Scavenger Hunt.jpg" alt="Scavenger Hunt">
                         <div class="event-overlay">
@@ -795,7 +806,7 @@
                 </div>
                 
                 <!-- Art Night Event Tile -->
-                <div class="event-tile art-night-tile" data-event="art-night" data-filter="special">
+                <div class="event-tile art-night-tile" data-event="art-night" data-filter="special" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/gallery/Photos/ArtNight.png" alt="Art Night">
                         <div class="event-overlay">
@@ -809,7 +820,7 @@
                 </div>
                 
                 <!-- Snacks and Suhbah Event Tile -->
-                <div class="event-tile snacks-and-suhbah-tile" data-event="snacks-and-suhbah" data-filter="msa-thursday">
+                <div class="event-tile snacks-and-suhbah-tile" data-event="snacks-and-suhbah" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="Snacks$SUHBAH.png" alt="Snacks and Suhbah">
                         <div class="event-overlay">
@@ -823,7 +834,7 @@
                 </div>
                 
                 <!-- MSA Olympics Event Tile -->
-                <div class="event-tile msa-olympics-tile" data-event="msa-olympics">
+                <div class="event-tile msa-olympics-tile" data-event="msa-olympics" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/posters/MSA OLYMPICS POSTER.png" alt="MSA Olympics">
                         <div class="event-overlay">
@@ -837,7 +848,7 @@
                 </div>
                 
                 <!-- Hope Drive Event Tile -->
-                <div class="event-tile hope-drive-tile" data-event="hope-drive">
+                <div class="event-tile hope-drive-tile" data-event="hope-drive" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="HopeDrive.jpg" alt="Hope Drive">
                         <div class="event-overlay">
@@ -851,7 +862,7 @@
                 </div>
                 
                 <!-- Breaking Barriers Event Tile -->
-                <div class="event-tile breaking-barriers-tile" data-event="breaking-barriers" data-filter="msa-thursday">
+                <div class="event-tile breaking-barriers-tile" data-event="breaking-barriers" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/posters/Breaking Barriers.png" alt="Breaking Barriers">
                         <div class="event-overlay">
@@ -865,7 +876,7 @@
                 </div>
                 
                 <!-- Career Prep Workshop Event Tile -->
-                <div class="event-tile career-prep-tile" data-event="career-prep" data-filter="special">
+                <div class="event-tile career-prep-tile" data-event="career-prep" data-filter="special" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/Career Prep.jpg" alt="Career Prep Workshop">
                         <div class="event-overlay">
@@ -879,7 +890,7 @@
                 </div>
                 
                 <!-- Cultures of the World Event Tile -->
-                <div class="event-tile cultures-of-the-world-tile" data-event="cultures-of-the-world" data-filter="msa-thursday">
+                <div class="event-tile cultures-of-the-world-tile" data-event="cultures-of-the-world" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="CulturesOfTheWorld.jpg" alt="Cultures of the World">
                         <div class="event-overlay">
@@ -893,7 +904,7 @@
                 </div>
                 
                 <!-- HOPE Charity Week Event Tile -->
-                <div class="event-tile charity-week-tile" data-event="charity-week" data-filter="msa-thursday">
+                <div class="event-tile charity-week-tile" data-event="charity-week" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/cw.png" alt="HOPE Charity Week">
                         <div class="event-overlay">
@@ -907,7 +918,7 @@
                 </div>
                 
                 <!-- Taboo Topics Event Tile -->
-                <div class="event-tile taboo-topics-tile" data-event="taboo-topics" data-filter="msa-thursday">
+                <div class="event-tile taboo-topics-tile" data-event="taboo-topics" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/posters/TabooTopics.jpg" alt="Taboo Topics">
                         <div class="event-overlay">
@@ -921,7 +932,7 @@
                 </div>
                 
                 <!-- Brothers Social Bonfire Event Tile -->
-                <div class="event-tile brothers-social-bonfire-tile" data-event="brothers-social-bonfire" data-filter="special">
+                <div class="event-tile brothers-social-bonfire-tile" data-event="brothers-social-bonfire" data-filter="special" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="BrothersSocialBonfireNight.png" alt="Brothers Social Bonfire">
                         <div class="event-overlay">
@@ -935,7 +946,7 @@
                 </div>
                 
                 <!-- Quran Night Event Tile -->
-                <div class="event-tile quran-night-tile" data-event="quran-night" data-filter="msa-thursday">
+                <div class="event-tile quran-night-tile" data-event="quran-night" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="QuranNight.png" alt="Quran Night">
                         <div class="event-overlay">
@@ -949,7 +960,7 @@
                 </div>
                 
                 <!-- Art Gala Event Tile -->
-                <div class="event-tile art-gala-tile" data-event="art-gala" data-filter="special">
+                <div class="event-tile art-gala-tile" data-event="art-gala" data-filter="special" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="artGala.png" alt="Art Gala">
                         <div class="event-overlay">
@@ -963,7 +974,7 @@
                 </div>
                 
                 <!-- Town Hall Dinner Event Tile -->
-                <div class="event-tile town-hall-tile" data-event="town-hall-dinner">
+                <div class="event-tile town-hall-tile" data-event="town-hall-dinner" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="TownHall.jpg" alt="Town Hall Dinner">
                         <div class="event-overlay">
@@ -977,7 +988,7 @@
                 </div>
                 
                 <!-- Pre - R2R Event Tile -->
-                <div class="event-tile pre-r2r-tile" data-event="pre-r2r" data-filter="special">
+                <div class="event-tile pre-r2r-tile" data-event="pre-r2r" data-filter="special" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/gallery/Photos/r2r.png" alt="Pre - R2R">
                         <div class="event-overlay">
@@ -991,42 +1002,73 @@
                 </div>
                 
                 <!-- Understanding Death & Resurrection Event Tile -->
-                <div class="event-tile understanding-death-tile" data-event="understanding-death" data-filter="msa-thursday">
+                <div class="event-tile understanding-death-tile" data-event="understanding-death" data-filter="msa-thursday" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="Understanding Death.png" alt="Understanding Death & Resurrection">
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>Understanding Death & Resurrection</h3>
-                                <p>Wednesday, November 20 • 6:30 PM • Event Completed</p>
-                                <button class="view-event-btn" disabled>Photos Coming Soon</button>
+                                <p>Wednesday, November 20 • 6:30 PM</p>
+                                <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Brothers Social Paintball Event Tile -->
-                <div class="event-tile paintball-tile" data-event="brothers-paintball" data-filter="special">
+                <div class="event-tile paintball-tile" data-event="brothers-paintball" data-filter="special" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/gallery/Photos/Paintball.png" alt="RUMSA Brothers Social Paintball">
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>Brothers Social Paintball</h3>
-                                <p>Saturday, November 23 • 12:30 PM • Photos Coming Soon</p>
-                                <button class="view-event-btn" disabled>Photos Coming Soon</button>
+                                <p>Saturday, November 23 • 12:30 PM</p>
+                                <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Sistersgiving Event Tile -->
-                <div class="event-tile sistersgiving-tile" data-event="sistersgiving" data-filter="special">
+                <div class="event-tile sistersgiving-tile" data-event="sistersgiving" data-filter="special" data-semester="fall-2025">
                     <div class="event-poster">
                         <img src="images/gallery/Photos/Sistersgiving.jpg" alt="Sistersgiving">
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>Sistersgiving</h3>
-                                <p>Tuesday, November 25 • 6:30 PM • Photos Coming Soon</p>
-                                <button class="view-event-btn" disabled>Photos Coming Soon</button>
+                                <p>Tuesday, November 25 • 6:30 PM</p>
+                                <button class="view-event-btn">View Photos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Spring 2026 Section Header -->
+                <div class="gallery-section-header" data-semester="spring-2026">Spring 2026 Events</div>
+                
+                <!-- MSA Spring Kickoff 2026 Event Tile -->
+                <div class="event-tile spring-kickoff-tile" data-event="spring-kickoff-2026" data-filter="special" data-semester="spring-2026">
+                    <div class="event-poster">
+                        <img src="images/posters/SpringKickoff2026.png" alt="MSA Spring Kickoff 2026">
+                        <div class="event-overlay">
+                            <div class="event-info">
+                                <h3>MSA Spring Kickoff 2026</h3>
+                                <p>Wednesday, January 22 • 6:30 PM • Photos Coming Soon</p>
+                                <button class="view-event-btn">View Photos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Naat n Nasheed Night Event Tile -->
+                <div class="event-tile naat-nasheed-tile" data-event="naat-nasheed-2026" data-filter="special" data-semester="spring-2026">
+                    <div class="event-poster">
+                        <img src="images/posters/NaatNasheed2026.png" alt="Naat n Nasheed Night">
+                        <div class="event-overlay">
+                            <div class="event-info">
+                                <h3>Naat n Nasheed Night</h3>
+                                <p>Thursday, February 5 • 6:30 PM • Photos Coming Soon</p>
+                                <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
                     </div>
@@ -1169,6 +1211,98 @@
                     </div>
                 </div>
             </div>
+
+            <!-- No Photos Modal (for events without uploaded photos) -->
+            <div class="event-modal no-photos-modal" id="no-photos-modal" style="display: none;">
+                <div class="modal-overlay"></div>
+                <div class="modal-content no-photos-content">
+                    <div class="modal-header">
+                        <h3 id="no-photos-title">Event Photos</h3>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body no-photos-body">
+                        <img src="images/heartcat.gif" alt="" class="no-photos-cat">
+                        <p class="no-photos-message">No photos were uploaded, sorry. Talk to marketing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gheebah (Backbiting) Section - PSA -->
+    <section id="gheebah" class="gheebah-section gheebah-psa">
+        <div class="gheebah-psa-banner">
+            <span class="gheebah-psa-badge">IMPORTANT MESSAGE</span>
+            <h2 class="gheebah-psa-title">Guard Your Tongue: A PSA on Gheebah (Backbiting)</h2>
+            <p class="gheebah-psa-tagline">What every Muslim should know about this grave sin — and how to avoid it</p>
+        </div>
+        <div class="container">
+            <div class="gheebah-psa-content">
+                <div class="arabic-calligraphy gheebah-psa-arabic">
+                    <p class="arabic-text">وَلَا يَغْتَب بَّعْضُكُم بَعْضًا ۚ أَيُحِبُّ أَحَدُكُمْ أَن يَأْكُلَ لَحْمَ أَخِيهِ مَيْتًا فَكَرِهْتُمُوهُ</p>
+                    <p class="arabic-translation">"And do not backbite one another. Would one of you like to eat the flesh of his dead brother? You would hate it." — Quran 49:12</p>
+                </div>
+            
+                <div class="gheebah-psa-main">
+                        <div class="gheebah-block">
+                            <h3>What is Gheebah?</h3>
+                            <p><strong>Gheebah</strong> (غِيْبَة) means <strong>backbiting</strong>: speaking about a Muslim in their absence in a way they would dislike, whether it is true or false—about their body, lineage, character, deeds, or anything else. The Prophet ﷺ defined it clearly:</p>
+                            <blockquote class="gheebah-quote">
+                                "Do you know what backbiting is?" They said, "Allah and His Messenger know best." He said, "It is to mention about your brother that which he would dislike." Someone asked, "What if what I say about my brother is true?" He said, "If what you say about him is true, you have backbitten him; and if it is not true, you have slandered him."
+                            </blockquote>
+                            <p class="source"><strong>Source:</strong> <cite>Sahih Muslim 2589</cite></p>
+                        </div>
+
+                        <div class="gheebah-block">
+                            <h3>Why Is It So Terrible? It Is Like Zina of the Tongue</h3>
+                            <p>Islam treats backbiting as one of the <strong>gravest sins</strong>. Allah likens it to <strong>eating the flesh of your dead brother</strong>—something that would fill any person with disgust. The Prophet ﷺ also warned that backbiting can destroy a person’s good deeds and bring the same kind of spiritual ruin as major sins:</p>
+                            <blockquote class="gheebah-quote">
+                                "The one who backbites and the one who listens to it are partners in sin."
+                            </blockquote>
+                            <p class="source"><strong>Source:</strong> <cite>Musnad Ahmad, Sunan Abi Dawud</cite> — and the listener is commanded to reject it.</p>
+                            <p>Scholars have described backbiting as "<strong>zina of the tongue</strong>" because, like zina, it violates the sanctity of another person, spreads harm, and is strictly forbidden. The Prophet ﷺ said that backbiting is <strong>worse than adultery</strong> in the sense that Allah may forgive the latter when the person repents, but the one who was backbitten must forgive the backbiter before the sin is lifted—making it a sin that can follow a person until the Day of Judgment if the victim does not forgive.</p>
+                        </div>
+
+                        <div class="gheebah-block">
+                            <h3>Punishment in the Quran</h3>
+                            <p>Allah says in <strong>Surah Al-Hujurat (49:12)</strong>:</p>
+                            <blockquote class="gheebah-quote arabic-block">
+                                يَا أَيُّهَا الَّذِينَ آمَنُوا اجْتَنِبُوا كَثِيرًا مِّنَ الظَّنِّ إِنَّ بَعْضَ الظَّنِّ إِثْمٌ ۖ وَلَا تَجَسَّسُوا وَلَا يَغْتَب بَّعْضُكُم بَعْضًا ۚ أَيُحِبُّ أَحَدُكُمْ أَن يَأْكُلَ لَحْمَ أَخِيهِ مَيْتًا فَكَرِهْتُمُوهُ ۚ وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ تَوَّابٌ رَّحِيمٌ
+                            </blockquote>
+                            <p><em>"O you who have believed, avoid much [negative] assumption. Indeed, some assumption is sin. And do not spy or backbite one another. Would one of you like to eat the flesh of his brother when dead? You would detest it. And fear Allah; indeed, Allah is Accepting of repentance and Merciful."</em></p>
+                            <p class="source"><strong>Source:</strong> <cite>Quran 49:12</cite></p>
+                        </div>
+
+                        <div class="gheebah-block">
+                            <h3>Punishment and Warnings in the Hadith</h3>
+                            <p>The Prophet ﷺ described the <strong>harsh consequences</strong> of backbiting in this life and the next:</p>
+                            <ul class="gheebah-list">
+                                <li><strong>Scavengers of the grave:</strong> It was reported that the Prophet ﷺ passed by two graves and said the occupants were being punished—one for backbiting and one for not cleaning himself from urine. He said the backbiter would have flesh torn from him in the grave. <cite>Source: Sahih al-Bukhari 1378, Sahih Muslim 292</cite></li>
+                                <li><strong>Partners in sin:</strong> "Whoever backbites a Muslim has wronged him; so whoever is able to compensate him, let him do so. Otherwise, the one who was backbitten will take from the backbiter’s good deeds on the Day of Resurrection." <cite>Source: Musnad Ahmad, authenticated by scholars</cite></li>
+                                <li><strong>Defending honor:</strong> "Whoever defends his brother’s honor in his absence, Allah will shield his face from the Fire on the Day of Resurrection." <cite>Source: Sunan al-Tirmidhi 1931, Jami` at-Tirmidhi</cite></li>
+                            </ul>
+                        </div>
+
+                        <div class="gheebah-block">
+                            <h3>Stories of Punishment and Repentance</h3>
+                            <p>In the hadith of the <strong>two women in the grave</strong>, the Prophet ﷺ explained that they were being punished—one for backbiting and the other for not guarding herself from urine. The one who backbit was made to tear at her own flesh. This shows the severity of the sin in the sight of Allah.</p>
+                            <p>Another narration teaches that on the Day of Resurrection, the <strong>good deeds of the backbiter are transferred to the one who was backbitten</strong>. If the backbiter runs out of good deeds, the sins of the victim are placed upon the backbiter. This is among the harshest spiritual punishments described in the Sunnah.</p>
+                            <p class="source"><strong>Sources:</strong> <cite>Sahih al-Bukhari, Sahih Muslim</cite> — see hadith on the punishment of the grave and the transfer of deeds.</p>
+                        </div>
+
+                        <div class="gheebah-block gheebah-closing">
+                            <h3>Conclusion: Guard Your Tongue</h3>
+                            <p>Gheebah is not a small mistake—it is a <strong>major sin</strong> that Allah and His Messenger ﷺ have condemned in the strongest terms. It destroys brotherhood, spreads hatred, and leads to severe punishment in the grave and on the Day of Judgment. We must guard our tongues, avoid backbiting, and if we have wronged someone with our speech, seek their forgiveness and repent to Allah.</p>
+                            <div class="arabic-calligraphy gheebah-psa-arabic" style="margin-top: 1.5rem;">
+                                <p class="arabic-text">وَاتَّقُوا اللَّهَ إِنَّ اللَّهَ تَوَّابٌ رَّحِيمٌ</p>
+                                <p class="arabic-translation">"And fear Allah; indeed, Allah is Accepting of repentance and Merciful." — Quran 49:12</p>
+                            </div>
+                            <div class="gheebah-psa-cta">
+                                <p><strong>Remember:</strong> If you've wronged someone with your tongue, seek their forgiveness and repent to Allah. It's never too late.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </section>
 
@@ -1224,6 +1358,7 @@
                         <li><a href="#about">About</a></li>
                         <li><a href="#teams">Teams</a></li>
                         <li><a href="#events">Events</a></li>
+                        <li><a href="#gheebah">Gheebah</a></li>
                     </ul>
                 </div>
                 

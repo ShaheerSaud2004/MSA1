@@ -111,6 +111,7 @@ class EventCalendar {
             // Spring 2026 Events
             '2026-01-20': [{ title: 'HOPE Event', location: 'CA MPR & LSC MPR', type: 'HOPE', time: 'TBD' }],
             '2026-01-22': [{ title: 'Spring Kickoff', location: 'CA MPR + Lounge', type: 'General', time: '6:00 - 9:00' }],
+            '2026-01-23': [{ title: 'HOPE Thursday', location: 'TBD', type: 'HOPE', time: '6:00 - 9:00' }],
             '2026-01-27': [
                 { title: 'WHW Event', location: 'Gathering Lounge', type: 'Sisters Social', time: '6:00 - 9:00' },
                 { title: 'Brothers\' Social', location: 'LSC MPR', type: 'Brothers Social', time: '6:00 - 9:00' }
@@ -923,7 +924,22 @@ class EventGallery {
                     }
                 }
             },
-            // Future events can be easily added here
+            'spring-kickoff-2026': {
+                name: 'MSA Spring Kickoff 2026',
+                poster: 'images/posters/SpringKickoff2026.png',
+                albums: {
+                    'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
+                    'sisters': { name: 'Sisters', count: 0, photos: [], comingSoon: true }
+                }
+            },
+            'naat-nasheed-2026': {
+                name: 'Naat n Nasheed Night',
+                poster: 'images/posters/NaatNasheed2026.png',
+                albums: {
+                    'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
+                    'sisters': { name: 'Sisters', count: 0, photos: [], comingSoon: true }
+                }
+            }
         };
     }
 
@@ -2632,6 +2648,14 @@ class EventGallery {
         const event = this.events[eventId];
         if (!event) return;
 
+        // Events with no photos uploaded - show cat + message instead of album selection
+        const noPhotosEvents = ['understanding-death', 'brothers-paintball', 'sistersgiving', 'spring-kickoff-2026', 'naat-nasheed-2026'];
+        if (noPhotosEvents.includes(eventId)) {
+            document.getElementById('no-photos-title').textContent = event.name + ' — Photos';
+            document.getElementById('no-photos-modal').style.display = 'flex';
+            return;
+        }
+
         // Check if this event has sections (like Charity Week)
         if (event.hasSections && event.sections) {
             // If sectionId is provided, show albums for that section
@@ -4042,6 +4066,8 @@ class EventGallery {
         document.getElementById('event-modal').style.display = 'none';
         document.getElementById('album-preview-modal').style.display = 'none';
         document.getElementById('full-album-modal').style.display = 'none';
+        const noPhotosModal = document.getElementById('no-photos-modal');
+        if (noPhotosModal) noPhotosModal.style.display = 'none';
         
         // Stop rotation
         if (this.rotationInterval) {
@@ -5262,6 +5288,7 @@ function getRemindMeData() {
 function initializeEventFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const eventTiles = document.querySelectorAll('.event-tile');
+    const sectionHeaders = document.querySelectorAll('.gallery-section-header');
     
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -5274,16 +5301,33 @@ function initializeEventFilters() {
             // Get the filter value
             const filterValue = button.getAttribute('data-filter');
             
+            // Filter by semester (fall-2025, spring-2026) or by type (msa-thursday, special)
+            const isSemesterFilter = filterValue === 'fall-2025' || filterValue === 'spring-2026';
+            
             // Filter event tiles
             eventTiles.forEach(tile => {
                 const tileFilter = tile.getAttribute('data-filter');
+                const tileSemester = tile.getAttribute('data-semester');
                 
-                if (filterValue === 'all' || tileFilter === filterValue) {
-                    tile.style.display = 'block';
-                    tile.style.animation = 'fadeInUp 0.5s ease forwards';
+                let show = false;
+                if (filterValue === 'all') {
+                    show = true;
+                } else if (isSemesterFilter) {
+                    show = tileSemester === filterValue;
                 } else {
-                    tile.style.display = 'none';
+                    show = tileFilter === filterValue;
                 }
+                
+                tile.style.display = show ? 'block' : 'none';
+                if (show) tile.style.animation = 'fadeInUp 0.5s ease forwards';
+            });
+            
+            // Show/hide section headers (e.g. Spring 2026 divider)
+            sectionHeaders.forEach(header => {
+                const headerSemester = header.getAttribute('data-semester');
+                const showHeader = filterValue === 'all' || headerSemester === filterValue ||
+                    (filterValue === 'special' && headerSemester === 'spring-2026');
+                header.style.display = showHeader ? 'block' : 'none';
             });
             
             console.log(`Filtered events by: ${filterValue}`);
