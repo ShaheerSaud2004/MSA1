@@ -6199,6 +6199,21 @@ img.event-logo[src*="hope.jpg"],
     justify-content: center !important;
 }
 
+/* Spring 2026 event tiles: solid overlay so poster text doesn't obscure title */
+.event-overlay-solid {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 60%, transparent 100%) !important;
+}
+
+.event-overlay-solid .event-info h3 {
+    margin-bottom: 0.5rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.event-overlay-solid .event-info .event-date {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
 .view-event-btn {
     background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
     color: white;
