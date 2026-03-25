@@ -147,6 +147,14 @@ function applyEdit(html, css, message) {
     else changes.push(`Updated gallery event "${galleryPayload.title}" (${total} photos)`);
   }
 
+  // Update first featured event card via JSON
+  const featuredPayload = parseFeaturedEventPayload(message);
+  if (featuredPayload) {
+    const result = applyFeaturedEventPayload(newHtml, featuredPayload);
+    newHtml = result.html;
+    changes.push(...result.changes);
+  }
+
   if (changes.length === 0) {
     // Fallback: try global replace of first quoted string with second
     const twoQuoted = message.match(/"([^"]+)"\s*=>\s*"([^"]+)"/) || message.match(/'([^']+)'\s*=>\s*'([^']+)'/);
@@ -196,6 +204,62 @@ function normalizePhotos(list) {
   return list
     .map((x) => String(x || '').trim())
     .filter((x) => /^https?:\/\//i.test(x) || x.startsWith('/'));
+}
+
+function parseFeaturedEventPayload(message) {
+  const match =
+    message.match(/set\s+featured\s+event\s*:?\s*(\{[\s\S]*\})/i) ||
+    message.match(/featured\s+event\s*:?\s*(\{[\s\S]*\})/i);
+  if (!match) return null;
+  try {
+    const payload = JSON.parse(match[1]);
+    const title = String(payload.title || '').trim();
+    const poster = String(payload.poster || '').trim();
+    const badge = String(payload.badge || '').trim();
+    const line1 = String(payload.line1 || payload.dateLine || '').trim();
+    const line2 = String(payload.line2 || payload.locationLine || '').trim();
+    const line3 = String(payload.line3 || payload.groupLine || '').trim();
+    if (!title || !poster || !line1 || !line2) return null;
+    return { title, poster, badge, line1, line2, line3 };
+  } catch (_) {
+    return null;
+  }
+}
+
+function applyFeaturedEventPayload(html, payload) {
+  let updated = html;
+  const changes = [];
+
+  updated = updated.replace(
+    /(<div class="featured-events-grid[\s\S]*?<div class="featured-event-card[^>]*>[\s\S]*?<div class="event-poster">\s*<img[^>]*src=")([^"]*)(")/i,
+    `$1${escapeAttr(payload.poster)}$3`
+  );
+  changes.push('Featured poster updated');
+
+  updated = updated.replace(
+    /(<div class="featured-events-grid[\s\S]*?<div class="featured-event-card[^>]*>[\s\S]*?<div class="event-header">\s*<h4[^>]*>)([^<]*)(<\/h4>)/i,
+    `$1${escapeHtml(payload.title)}$3`
+  );
+  changes.push(`Featured title set to "${payload.title}"`);
+
+  if (payload.badge) {
+    updated = updated.replace(
+      /(<div class="featured-events-grid[\s\S]*?<div class="featured-event-card[^>]*>[\s\S]*?<div class="event-type-badge"[^>]*>\s*(?:<i[^>]*><\/i>\s*)?)([\s\S]*?)(\s*<\/div>)/i,
+      `$1${escapeHtml(payload.badge)}$3`
+    );
+    changes.push(`Featured badge set to "${payload.badge}"`);
+  }
+
+  const line3Html = payload.line3
+    ? `\n                                <p><i class="fas fa-users"></i> ${escapeHtml(payload.line3)}</p>`
+    : '';
+  updated = updated.replace(
+    /(<div class="featured-events-grid[\s\S]*?<div class="featured-event-card[^>]*>[\s\S]*?<div class="event-info">)([\s\S]*?)(<\/div>\s*<div class="event-actions">)/i,
+    `$1\n                                <p><i class="fas fa-clock"></i> ${escapeHtml(payload.line1)}</p>\n                                <p><i class="fas fa-map-marker-alt"></i> ${escapeHtml(payload.line2)}</p>${line3Html}\n                            $3`
+  );
+  changes.push('Featured details updated');
+
+  return { html: updated, changes };
 }
 
 function buildGalleryTile(event) {

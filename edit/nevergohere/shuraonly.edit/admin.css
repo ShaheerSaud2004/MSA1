@@ -342,6 +342,108 @@ body {
     background: #4a7c59;
 }
 
+.simple-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.simple-card {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border: 1px solid #dce6f4;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 8px 24px rgba(18, 38, 63, 0.07);
+}
+
+.simple-card h4 {
+    color: #2c5530;
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+
+.simple-hero-note {
+    background: linear-gradient(135deg, #edf9ee, #f3f9ff);
+    border: 1px solid #d7e8dd;
+    color: #2f4f39;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-size: 0.95rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.form-grid input,
+#galleryBrothersUrls,
+#gallerySistersUrls,
+#galleryPhotos {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d6dbe6;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    margin-bottom: 10px;
+}
+
+#galleryBrothersUrls,
+#gallerySistersUrls,
+#galleryPhotos {
+    resize: vertical;
+}
+
+.apply-btn {
+    background: linear-gradient(135deg, #2c5530, #4a7c59);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.apply-btn:hover {
+    opacity: 0.95;
+}
+
+.quick-fill-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.quick-fill-row button {
+    border: 1px solid #c8e6c9;
+    background: #fff;
+    color: #2c5530;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.advanced-chat {
+    margin-bottom: 16px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+.advanced-chat summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #2c5530;
+    margin-bottom: 8px;
+}
+
 .example-section {
     background: #fff3cd;
     padding: 20px;

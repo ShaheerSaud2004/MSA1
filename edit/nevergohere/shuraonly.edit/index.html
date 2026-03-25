@@ -51,47 +51,58 @@
                 <div class="header-icon"><i class="fas fa-magic"></i></div>
                 <div class="header-text">
                     <h2>Website Assistant</h2>
-                    <p>Edit UI, content, and layout. Changes go to staging → preview → approve to go live.</p>
+                    <p>Just upload and fill forms. Save to staging, preview, then publish.</p>
                 </div>
             </div>
-            <div class="upload-section">
-                <h4><i class="fas fa-upload"></i> Upload Poster / Photo</h4>
-                <p class="upload-hint">Upload an image to get a URL you can use in the site or chat.</p>
-                <div class="upload-controls">
-                    <select id="uploadPath">
-                        <option value="posters">Posters</option>
-                        <option value="gallery">Gallery</option>
-                    </select>
-                    <input type="file" id="uploadInput" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
-                    <button type="button" id="uploadBtn" class="upload-btn"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
-                </div>
-                <div id="uploadResult" class="upload-result" style="display: none;">
-                    <label>URL:</label>
-                    <div class="upload-url-row">
-                        <input type="text" id="uploadUrlDisplay" readonly>
-                        <button type="button" id="copyUrlBtn"><i class="fas fa-copy"></i> Copy</button>
-                    </div>
-                </div>
+            <div class="simple-hero-note">
+                <strong>Super simple flow:</strong> upload your files, paste URLs into the fields, click save, then click <strong>Preview staging</strong> and <strong>Approve & publish</strong>.
             </div>
 
-            <div class="example-section">
-                <h4>Examples</h4>
-                <div class="example-commands">
-                    <button type="button" class="example-btn" data-msg="Change the hero title to Welcome to Rutgers MSA">Change hero title</button>
-                    <button type="button" class="example-btn" data-msg="Change the hero subtitle to Muslim Student Association">Change hero subtitle</button>
-                    <button type="button" class="example-btn" data-msg="Replace Welcome with Assalamu Alaikum">Replace text</button>
-                    <button type="button" class="example-btn" data-msg="Set poster for spring-kickoff-2026 to ">Set poster (paste URL after)</button>
-                    <button type="button" class="example-btn" data-msg="Set event spring-kickoff-2026 title to MSA Spring Kickoff 2026">Set event title</button>
-                    <button type="button" class="example-btn" data-msg='Add gallery event {"slug":"new-event-2026","title":"New Event","poster":"https://example.com/poster.png","semester":"spring-2026","brothersPhotos":["https://example.com/b1.jpg"],"sistersPhotos":["https://example.com/s1.jpg"]}'>Add gallery event + photos (JSON)</button>
+            <div class="simple-grid">
+                <div class="simple-card upload-section">
+                    <h4><i class="fas fa-upload"></i> Upload Image</h4>
+                    <p class="upload-hint">Upload a poster or photo and copy the URL.</p>
+                    <div class="upload-controls">
+                        <select id="uploadPath">
+                            <option value="posters">Poster upload</option>
+                            <option value="gallery">Photo upload</option>
+                        </select>
+                        <input type="file" id="uploadInput" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
+                        <button type="button" id="uploadBtn" class="upload-btn"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                    </div>
+                    <div id="uploadResult" class="upload-result" style="display: none;">
+                        <label>Uploaded URL</label>
+                        <div class="upload-url-row">
+                            <input type="text" id="uploadUrlDisplay" readonly>
+                            <button type="button" id="copyUrlBtn"><i class="fas fa-copy"></i> Copy</button>
+                        </div>
+                        <div class="quick-fill-row">
+                            <button type="button" id="useForFeaturedBtn">Use for Featured Poster</button>
+                            <button type="button" id="useForGalleryBtn">Use for Gallery Poster</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simple-card">
+                    <h4><i class="fas fa-images"></i> Gallery Event (3 things only)</h4>
+                    <div class="form-grid">
+                        <input id="galleryPosterUrl" placeholder="1) Poster URL">
+                        <input id="galleryText" placeholder="2) Text / Event title">
+                        <textarea id="galleryPhotos" rows="5" placeholder="3) Photo URLs (one per line)"></textarea>
+                    </div>
+                    <button type="button" id="galleryApplyBtn" class="apply-btn">Save Gallery Event</button>
+                </div>
+
+                <div class="simple-card">
+                    <h4><i class="fas fa-star"></i> Featured Section</h4>
+                    <div class="form-grid">
+                        <input id="featuredPosterUrl" placeholder="Featured poster URL">
+                        <input id="featuredText" placeholder="Featured text/title">
+                    </div>
+                    <button type="button" id="featuredApplyBtn" class="apply-btn">Save Featured Section</button>
                 </div>
             </div>
             <div class="chat-messages" id="chatMessages"></div>
-            <div class="chat-input-container">
-                <div class="input-wrapper">
-                    <input type="text" id="chatInput" placeholder="e.g. Change hero title to …" autocomplete="off">
-                    <button type="button" id="sendButton"><i class="fas fa-paper-plane"></i></button>
-                </div>
-            </div>
         </div>
 
         <!-- Preview panel -->

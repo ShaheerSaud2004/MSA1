@@ -112,11 +112,11 @@
     if (el) el.remove();
   }
 
-  async function sendChat() {
+  async function sendChat(overrideMessage) {
     const input = document.getElementById('chatInput');
-    const msg = (input && input.value || '').trim();
+    const msg = (overrideMessage || (input && input.value) || '').trim();
     if (!msg) return;
-    input.value = '';
+    if (!overrideMessage && input) input.value = '';
     addMessage(msg, 'user');
     showTyping();
     try {
@@ -133,6 +133,22 @@
       addMessage('Error: ' + (e.message || 'Request failed'), 'assistant', true);
       if (e.message && e.message.indexOf('401') !== -1) showAuth();
     }
+  }
+
+  function splitUrls(text) {
+    return String(text || '')
+      .split(/\n|,/)
+      .map((x) => x.trim())
+      .filter((x) => /^https?:\/\//i.test(x) || x.startsWith('/'));
+  }
+
+  function slugify(value) {
+    return String(value || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9-_\s]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
   }
 
   function openPreview() {
@@ -264,7 +280,7 @@
 
     showApp();
     loadState();
-    addMessage('Use the toolbar: Seed (first time), then chat to edit, Preview to see staging, Approve to publish. You can also add full gallery events with JSON (slug/title/poster/brothersPhotos/sistersPhotos).', 'assistant', true);
+    addMessage('Fill only 3 fields for gallery (poster, text, photos), then preview and publish. Featured section needs only poster + text.', 'assistant', true);
 
     document.getElementById('seedBtn').addEventListener('click', seed);
     document.getElementById('previewBtn').addEventListener('click', openPreview);
@@ -286,20 +302,14 @@
       showAuth();
     });
 
-    document.getElementById('sendButton').addEventListener('click', sendChat);
-    document.getElementById('chatInput').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') sendChat();
-    });
-
-    document.querySelectorAll('.example-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var msg = btn.getAttribute('data-msg');
-        if (msg) {
-          document.getElementById('chatInput').value = msg;
-          sendChat();
-        }
+    const sendButton = document.getElementById('sendButton');
+    const chatInput = document.getElementById('chatInput');
+    if (sendButton && chatInput) {
+      sendButton.addEventListener('click', sendChat);
+      chatInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') sendChat();
       });
-    });
+    }
 
     // Upload poster/photo
     const uploadBtn = document.getElementById('uploadBtn');
@@ -361,6 +371,64 @@
             addMessage('URL copied to clipboard. Paste it in chat to use (e.g. "Replace [old-src] with [url]").', 'assistant', true);
           });
         }
+      });
+    }
+
+    const useForFeaturedBtn = document.getElementById('useForFeaturedBtn');
+    const useForGalleryBtn = document.getElementById('useForGalleryBtn');
+    if (useForFeaturedBtn) {
+      useForFeaturedBtn.addEventListener('click', function () {
+        const url = uploadUrlDisplay && uploadUrlDisplay.value;
+        if (url) document.getElementById('featuredPosterUrl').value = url;
+      });
+    }
+    if (useForGalleryBtn) {
+      useForGalleryBtn.addEventListener('click', function () {
+        const url = uploadUrlDisplay && uploadUrlDisplay.value;
+        if (url) document.getElementById('galleryPosterUrl').value = url;
+      });
+    }
+
+    const featuredApplyBtn = document.getElementById('featuredApplyBtn');
+    if (featuredApplyBtn) {
+      featuredApplyBtn.addEventListener('click', function () {
+        const featuredText = (document.getElementById('featuredText')?.value || '').trim();
+        const payload = {
+          title: featuredText,
+          poster: (document.getElementById('featuredPosterUrl')?.value || '').trim(),
+          line1: 'Updated from admin panel',
+          line2: featuredText,
+          line3: ''
+        };
+        if (!payload.title || !payload.poster) {
+          addMessage('Featured section needs 2 things: poster URL and text.', 'assistant', true);
+          return;
+        }
+        sendChat(`Set featured event ${JSON.stringify(payload)}`);
+      });
+    }
+
+    const galleryApplyBtn = document.getElementById('galleryApplyBtn');
+    if (galleryApplyBtn) {
+      galleryApplyBtn.addEventListener('click', function () {
+        const title = (document.getElementById('galleryText')?.value || '').trim();
+        const poster = (document.getElementById('galleryPosterUrl')?.value || '').trim();
+        const photos = splitUrls(document.getElementById('galleryPhotos')?.value || '');
+        const slug = slugify(title);
+        if (!title || !poster || photos.length === 0) {
+          addMessage('Gallery needs exactly 3 things: poster, text, and photos.', 'assistant', true);
+          return;
+        }
+        const payload = {
+          slug,
+          title,
+          poster,
+          semester: 'spring-2026',
+          subtitle: `${photos.length} photos • Brothers & Sisters`,
+          brothersPhotos: photos,
+          sistersPhotos: []
+        };
+        sendChat(`Add gallery event ${JSON.stringify(payload)}`);
       });
     }
   }
