@@ -49,12 +49,8 @@ function getAdminToken(req, body) {
 }
 
 function handleAdminApi(req, res, urlPath, body = {}) {
-  const secret = process.env.ADMIN_SECRET;
+  const secret = process.env.ADMIN_SECRET || 'rutgermsaproject';
   const token = getAdminToken(req, body);
-  if (!secret) {
-    sendJson(res, 503, { error: 'ADMIN_SECRET not set. Add it to .env for local dev.' });
-    return;
-  }
   if (token !== secret) {
     sendJson(res, 401, { error: 'Unauthorized' });
     return;
@@ -167,6 +163,33 @@ function handleAdminApi(req, res, urlPath, body = {}) {
       sendJson(res, 200, { changelog: cms.getChangelog() });
       return;
     }
+    if (pathOnly === '/api/admin/upload' && req.method === 'POST') {
+      const { file: base64, filename, path: pathDir = 'posters' } = body;
+      if (!base64 || typeof base64 !== 'string') {
+        sendJson(res, 400, { error: 'Request body must include file (base64 string)' });
+        return;
+      }
+      let data = base64;
+      if (base64.startsWith('data:')) {
+        const match = base64.match(/^data:([^;]+);base64,(.+)$/);
+        if (match) data = match[2];
+      }
+      const buf = Buffer.from(data, 'base64');
+      if (buf.length > 5 * 1024 * 1024) {
+        sendJson(res, 400, { error: 'File too large. Max 5MB.' });
+        return;
+      }
+      const safeDir = (pathDir || 'posters').replace(/[^a-zA-Z0-9_-]/g, '');
+      const name = (filename || `upload-${Date.now()}.png`).replace(/[^a-zA-Z0-9._-]/g, '_');
+      const uploadsDir = path.join(ROOT, '.cms-data', 'uploads', safeDir);
+      if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+      const outPath = path.join(uploadsDir, `${Date.now()}-${name}`);
+      fs.writeFileSync(outPath, buf);
+      const origin = 'http://' + (req.headers.host || `localhost:${PORT}`);
+      const url = `${origin}/cms-uploads/${safeDir}/${Date.now()}-${name}`;
+      sendJson(res, 200, { success: true, url, path: outPath });
+      return;
+    }
     sendJson(res, 405, { error: 'Method not allowed' });
   } catch (err) {
     console.error('admin api', err);
@@ -222,6 +245,28 @@ const server = http.createServer((req, res) => {
   if (url.startsWith('/api/')) {
     sendJson(res, 404, { error: 'Not found' });
     return;
+  }
+  // Serve uploaded CMS files (local dev)
+  if (url.startsWith('/cms-uploads/')) {
+    const subPath = url.slice('/cms-uploads/'.length).replace(/\.\./g, '');
+    const filePath = path.join(ROOT, '.cms-data', 'uploads', subPath);
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      serveFile(res, filePath);
+      return;
+    }
+    send(res, 404, 'Not found');
+    return;
+  }
+  // Serve live CMS version at / when set (mirrors prod)
+  if (url === '/' || url === '') {
+    const state = cms.getState();
+    if (state?.liveVersionId) {
+      const v = cms.getVersion(state.liveVersionId);
+      if (v?.indexHtml) {
+        send(res, 200, v.indexHtml, 'text/html');
+        return;
+      }
+    }
   }
   // Decode URL-encoded path (e.g. %20 -> space) so files like "Scavenger Hunt.jpg" are found
   let decodedPath = url;

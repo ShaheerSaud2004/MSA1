@@ -2701,10 +2701,47 @@ class EventGallery {
         });
     }
 
+    parseDynamicPhotoList(value) {
+        if (!value) return [];
+        return value
+            .split('||')
+            .map((item) => item.trim())
+            .filter(Boolean);
+    }
+
+    getDynamicEventFromTile(eventId) {
+        const tile = document.querySelector(`.event-tile[data-event="${eventId}"]`);
+        if (!tile) return null;
+
+        const title = tile.querySelector('.event-info h3')?.textContent?.trim() || eventId;
+        const poster = tile.querySelector('.event-poster img')?.getAttribute('src') || '';
+        const brothersPhotos = this.parseDynamicPhotoList(tile.getAttribute('data-brothers-photos'));
+        const sistersPhotos = this.parseDynamicPhotoList(tile.getAttribute('data-sisters-photos'));
+
+        return {
+            name: title,
+            poster,
+            albums: {
+                brothers: {
+                    name: 'Brothers',
+                    count: brothersPhotos.length,
+                    photos: brothersPhotos,
+                    comingSoon: brothersPhotos.length === 0
+                },
+                sisters: {
+                    name: 'Sisters',
+                    count: sistersPhotos.length,
+                    photos: sistersPhotos,
+                    comingSoon: sistersPhotos.length === 0
+                }
+            }
+        };
+    }
+
     showEventModal(eventId, sectionId = null) {
         this.currentEvent = eventId;
         this.currentSection = sectionId;
-        const event = this.events[eventId];
+        const event = this.events[eventId] || this.getDynamicEventFromTile(eventId);
         if (!event) return;
 
         // Events with no photos uploaded - show cat + message instead of album selection

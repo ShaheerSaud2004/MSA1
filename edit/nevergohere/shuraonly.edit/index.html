@@ -3,226 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MSA Admin Panel - Shura Only</title>
+    <title>MSA CMS – AI Website Editor (Private)</title>
     <link rel="stylesheet" href="admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="admin-container">
+    <!-- Auth gate (hidden after login) -->
+    <div id="authGate" class="auth-gate">
+        <div class="auth-box">
+            <h1><i class="fas fa-lock"></i> CMS Editor</h1>
+            <p>Enter admin secret to continue.</p>
+            <input type="password" id="adminSecretInput" placeholder="Admin secret" autocomplete="off">
+            <button type="button" id="authSubmit">Continue</button>
+            <p id="authError" class="auth-error"></p>
+        </div>
+    </div>
+
+    <div id="adminApp" class="admin-container" style="display: none;">
         <!-- Header -->
         <div class="admin-header">
             <div class="header-content">
                 <div class="logo-section">
                     <img src="../../images/logos/MSA.png" alt="MSA Logo" class="admin-logo">
-                    <h1>MSA Admin Panel</h1>
+                    <h1>MSA CMS Editor</h1>
                 </div>
-                <div class="status-indicator">
+                <div class="status-indicator" id="statusIndicator">
                     <span class="status-dot"></span>
-                    <span>Demo Mode - No Changes Made</span>
+                    <span id="statusText">Loading…</span>
                 </div>
+                <button type="button" id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </div>
 
-        <!-- Main Chat Interface -->
+        <!-- Toolbar: Seed, Preview, Approve, Versions -->
+        <div class="cms-toolbar">
+            <button type="button" id="seedBtn" class="toolbar-btn primary"><i class="fas fa-database"></i> Seed from current site</button>
+            <button type="button" id="previewBtn" class="toolbar-btn"><i class="fas fa-eye"></i> Preview staging</button>
+            <button type="button" id="approveBtn" class="toolbar-btn success" disabled><i class="fas fa-check"></i> Approve & publish</button>
+            <button type="button" id="versionsBtn" class="toolbar-btn"><i class="fas fa-history"></i> Version history</button>
+            <button type="button" id="changelogBtn" class="toolbar-btn"><i class="fas fa-list"></i> Changelog</button>
+        </div>
+
+        <!-- Main Chat -->
         <div class="chat-container">
             <div class="chat-header">
-                <div class="header-icon">
-                    <i class="fas fa-magic"></i>
-                </div>
+                <div class="header-icon"><i class="fas fa-magic"></i></div>
                 <div class="header-text">
-                    <h2>MSA Website Assistant</h2>
-                    <p>Simply tell me what you want to do - I'll handle all the technical stuff!</p>
+                    <h2>Website Assistant</h2>
+                    <p>Edit UI, content, and layout. Changes go to staging → preview → approve to go live.</p>
                 </div>
             </div>
-
-            <!-- How It Works Section -->
-            <div class="how-it-works">
-                <h3><i class="fas fa-lightbulb"></i> How This Works</h3>
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <strong>You tell me what you want</strong>
-                            <p>Just type naturally, like "Add Spring Kickoff event"</p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <strong>I understand and help</strong>
-                            <p>I'll ask for details and guide you through the process</p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <strong>Changes happen automatically</strong>
-                            <p>I'll update your website without you touching any code!</p>
-                        </div>
+            <div class="upload-section">
+                <h4><i class="fas fa-upload"></i> Upload Poster / Photo</h4>
+                <p class="upload-hint">Upload an image to get a URL you can use in the site or chat.</p>
+                <div class="upload-controls">
+                    <select id="uploadPath">
+                        <option value="posters">Posters</option>
+                        <option value="gallery">Gallery</option>
+                    </select>
+                    <input type="file" id="uploadInput" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
+                    <button type="button" id="uploadBtn" class="upload-btn"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                </div>
+                <div id="uploadResult" class="upload-result" style="display: none;">
+                    <label>URL:</label>
+                    <div class="upload-url-row">
+                        <input type="text" id="uploadUrlDisplay" readonly>
+                        <button type="button" id="copyUrlBtn"><i class="fas fa-copy"></i> Copy</button>
                     </div>
                 </div>
             </div>
 
-            <div class="chat-messages" id="chatMessages">
-                <!-- Welcome Message -->
-                <div class="message assistant-message">
-                    <div class="message-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="message-content">
-                        <div class="message-text">
-                            <div class="welcome-banner">
-                                <h3>🎉 Welcome to the MSA Admin Panel!</h3>
-                                <p>I'm your personal website assistant. No coding knowledge needed!</p>
-                            </div>
-                            
-                            <div class="capabilities-grid">
-                                <div class="capability">
-                                    <div class="capability-icon">📅</div>
-                                    <div class="capability-text">
-                                        <strong>Calendar Events</strong>
-                                        <p>Add, edit, or remove events from your calendar</p>
-                                    </div>
-                                </div>
-                                <div class="capability">
-                                    <div class="capability-icon">⭐</div>
-                                    <div class="capability-text">
-                                        <strong>Featured Events</strong>
-                                        <p>Choose which events to highlight on your homepage</p>
-                                    </div>
-                                </div>
-                                <div class="capability">
-                                    <div class="capability-icon">📸</div>
-                                    <div class="capability-text">
-                                        <strong>Photo Gallery</strong>
-                                        <p>Add photos and create albums for your events</p>
-                                    </div>
-                                </div>
-                                <div class="capability">
-                                    <div class="capability-icon">🖼️</div>
-                                    <div class="capability-text">
-                                        <strong>Event Posters</strong>
-                                        <p>Upload and manage beautiful event posters</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="example-section">
-                                <h4>💡 Try These Examples:</h4>
-                                <div class="example-commands">
-                                    <button class="example-btn" onclick="sendQuickMessage('Add a new event called Spring Kickoff on March 15th at 6 PM')">
-                                        "Add Spring Kickoff event on March 15th"
-                                    </button>
-                                    <button class="example-btn" onclick="sendQuickMessage('Show me the calendar')">
-                                        "Show me the calendar"
-                                    </button>
-                                    <button class="example-btn" onclick="sendQuickMessage('Add photos from Art Night')">
-                                        "Add photos from Art Night"
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message-time">Just now</div>
-                    </div>
+            <div class="example-section">
+                <h4>Examples</h4>
+                <div class="example-commands">
+                    <button type="button" class="example-btn" data-msg="Change the hero title to Welcome to Rutgers MSA">Change hero title</button>
+                    <button type="button" class="example-btn" data-msg="Change the hero subtitle to Muslim Student Association">Change hero subtitle</button>
+                    <button type="button" class="example-btn" data-msg="Replace Welcome with Assalamu Alaikum">Replace text</button>
+                    <button type="button" class="example-btn" data-msg="Set poster for spring-kickoff-2026 to ">Set poster (paste URL after)</button>
+                    <button type="button" class="example-btn" data-msg="Set event spring-kickoff-2026 title to MSA Spring Kickoff 2026">Set event title</button>
+                    <button type="button" class="example-btn" data-msg='Add gallery event {"slug":"new-event-2026","title":"New Event","poster":"https://example.com/poster.png","semester":"spring-2026","brothersPhotos":["https://example.com/b1.jpg"],"sistersPhotos":["https://example.com/s1.jpg"]}'>Add gallery event + photos (JSON)</button>
                 </div>
             </div>
-
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
-                <p class="quick-actions-desc">Click any button below to get started instantly!</p>
-                <div class="action-buttons">
-                    <button class="action-btn primary" onclick="sendQuickMessage('Add a new event')">
-                        <div class="btn-icon">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="btn-content">
-                            <strong>Add Event</strong>
-                            <p>Create a new event for your calendar</p>
-                        </div>
-                    </button>
-                    <button class="action-btn secondary" onclick="sendQuickMessage('Show me the calendar')">
-                        <div class="btn-icon">
-                            <i class="fas fa-calendar"></i>
-                        </div>
-                        <div class="btn-content">
-                            <strong>View Calendar</strong>
-                            <p>See all your upcoming events</p>
-                        </div>
-                    </button>
-                    <button class="action-btn tertiary" onclick="sendQuickMessage('Add photos to gallery')">
-                        <div class="btn-icon">
-                            <i class="fas fa-images"></i>
-                        </div>
-                        <div class="btn-content">
-                            <strong>Add Photos</strong>
-                            <p>Upload photos to your gallery</p>
-                        </div>
-                    </button>
-                    <button class="action-btn quaternary" onclick="sendQuickMessage('Upload a poster')">
-                        <div class="btn-icon">
-                            <i class="fas fa-upload"></i>
-                        </div>
-                        <div class="btn-content">
-                            <strong>Upload Poster</strong>
-                            <p>Add a new event poster</p>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Chat Input -->
+            <div class="chat-messages" id="chatMessages"></div>
             <div class="chat-input-container">
-                <div class="input-header">
-                    <h4><i class="fas fa-comments"></i> Chat with Your Assistant</h4>
-                    <p>Type naturally - I understand what you want to do!</p>
-                </div>
                 <div class="input-wrapper">
-                    <input type="text" id="chatInput" placeholder="Try: 'Add Spring Kickoff event on March 15th at 6 PM' or 'Show me the calendar'" autocomplete="off">
-                    <button id="sendButton" onclick="sendMessage()">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-                <div class="input-hints">
-                    <div class="hint-section">
-                        <span class="hint-label">💡 Popular Commands:</span>
-                        <div class="hint-tags">
-                            <span class="hint-tag">"Add event"</span>
-                            <span class="hint-tag">"Show calendar"</span>
-                            <span class="hint-tag">"Add photos"</span>
-                            <span class="hint-tag">"Upload poster"</span>
-                            <span class="hint-tag">"Featured events"</span>
-                        </div>
-                    </div>
+                    <input type="text" id="chatInput" placeholder="e.g. Change hero title to …" autocomplete="off">
+                    <button type="button" id="sendButton"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
 
-        <!-- File Upload Area (Hidden by default) -->
-        <div class="file-upload-area" id="fileUploadArea" style="display: none;">
-            <div class="upload-content">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <h3>Upload File</h3>
-                <p>Drag and drop your file here or click to browse</p>
-                <input type="file" id="fileInput" accept="image/*" multiple>
-                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
-                    Choose Files
-                </button>
-            </div>
-        </div>
-
-        <!-- Preview Panel -->
+        <!-- Preview panel -->
         <div class="preview-panel" id="previewPanel" style="display: none;">
             <div class="preview-header">
-                <h3>Preview Changes</h3>
-                <button class="close-preview" onclick="closePreview()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <h3>Preview (staging)</h3>
+                <button type="button" class="close-preview" id="closePreview"><i class="fas fa-times"></i></button>
             </div>
-            <div class="preview-content" id="previewContent">
-                <!-- Preview content will be inserted here -->
+            <div class="preview-content">
+                <iframe id="previewFrame" title="Staging preview"></iframe>
             </div>
+        </div>
+
+        <!-- Versions panel -->
+        <div class="versions-panel" id="versionsPanel" style="display: none;">
+            <div class="preview-header">
+                <h3>Version history</h3>
+                <button type="button" class="close-preview" id="closeVersions"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="versionsList" class="versions-list"></div>
+        </div>
+
+        <!-- Changelog panel -->
+        <div class="versions-panel" id="changelogPanel" style="display: none;">
+            <div class="preview-header">
+                <h3>Changelog</h3>
+                <button type="button" class="close-preview" id="closeChangelog"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="changelogList" class="versions-list"></div>
         </div>
     </div>
 

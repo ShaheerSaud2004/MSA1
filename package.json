@@ -5,7 +5,9 @@
   "description": "Rutgers MSA Website",
   "main": "index.html",
   "scripts": {
-    "dev": "vercel dev",
+    "dev": "node dev-server.js",
+    "dev:restart": "lsof -ti :3002 | xargs kill -9 2>/dev/null; sleep 1; node dev-server.js",
+    "dev:vercel": "vercel dev --yes",
     "build": "echo 'No build step required for static site'",
     "deploy": "vercel --prod",
     "upload-art-gala": "node upload-art-gala-to-blob.js"

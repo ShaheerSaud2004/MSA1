@@ -136,6 +136,17 @@ function applyEdit(html, css, message) {
     }
   }
 
+  // Add/update gallery tile via JSON:
+  // add gallery event {"slug":"my-event","title":"My Event","poster":"https://...","semester":"spring-2026","brothersPhotos":["https://..."],"sistersPhotos":["https://..."]}
+  const galleryPayload = parseGalleryEventPayload(message);
+  if (galleryPayload) {
+    const result = upsertGalleryTile(newHtml, galleryPayload);
+    newHtml = result.html;
+    const total = galleryPayload.brothersPhotos.length + galleryPayload.sistersPhotos.length;
+    if (result.inserted) changes.push(`Added gallery event "${galleryPayload.title}" (${total} photos)`);
+    else changes.push(`Updated gallery event "${galleryPayload.title}" (${total} photos)`);
+  }
+
   if (changes.length === 0) {
     // Fallback: try global replace of first quoted string with second
     const twoQuoted = message.match(/"([^"]+)"\s*=>\s*"([^"]+)"/) || message.match(/'([^']+)'\s*=>\s*'([^']+)'/);
@@ -157,6 +168,121 @@ function escapeHtml(s) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function escapeAttr(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+}
+
+function sanitizeSlug(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-_\s]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function sanitizeSemester(value) {
+  const clean = String(value || 'spring-2026')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, '');
+  return clean || 'spring-2026';
+}
+
+function normalizePhotos(list) {
+  if (!Array.isArray(list)) return [];
+  return list
+    .map((x) => String(x || '').trim())
+    .filter((x) => /^https?:\/\//i.test(x) || x.startsWith('/'));
+}
+
+function buildGalleryTile(event) {
+  const brothersData = event.brothersPhotos.join('||');
+  const sistersData = event.sistersPhotos.join('||');
+  return `
+                <div class="event-tile" data-event="${escapeAttr(event.slug)}" data-filter="special" data-semester="${escapeAttr(event.semester)}" data-brothers-photos="${escapeAttr(brothersData)}" data-sisters-photos="${escapeAttr(sistersData)}">
+                    <div class="event-poster">
+                        <img src="${escapeAttr(event.poster)}" alt="${escapeAttr(event.title)}">
+                        <div class="event-overlay">
+                            <div class="event-info">
+                                <h3>${escapeHtml(event.title)}</h3>
+                                <p>${escapeHtml(event.subtitle)}</p>
+                                <button class="view-event-btn">View Photos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+}
+
+function upsertGalleryTile(html, event) {
+  const tileHtml = buildGalleryTile(event);
+  const escapedSlug = event.slug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const existingTileRegex = new RegExp(
+    `<div class="event-tile"[^>]*data-event=["']${escapedSlug}["'][\\s\\S]*?<\\/div>\\s*<\\/div>\\s*<\\/div>\\s*<\\/div>`,
+    'i'
+  );
+  if (existingTileRegex.test(html)) {
+    return { html: html.replace(existingTileRegex, tileHtml), inserted: false };
+  }
+
+  const escapedSemester = event.semester.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const semesterTileRegex = new RegExp(
+    `<div class="event-tile"[^>]*data-semester=["']${escapedSemester}["'][\\s\\S]*?<\\/div>\\s*<\\/div>\\s*<\\/div>\\s*<\\/div>`,
+    'gi'
+  );
+  let match;
+  let lastEnd = -1;
+  while ((match = semesterTileRegex.exec(html)) !== null) {
+    lastEnd = match.index + match[0].length;
+  }
+  if (lastEnd > -1) {
+    return { html: html.slice(0, lastEnd) + '\n                ' + tileHtml + html.slice(lastEnd), inserted: true };
+  }
+
+  const semesterHeaderRegex = new RegExp(
+    `(<div class="gallery-section-header"[^>]*data-semester=["']${escapedSemester}["'][^>]*>[\\s\\S]*?<\\/div>)`,
+    'i'
+  );
+  if (semesterHeaderRegex.test(html)) {
+    return { html: html.replace(semesterHeaderRegex, `$1\n                ${tileHtml}`), inserted: true };
+  }
+
+  const fallbackAnchor = '<!-- Notification Popup Modal -->';
+  if (html.includes(fallbackAnchor)) {
+    return { html: html.replace(fallbackAnchor, `${tileHtml}\n            \n            ${fallbackAnchor}`), inserted: true };
+  }
+
+  return { html, inserted: false };
+}
+
+function parseGalleryEventPayload(message) {
+  const match =
+    message.match(/(?:add|update)\s+gallery\s+event\s*:?\s*(\{[\s\S]*\})/i) ||
+    message.match(/gallery\s+event\s*:?\s*(\{[\s\S]*\})/i);
+  if (!match) return null;
+  try {
+    const payload = JSON.parse(match[1]);
+    const slug = sanitizeSlug(payload.slug || payload.event || payload.title);
+    const title = String(payload.title || '').trim();
+    const poster = String(payload.poster || '').trim();
+    if (!slug || !title || !poster) return null;
+    const brothersPhotos = normalizePhotos(payload.brothersPhotos || payload.brothers || []);
+    const sistersPhotos = normalizePhotos(payload.sistersPhotos || payload.sisters || []);
+    const total = brothersPhotos.length + sistersPhotos.length;
+    return {
+      slug,
+      title,
+      poster,
+      semester: sanitizeSemester(payload.semester || 'spring-2026'),
+      subtitle: String(payload.subtitle || `${total} photos • Brothers & Sisters`),
+      brothersPhotos,
+      sistersPhotos,
+    };
+  } catch (_) {
+    return null;
+  }
 }
 
 export default async function handler(req, res) {
