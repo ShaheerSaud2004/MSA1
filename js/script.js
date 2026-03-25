@@ -120,7 +120,7 @@ class EventCalendar {
             '2026-01-30': [{ title: 'R2R Setup', location: 'CA 108, 109', type: 'R2R', time: '6:00 - 9:00' }],
             '2026-01-31': [{ title: 'R2R Conference', location: 'CA MPR + Lounge, 411 ABC, 108, 109, Cap & Skull', type: 'R2R', time: '6:00 - 9:00' }],
             '2026-02-03': [{ title: 'Submissions Event', location: 'LSC MPR', type: 'Submissions', time: '6:00 - 9:00' }],
-            '2026-02-05': [{ title: 'Mental Health Workshop', location: 'BSC MPR', type: 'General', time: '6:00 - 9:00' }],
+            '2026-02-05': [{ title: 'Naat n Nasheed Night', location: 'BSC MPR', type: 'General', time: '6:30 PM' }],
             '2026-02-10': [{ title: 'Pre-IAW Event', location: 'Trayes Hall, Gathering Lounge, Glass Room', type: 'IAW', time: '6:00 - 9:00' }],
             '2026-02-12': [{ title: 'Brainrot / Pre-Ramadan', location: 'CA MPR + Lounge', type: 'General', time: '6:00 - 9:00' }],
             '2026-02-14': [{ title: 'Alumni Gala Setup', location: 'CA MPR + Lounge', type: 'Ladders', time: '6:00 - 9:00' }],
