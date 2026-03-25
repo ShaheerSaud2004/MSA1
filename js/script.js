@@ -939,6 +939,38 @@ class EventGallery {
                     'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
                     'sisters': { name: 'Sisters', count: 0, photos: [], comingSoon: true }
                 }
+            },
+            'msa-psa-iftar-2026': {
+                name: 'MSA × PSA Iftar',
+                poster: 'images/posters/Spring2026-MSA-PSA-Iftar.png',
+                albums: {
+                    'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
+                    'sisters': { name: 'Sisters', count: 0, photos: [], comingSoon: true }
+                }
+            },
+            'r2r-hope-iftar-2026': {
+                name: 'R2R × HOPE Iftar',
+                poster: 'images/posters/Spring2026-R2R-HOPE-Iftar.png',
+                albums: {
+                    'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
+                    'sisters': { name: 'Sisters', count: 0, photos: [], comingSoon: true }
+                }
+            },
+            'msa-iftar-drshadee-2026': {
+                name: 'MSA Iftar — Dr. Shadee Elmasry',
+                poster: 'images/posters/Spring2026-Iftar-Dr-Shadee.png',
+                albums: {
+                    'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
+                    'sisters': { name: 'Sisters', count: 0, photos: [], comingSoon: true }
+                }
+            },
+            'eid-party-2026': {
+                name: 'Eid Party',
+                poster: 'images/posters/Spring2026-Eid-Party.png',
+                albums: {
+                    'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
+                    'sisters': { name: 'Sisters', count: 0, photos: [], comingSoon: true }
+                }
             }
         };
     }
@@ -2649,7 +2681,11 @@ class EventGallery {
         if (!event) return;
 
         // Events with no photos uploaded - show cat + message instead of album selection
-        const noPhotosEvents = ['understanding-death', 'brothers-paintball', 'sistersgiving', 'spring-kickoff-2026', 'naat-nasheed-2026'];
+        const noPhotosEvents = [
+            'understanding-death', 'brothers-paintball', 'sistersgiving',
+            'spring-kickoff-2026', 'naat-nasheed-2026',
+            'msa-psa-iftar-2026', 'r2r-hope-iftar-2026', 'msa-iftar-drshadee-2026', 'eid-party-2026'
+        ];
         if (noPhotosEvents.includes(eventId)) {
             document.getElementById('no-photos-title').textContent = event.name + ' — Photos';
             document.getElementById('no-photos-modal').style.display = 'flex';
