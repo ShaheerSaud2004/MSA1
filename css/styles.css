@@ -6194,13 +6194,13 @@ img.event-logo[src*="hope.jpg"],
 
 /* Spring 2026 tiles: match Fall overlay positioning */
 .spring-kickoff-tile .event-overlay {
-    padding-top: 12rem !important;
+    padding-top: 10rem !important;
     padding-left: 3rem !important;
     padding-right: 3rem !important;
 }
 
 .naat-nasheed-tile .event-overlay {
-    padding-top: 12rem !important;
+    padding-top: 10rem !important;
     padding-left: 3rem !important;
     padding-right: 3rem !important;
 }
