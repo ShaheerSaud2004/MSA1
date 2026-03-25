@@ -151,6 +151,24 @@
       .replace(/-+/g, '-');
   }
 
+  function readFileAsDataUrl(file) {
+    return new Promise(function (resolve, reject) {
+      const reader = new FileReader();
+      reader.onload = function () { resolve(reader.result); };
+      reader.onerror = function () { reject(new Error('Failed to read file: ' + file.name)); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function setPreviewBackground(el, url) {
+    if (!el) return;
+    if (url) {
+      el.style.backgroundImage = 'url("' + url.replace(/"/g, '\\"') + '")';
+    } else {
+      el.style.backgroundImage = 'linear-gradient(135deg, #dfe9f3, #f4f7fb)';
+    }
+  }
+
   function openPreview() {
     const secret = getSecret();
     const url = API_BASE + '/admin/preview?token=' + encodeURIComponent(secret);
@@ -317,58 +335,111 @@
     const uploadPath = document.getElementById('uploadPath');
     const uploadResult = document.getElementById('uploadResult');
     const uploadUrlDisplay = document.getElementById('uploadUrlDisplay');
+    const uploadUrlsList = document.getElementById('uploadUrlsList');
     const copyUrlBtn = document.getElementById('copyUrlBtn');
+    const addToGalleryPhotosBtn = document.getElementById('addToGalleryPhotosBtn');
+    const galleryPosterInput = document.getElementById('galleryPosterUrl');
+    const galleryEventNameInput = document.getElementById('galleryEventName');
+    const galleryPhotosInput = document.getElementById('galleryPhotos');
+    const featuredPosterInput = document.getElementById('featuredPosterUrl');
+    const featuredTextInput = document.getElementById('featuredText');
+    const galleryPreviewPoster = document.getElementById('galleryPreviewPoster');
+    const galleryPreviewTitle = document.getElementById('galleryPreviewTitle');
+    const galleryPreviewSubtitle = document.getElementById('galleryPreviewSubtitle');
+    const featuredPreviewPoster = document.getElementById('featuredPreviewPoster');
+    const featuredPreviewTitle = document.getElementById('featuredPreviewTitle');
+    const featuredPreviewLine = document.getElementById('featuredPreviewLine');
 
-    function doUpload() {
-      const file = uploadInput && uploadInput.files && uploadInput.files[0];
-      if (!file) {
-        addMessage('Select a file first (PNG, JPEG, GIF, WebP, max 5MB).', 'assistant', true);
+    function refreshFormPreview() {
+      const galleryTitle = (galleryEventNameInput && galleryEventNameInput.value || '').trim();
+      const galleryPoster = (galleryPosterInput && galleryPosterInput.value || '').trim();
+      const galleryPhotos = splitUrls((galleryPhotosInput && galleryPhotosInput.value) || '');
+      const featuredTitle = (featuredTextInput && featuredTextInput.value || '').trim();
+      const featuredPoster = (featuredPosterInput && featuredPosterInput.value || '').trim();
+
+      if (galleryPreviewTitle) galleryPreviewTitle.textContent = galleryTitle || 'Event name goes here';
+      if (galleryPreviewSubtitle) galleryPreviewSubtitle.textContent = galleryPhotos.length + ' photos • Brothers & Sisters';
+      setPreviewBackground(galleryPreviewPoster, galleryPoster);
+
+      if (featuredPreviewTitle) featuredPreviewTitle.textContent = featuredTitle || 'Featured title goes here';
+      if (featuredPreviewLine) featuredPreviewLine.textContent = featuredTitle ? ('Updated from admin panel • ' + featuredTitle) : 'Updated from admin panel';
+      setPreviewBackground(featuredPreviewPoster, featuredPoster);
+    }
+
+    async function doUpload() {
+      const files = Array.from((uploadInput && uploadInput.files) || []);
+      if (!files.length) {
+        addMessage('Select files or a folder first (images only, max 5MB each).', 'assistant', true);
         return;
       }
-      if (file.size > 5 * 1024 * 1024) {
-        addMessage('File too large. Max 5MB.', 'assistant', true);
+      const tooLarge = files.filter(function (f) { return f.size > 5 * 1024 * 1024; });
+      if (tooLarge.length) {
+        addMessage('Some files are over 5MB. Remove large files and try again.', 'assistant', true);
         return;
       }
-      const reader = new FileReader();
-      reader.onload = function () {
-        const base64 = reader.result;
-        const path = (uploadPath && uploadPath.value) || 'posters';
-        setStatus('Uploading…', true);
-        fetch(API_BASE + '/admin/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-admin-secret': getSecret() },
-          body: JSON.stringify({
-            file: base64,
-            filename: file.name,
-            path: path
-          })
-        })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            setStatus('Uploaded.', true);
-            if (data.url) {
-              uploadUrlDisplay.value = data.url;
-              uploadResult.style.display = 'block';
-              addMessage('Uploaded: ' + file.name + ' → ' + data.url, 'assistant', true);
-            } else {
-              addMessage('Upload failed: ' + (data.error || 'Unknown error'), 'assistant', true);
-            }
-          })
-          .catch(function (e) {
-            setStatus('Upload failed', false);
-            addMessage('Upload failed: ' + (e.message || 'Network error'), 'assistant', true);
+      const path = (uploadPath && uploadPath.value) || 'posters';
+      const uploadedUrls = [];
+      const failed = [];
+      setStatus('Uploading ' + files.length + ' file(s)…', true);
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!String(file.type || '').startsWith('image/')) {
+          failed.push(file.name + ' (not an image)');
+          continue;
+        }
+        try {
+          const base64 = await readFileAsDataUrl(file);
+          const resp = await fetch(API_BASE + '/admin/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-admin-secret': getSecret() },
+            body: JSON.stringify({
+              file: base64,
+              filename: file.name,
+              path: path
+            })
           });
-      };
-      reader.readAsDataURL(file);
+          const data = await resp.json();
+          if (data.url) uploadedUrls.push(data.url);
+          else failed.push(file.name + ' (' + (data.error || 'upload failed') + ')');
+        } catch (e) {
+          failed.push(file.name + ' (' + (e.message || 'error') + ')');
+        }
+      }
+
+      if (!uploadedUrls.length) {
+        setStatus('Upload failed', false);
+        addMessage('No files uploaded. ' + (failed.length ? ('Failed: ' + failed.join(', ')) : ''), 'assistant', true);
+        return;
+      }
+
+      setStatus('Uploaded ' + uploadedUrls.length + ' file(s).', true);
+      uploadUrlDisplay.value = uploadedUrls[0];
+      if (uploadUrlsList) uploadUrlsList.value = uploadedUrls.join('\n');
+      uploadResult.style.display = 'block';
+
+      if (path === 'gallery') {
+        const galleryPhotos = document.getElementById('galleryPhotos');
+        if (galleryPhotos) {
+          galleryPhotos.value = (galleryPhotos.value ? galleryPhotos.value.trim() + '\n' : '') + uploadedUrls.join('\n');
+        }
+      }
+      refreshFormPreview();
+      addMessage(
+        'Uploaded ' + uploadedUrls.length + ' file(s).' +
+        (failed.length ? (' Failed: ' + failed.length) : ''),
+        'assistant',
+        true
+      );
     }
 
     if (uploadBtn) uploadBtn.addEventListener('click', doUpload);
     if (copyUrlBtn) {
       copyUrlBtn.addEventListener('click', function () {
-        const url = uploadUrlDisplay.value;
-        if (url && navigator.clipboard) {
-          navigator.clipboard.writeText(url).then(function () {
-            addMessage('URL copied to clipboard. Paste it in chat to use (e.g. "Replace [old-src] with [url]").', 'assistant', true);
+        const value = (uploadUrlsList && uploadUrlsList.value) || uploadUrlDisplay.value;
+        if (value && navigator.clipboard) {
+          navigator.clipboard.writeText(value).then(function () {
+            addMessage('Copied uploaded URL(s) to clipboard.', 'assistant', true);
           });
         }
       });
@@ -379,15 +450,38 @@
     if (useForFeaturedBtn) {
       useForFeaturedBtn.addEventListener('click', function () {
         const url = uploadUrlDisplay && uploadUrlDisplay.value;
-        if (url) document.getElementById('featuredPosterUrl').value = url;
+        if (url) {
+          document.getElementById('featuredPosterUrl').value = url;
+          refreshFormPreview();
+        }
       });
     }
     if (useForGalleryBtn) {
       useForGalleryBtn.addEventListener('click', function () {
         const url = uploadUrlDisplay && uploadUrlDisplay.value;
-        if (url) document.getElementById('galleryPosterUrl').value = url;
+        if (url) {
+          document.getElementById('galleryPosterUrl').value = url;
+          refreshFormPreview();
+        }
       });
     }
+    if (addToGalleryPhotosBtn) {
+      addToGalleryPhotosBtn.addEventListener('click', function () {
+        const urls = (uploadUrlsList && uploadUrlsList.value) || '';
+        if (!urls) return;
+        const galleryPhotos = document.getElementById('galleryPhotos');
+        if (!galleryPhotos) return;
+        galleryPhotos.value = (galleryPhotos.value ? galleryPhotos.value.trim() + '\n' : '') + urls;
+        refreshFormPreview();
+      });
+    }
+
+    [galleryPosterInput, galleryEventNameInput, galleryPhotosInput, featuredPosterInput, featuredTextInput].forEach(function (el) {
+      if (!el) return;
+      el.addEventListener('input', refreshFormPreview);
+      el.addEventListener('change', refreshFormPreview);
+    });
+    refreshFormPreview();
 
     const featuredApplyBtn = document.getElementById('featuredApplyBtn');
     if (featuredApplyBtn) {
@@ -411,7 +505,7 @@
     const galleryApplyBtn = document.getElementById('galleryApplyBtn');
     if (galleryApplyBtn) {
       galleryApplyBtn.addEventListener('click', function () {
-        const title = (document.getElementById('galleryText')?.value || '').trim();
+        const title = (document.getElementById('galleryEventName')?.value || '').trim();
         const poster = (document.getElementById('galleryPosterUrl')?.value || '').trim();
         const photos = splitUrls(document.getElementById('galleryPhotos')?.value || '');
         const slug = slugify(title);
