@@ -3901,6 +3901,11 @@ img.event-logo[src*="hope.jpg"],
     align-items: start;
 }
 
+.featured-events-grid.eid-featured-only {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+}
+
 /* View All Events Button */
 .view-all-events-button {
     grid-column: 1 / -1;
@@ -6174,10 +6179,35 @@ img.event-logo[src*="hope.jpg"],
     padding-right: 3rem !important;
 }
 
+.understanding-death-tile .event-info {
+    /* Nudge content down to avoid top clipping */
+    transform: translateY(18px);
+}
+
 .paintball-tile .event-overlay {
     padding-top: 12rem !important;
     padding-left: 3rem !important;
     padding-right: 3rem !important;
+}
+
+.paintball-tile .event-info {
+    /* Nudge content down to avoid top clipping */
+    transform: translateY(18px);
+}
+
+.spring-kickoff-2026 .event-info {
+    /* Kickoff title is taller; push it further down to avoid top cutoff */
+    transform: translateY(56px);
+}
+
+.msa-iftar-drshadee-2026 .event-info {
+    /* Dr. Shadee tile title sometimes clips at the top */
+    transform: translateY(42px);
+}
+
+.eid-party-2026 .event-info {
+    /* Eid tile has a slightly taller title block; move content down */
+    transform: translateY(22px);
 }
 
 .sistersgiving-tile .event-overlay {

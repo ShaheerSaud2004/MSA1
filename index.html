@@ -647,46 +647,37 @@
             
             <div class="events-list">
                 <h3>Featured Events</h3>
-                <div class="featured-events-grid">
+                <div class="featured-events-grid eid-featured-only">
 
-                    <!-- Break Message - Featured Card -->
-                    <div class="featured-event-card main-event break-message-card">
-                        <div class="break-poster">
-                            <div class="rotating-cats-container">
-                                <img src="images/cat1.jpeg" alt="Cat" class="rotating-cat active">
-                                <img src="images/cat2.jpeg" alt="Cat" class="rotating-cat">
-                                <img src="images/cat4.jpeg" alt="Cat" class="rotating-cat">
-                            </div>
+                    <!-- Eid Party Featured Card -->
+                    <div class="featured-event-card">
+                        <div class="event-poster">
+                            <img src="images/posters/Spring2026-Eid-Party.png" alt="Eid Party">
                         </div>
                         <div class="event-content">
                             <div class="event-header">
-                                <h4>Have a Great Long Break!</h4>
-                                <div class="event-type-badge break-badge">
+                                <h4>Eid Party</h4>
+                                <div class="event-type-badge" style="background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%); color: white;">
                                     <i class="fas fa-calendar-alt"></i>
-                                    We'll Be Back Next Sem
+                                    Mar 26
                                 </div>
                             </div>
                             <div class="event-info">
-                                <p><i class="fas fa-heart"></i> Enjoy your time off!</p>
-                                <p><i class="fas fa-calendar-check"></i> See you soon!</p>
+                                <p><i class="fas fa-clock"></i> Thursday, March 26 • 6:45 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Trayes Hall, Douglass Student Center</p>
+                                <p><i class="fas fa-users"></i> Brothers Social × Sisters Social</p>
                             </div>
                             <div class="event-actions">
-                                <button class="remind-me-btn" id="remindMeBtn">
-                                    <i class="fas fa-bell"></i>
-                                    Remind Me
+                                <button
+                                    class="learn-more-btn"
+                                    type="button"
+                                    onclick="document.querySelector('.event-tile[data-event=&quot;eid-party-2026&quot;]')?.click()"
+                                >
+                                    <i class="fas fa-image"></i>
+                                    View Photos
                                 </button>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Upcoming Events Sidebar -->
-                    <div class="upcoming-events-sidebar">
-                        <h5>Stay Connected</h5>
-                        <p style="text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 20px;">Get notified about upcoming events and new photos</p>
-                        <button class="remind-me-btn" id="remindMeBtn3" style="width: 100%; padding: 15px; font-size: 1rem; margin-top: 10px;">
-                            <i class="fas fa-bell"></i>
-                            Remind Me
-                        </button>
                     </div>
 
                     <!-- View All Events Button -->
@@ -1008,7 +999,7 @@
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>Understanding Death & Resurrection</h3>
-                                <p>Wednesday, November 20 • 6:30 PM</p>
+                                <p>0 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
@@ -1022,7 +1013,7 @@
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>Brothers Social Paintball</h3>
-                                <p>Saturday, November 23 • 12:30 PM</p>
+                                <p>3 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
@@ -1036,7 +1027,7 @@
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>Sistersgiving</h3>
-                                <p>Tuesday, November 25 • 6:30 PM</p>
+                                <p>3 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
@@ -1049,11 +1040,11 @@
                 <!-- MSA Spring Kickoff 2026 Event Tile (same layout as Fall gallery tiles) -->
                 <div class="event-tile" data-event="spring-kickoff-2026" data-filter="special" data-semester="spring-2026">
                     <div class="event-poster">
-                        <img src="images/posters/SpringKickoff2026.png" alt="MSA Spring Kickoff 2026">
+                        <img src="images/posters/SpringKickoff2026.png" alt="MSA Spring Kickoff">
                         <div class="event-overlay">
                             <div class="event-info">
-                                <h3>MSA Spring Kickoff 2026</h3>
-                                <p>Wednesday, January 22 • 6:30 PM</p>
+                                <h3>MSA Spring Kickoff</h3>
+                                <p>337 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
@@ -1067,7 +1058,7 @@
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>Naat n Nasheed Night</h3>
-                                <p>Thursday, February 5 • 6:30 PM • Busch Student Center MPR</p>
+                                <p>0 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
@@ -1080,7 +1071,7 @@
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>MSA × PSA Iftar</h3>
-                                <p>Thursday, February 26 • 5:00 PM • Busch Student Center MPR</p>
+                                <p>0 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
@@ -1093,7 +1084,7 @@
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>R2R × HOPE Iftar</h3>
-                                <p>Tuesday, March 3 • 5:00 PM • College Ave Student Center MPR</p>
+                                <p>0 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
@@ -1102,11 +1093,11 @@
                 
                 <div class="event-tile" data-event="msa-iftar-drshadee-2026" data-filter="special" data-semester="spring-2026">
                     <div class="event-poster">
-                        <img src="images/posters/Spring2026-Iftar-Dr-Shadee.png" alt="MSA Iftar — Dr. Shadee Elmasry">
+                        <img src="images/posters/Spring2026-Iftar-Dr-Shadee.png" alt="MSA Iftar">
                         <div class="event-overlay">
                             <div class="event-info">
-                                <h3>MSA Iftar — Dr. Shadee Elmasry</h3>
-                                <p>Thursday, March 5 • 5:00 PM • College Ave Student Center MPR</p>
+                                <h3>MSA Iftar</h3>
+                                <p>0 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>
@@ -1119,7 +1110,7 @@
                         <div class="event-overlay">
                             <div class="event-info">
                                 <h3>Eid Party</h3>
-                                <p>Thursday, March 26 • 6:45 PM • Trayes Hall, Douglass Student Center</p>
+                                <p>0 photos • Brothers & Sisters</p>
                                 <button class="view-event-btn">View Photos</button>
                             </div>
                         </div>

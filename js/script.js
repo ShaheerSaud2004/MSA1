@@ -925,11 +925,11 @@ class EventGallery {
                 }
             },
             'spring-kickoff-2026': {
-                name: 'MSA Spring Kickoff 2026',
+                name: 'MSA Spring Kickoff',
                 poster: 'images/posters/SpringKickoff2026.png',
                 albums: {
-                    'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
-                    'sisters': { name: 'Sisters', count: 0, photos: [], comingSoon: true }
+                    'brothers': { name: 'Brothers', count: 59, photos: this.generateSpringKickoffBrothersPhotos() },
+                    'sisters': { name: 'Sisters', count: 278, photos: this.generateSpringKickoffSistersPhotos() }
                 }
             },
             'naat-nasheed-2026': {
@@ -957,7 +957,7 @@ class EventGallery {
                 }
             },
             'msa-iftar-drshadee-2026': {
-                name: 'MSA Iftar — Dr. Shadee Elmasry',
+                name: 'MSA Iftar',
                 poster: 'images/posters/Spring2026-Iftar-Dr-Shadee.png',
                 albums: {
                     'brothers': { name: 'Brothers', count: 0, photos: [], comingSoon: true },
@@ -1026,6 +1026,33 @@ class EventGallery {
         ];
         
         return brothersFiles.map(file => `images/gallery/Photos/Fall Kickoff/Brothers/${file}`);
+    }
+
+    generateSpringKickoffBrothersPhotos() {
+        const brothersFiles = [];
+
+        for (let i = 1; i <= 59; i++) {
+            const imgNumber = i <= 4 ? 6881 + i : 6882 + i; // 5th file skips IMG_6886
+            brothersFiles.push(`${i}-IMG_${imgNumber}.jpg`);
+        }
+
+        return brothersFiles.map(file => `images/gallery/Photos/Spring Kickoff/Brothers/${file}`);
+    }
+
+    generateSpringKickoffSistersPhotos() {
+        const sistersFiles = [
+            '1-IMG_6879.jpg',
+            '2-IMG_6880.jpg',
+            '3-IMG_6943.jpg',
+            '4-IMG_6944.jpg'
+        ];
+
+        for (let i = 5; i <= 278; i++) {
+            const dscNumber = String(i + 184).padStart(4, '0');
+            sistersFiles.push(`${i}-DSC_${dscNumber}.jpg`);
+        }
+
+        return sistersFiles.map(file => `images/gallery/Photos/Spring Kickoff/Sisters/${file}`);
     }
 
     generateSistersPhotos() {
@@ -2683,7 +2710,7 @@ class EventGallery {
         // Events with no photos uploaded - show cat + message instead of album selection
         const noPhotosEvents = [
             'understanding-death', 'brothers-paintball', 'sistersgiving',
-            'spring-kickoff-2026', 'naat-nasheed-2026',
+            'naat-nasheed-2026',
             'msa-psa-iftar-2026', 'r2r-hope-iftar-2026', 'msa-iftar-drshadee-2026', 'eid-party-2026'
         ];
         if (noPhotosEvents.includes(eventId)) {
