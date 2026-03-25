@@ -298,7 +298,7 @@
 
     showApp();
     loadState();
-    addMessage('Fill only 3 fields for gallery (poster, text, photos), then preview and publish. Featured section needs only poster + text.', 'assistant', true);
+    addMessage('Use Photo Gallery Library: load existing event or create new, upload poster/photos, save to staging, then preview and publish.', 'assistant', true);
 
     document.getElementById('seedBtn').addEventListener('click', seed);
     document.getElementById('previewBtn').addEventListener('click', openPreview);
@@ -329,63 +329,98 @@
       });
     }
 
-    // Upload poster/photo
-    const uploadBtn = document.getElementById('uploadBtn');
-    const uploadInput = document.getElementById('uploadInput');
-    const uploadPath = document.getElementById('uploadPath');
+    // Gallery library manager
+    const galleryEventSelect = document.getElementById('galleryEventSelect');
+    const refreshLibraryBtn = document.getElementById('refreshLibraryBtn');
+    const galleryPosterInput = document.getElementById('galleryPosterUrl');
+    const galleryEventNameInput = document.getElementById('galleryEventName');
+    const galleryInfoInput = document.getElementById('galleryInfoText');
+    const galleryPhotosInput = document.getElementById('galleryPhotos');
+    const posterUploadInput = document.getElementById('posterUploadInput');
+    const posterUploadBtn = document.getElementById('posterUploadBtn');
+    const galleryUploadInput = document.getElementById('galleryUploadInput');
+    const galleryUploadBtn = document.getElementById('galleryUploadBtn');
     const uploadResult = document.getElementById('uploadResult');
     const uploadUrlDisplay = document.getElementById('uploadUrlDisplay');
     const uploadUrlsList = document.getElementById('uploadUrlsList');
     const copyUrlBtn = document.getElementById('copyUrlBtn');
-    const addToGalleryPhotosBtn = document.getElementById('addToGalleryPhotosBtn');
-    const galleryPosterInput = document.getElementById('galleryPosterUrl');
-    const galleryEventNameInput = document.getElementById('galleryEventName');
-    const galleryPhotosInput = document.getElementById('galleryPhotos');
-    const featuredPosterInput = document.getElementById('featuredPosterUrl');
-    const featuredTextInput = document.getElementById('featuredText');
     const galleryPreviewPoster = document.getElementById('galleryPreviewPoster');
     const galleryPreviewTitle = document.getElementById('galleryPreviewTitle');
     const galleryPreviewSubtitle = document.getElementById('galleryPreviewSubtitle');
-    const featuredPreviewPoster = document.getElementById('featuredPreviewPoster');
-    const featuredPreviewTitle = document.getElementById('featuredPreviewTitle');
-    const featuredPreviewLine = document.getElementById('featuredPreviewLine');
+    const galleryApplyBtn = document.getElementById('galleryApplyBtn');
+    let galleryLibrary = [];
+    let currentSemester = 'spring-2026';
 
     function refreshFormPreview() {
       const galleryTitle = (galleryEventNameInput && galleryEventNameInput.value || '').trim();
       const galleryPoster = (galleryPosterInput && galleryPosterInput.value || '').trim();
       const galleryPhotos = splitUrls((galleryPhotosInput && galleryPhotosInput.value) || '');
-      const featuredTitle = (featuredTextInput && featuredTextInput.value || '').trim();
-      const featuredPoster = (featuredPosterInput && featuredPosterInput.value || '').trim();
-
+      const infoText = (galleryInfoInput && galleryInfoInput.value || '').trim();
       if (galleryPreviewTitle) galleryPreviewTitle.textContent = galleryTitle || 'Event name goes here';
-      if (galleryPreviewSubtitle) galleryPreviewSubtitle.textContent = galleryPhotos.length + ' photos • Brothers & Sisters';
+      if (galleryPreviewSubtitle) galleryPreviewSubtitle.textContent = infoText || (galleryPhotos.length + ' photos • Brothers & Sisters');
       setPreviewBackground(galleryPreviewPoster, galleryPoster);
-
-      if (featuredPreviewTitle) featuredPreviewTitle.textContent = featuredTitle || 'Featured title goes here';
-      if (featuredPreviewLine) featuredPreviewLine.textContent = featuredTitle ? ('Updated from admin panel • ' + featuredTitle) : 'Updated from admin panel';
-      setPreviewBackground(featuredPreviewPoster, featuredPoster);
     }
 
-    async function doUpload() {
-      const files = Array.from((uploadInput && uploadInput.files) || []);
-      if (!files.length) {
-        addMessage('Select files or a folder first (images only, max 5MB each).', 'assistant', true);
-        return;
-      }
-      const tooLarge = files.filter(function (f) { return f.size > 5 * 1024 * 1024; });
-      if (tooLarge.length) {
-        addMessage('Some files are over 5MB. Remove large files and try again.', 'assistant', true);
-        return;
-      }
-      const path = (uploadPath && uploadPath.value) || 'posters';
-      const uploadedUrls = [];
-      const failed = [];
-      setStatus('Uploading ' + files.length + ' file(s)…', true);
+    function setButtonBusy(btn, busyText) {
+      if (!btn) return function () {};
+      const previous = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = busyText;
+      return function restore(nextText) {
+        btn.disabled = false;
+        btn.textContent = nextText || previous;
+      };
+    }
 
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+    function populateFromEvent(slug) {
+      if (!slug) return;
+      const event = galleryLibrary.find(function (x) { return x.slug === slug; });
+      if (!event) return;
+      if (galleryPosterInput) galleryPosterInput.value = event.poster || '';
+      if (galleryEventNameInput) galleryEventNameInput.value = event.title || '';
+      if (galleryInfoInput) galleryInfoInput.value = event.subtitle || '';
+      if (galleryPhotosInput) galleryPhotosInput.value = event.photos.join('\n');
+      currentSemester = event.semester || 'spring-2026';
+      refreshFormPreview();
+    }
+
+    async function loadGalleryLibrary() {
+      if (!galleryEventSelect) return;
+      try {
+        const html = await fetch(API_BASE + '/admin/preview?token=' + encodeURIComponent(getSecret())).then(function (r) { return r.text(); });
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const tiles = Array.from(doc.querySelectorAll('.event-tile[data-event]'));
+        galleryLibrary = tiles.map(function (tile) {
+          const slug = tile.getAttribute('data-event') || '';
+          const title = tile.querySelector('.event-info h3')?.textContent?.trim() || slug;
+          const subtitle = tile.querySelector('.event-info p')?.textContent?.trim() || '';
+          const poster = tile.querySelector('.event-poster img')?.getAttribute('src') || '';
+          const semester = tile.getAttribute('data-semester') || 'spring-2026';
+          const brothers = splitUrls((tile.getAttribute('data-brothers-photos') || '').split('||').join('\n'));
+          const sisters = splitUrls((tile.getAttribute('data-sisters-photos') || '').split('||').join('\n'));
+          return { slug, title, subtitle, poster, semester, photos: brothers.concat(sisters) };
+        }).filter(function (x) { return x.slug; });
+
+        galleryEventSelect.innerHTML = '<option value="">New event</option>' + galleryLibrary.map(function (event) {
+          return '<option value="' + event.slug + '">' + event.title + ' (' + event.slug + ')</option>';
+        }).join('');
+      } catch (e) {
+        addMessage('Could not load gallery library yet. Seed and refresh.', 'assistant', true);
+      }
+    }
+
+    async function uploadFiles(files, pathLabel, onProgress) {
+      const fileList = Array.from(files || []);
+      if (!fileList.length) return { urls: [], failed: ['No files selected'] };
+      const tooLarge = fileList.filter(function (f) { return f.size > 5 * 1024 * 1024; });
+      if (tooLarge.length) return { urls: [], failed: ['Some files are over 5MB'] };
+      const urls = [];
+      const failed = [];
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        if (onProgress) onProgress(i + 1, fileList.length, file.name);
         if (!String(file.type || '').startsWith('image/')) {
-          failed.push(file.name + ' (not an image)');
+          failed.push(file.name + ' (not image)');
           continue;
         }
         try {
@@ -393,136 +428,117 @@
           const resp = await fetch(API_BASE + '/admin/upload', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'x-admin-secret': getSecret() },
-            body: JSON.stringify({
-              file: base64,
-              filename: file.name,
-              path: path
-            })
+            body: JSON.stringify({ file: base64, filename: file.name, path: pathLabel })
           });
           const data = await resp.json();
-          if (data.url) uploadedUrls.push(data.url);
+          if (data.url) urls.push(data.url);
           else failed.push(file.name + ' (' + (data.error || 'upload failed') + ')');
         } catch (e) {
           failed.push(file.name + ' (' + (e.message || 'error') + ')');
         }
       }
-
-      if (!uploadedUrls.length) {
-        setStatus('Upload failed', false);
-        addMessage('No files uploaded. ' + (failed.length ? ('Failed: ' + failed.join(', ')) : ''), 'assistant', true);
-        return;
-      }
-
-      setStatus('Uploaded ' + uploadedUrls.length + ' file(s).', true);
-      uploadUrlDisplay.value = uploadedUrls[0];
-      if (uploadUrlsList) uploadUrlsList.value = uploadedUrls.join('\n');
-      uploadResult.style.display = 'block';
-
-      if (path === 'gallery') {
-        const galleryPhotos = document.getElementById('galleryPhotos');
-        if (galleryPhotos) {
-          galleryPhotos.value = (galleryPhotos.value ? galleryPhotos.value.trim() + '\n' : '') + uploadedUrls.join('\n');
-        }
-      }
-      refreshFormPreview();
-      addMessage(
-        'Uploaded ' + uploadedUrls.length + ' file(s).' +
-        (failed.length ? (' Failed: ' + failed.length) : ''),
-        'assistant',
-        true
-      );
+      return { urls, failed };
     }
 
-    if (uploadBtn) uploadBtn.addEventListener('click', doUpload);
+    async function uploadPoster() {
+      const restore = setButtonBusy(posterUploadBtn, 'Uploading...');
+      try {
+        const result = await uploadFiles(posterUploadInput && posterUploadInput.files, 'posters', function (i, total) {
+          if (posterUploadBtn) posterUploadBtn.textContent = 'Uploading ' + i + '/' + total + '...';
+        });
+        if (!result.urls.length) {
+          addMessage('Poster upload failed: ' + result.failed.join(', '), 'assistant', true);
+          restore('Upload Poster');
+          return;
+        }
+        galleryPosterInput.value = result.urls[0];
+        uploadResult.style.display = 'block';
+        uploadUrlDisplay.value = result.urls[0];
+        uploadUrlsList.value = result.urls.join('\n');
+        refreshFormPreview();
+        addMessage('Poster uploaded and applied.', 'assistant', true);
+        restore('Upload Poster');
+      } catch (e) {
+        addMessage('Poster upload failed: ' + (e.message || 'unknown error'), 'assistant', true);
+        restore('Upload Poster');
+      }
+    }
+
+    async function uploadGalleryPhotos() {
+      const restore = setButtonBusy(galleryUploadBtn, 'Uploading...');
+      try {
+        const result = await uploadFiles(galleryUploadInput && galleryUploadInput.files, 'gallery', function (i, total) {
+          if (galleryUploadBtn) galleryUploadBtn.textContent = 'Uploading ' + i + '/' + total + '...';
+        });
+        if (!result.urls.length) {
+          addMessage('Photo upload failed: ' + result.failed.join(', '), 'assistant', true);
+          restore('Upload Photos/Folder');
+          return;
+        }
+        galleryPhotosInput.value = (galleryPhotosInput.value ? galleryPhotosInput.value.trim() + '\n' : '') + result.urls.join('\n');
+        uploadResult.style.display = 'block';
+        uploadUrlDisplay.value = result.urls[0];
+        uploadUrlsList.value = result.urls.join('\n');
+        refreshFormPreview();
+        addMessage('Uploaded and added ' + result.urls.length + ' photo URL(s).', 'assistant', true);
+        restore('Upload Photos/Folder');
+      } catch (e) {
+        addMessage('Photo upload failed: ' + (e.message || 'unknown error'), 'assistant', true);
+        restore('Upload Photos/Folder');
+      }
+    }
+
+    if (refreshLibraryBtn) refreshLibraryBtn.addEventListener('click', loadGalleryLibrary);
+    if (galleryEventSelect) {
+      galleryEventSelect.addEventListener('change', function () {
+        populateFromEvent(galleryEventSelect.value);
+      });
+    }
+    if (posterUploadBtn) posterUploadBtn.addEventListener('click', uploadPoster);
+    if (galleryUploadBtn) galleryUploadBtn.addEventListener('click', uploadGalleryPhotos);
     if (copyUrlBtn) {
       copyUrlBtn.addEventListener('click', function () {
-        const value = (uploadUrlsList && uploadUrlsList.value) || uploadUrlDisplay.value;
-        if (value && navigator.clipboard) {
-          navigator.clipboard.writeText(value).then(function () {
-            addMessage('Copied uploaded URL(s) to clipboard.', 'assistant', true);
-          });
-        }
+        const value = (uploadUrlsList && uploadUrlsList.value) || (uploadUrlDisplay && uploadUrlDisplay.value) || '';
+        if (value && navigator.clipboard) navigator.clipboard.writeText(value);
       });
     }
 
-    const useForFeaturedBtn = document.getElementById('useForFeaturedBtn');
-    const useForGalleryBtn = document.getElementById('useForGalleryBtn');
-    if (useForFeaturedBtn) {
-      useForFeaturedBtn.addEventListener('click', function () {
-        const url = uploadUrlDisplay && uploadUrlDisplay.value;
-        if (url) {
-          document.getElementById('featuredPosterUrl').value = url;
-          refreshFormPreview();
-        }
-      });
-    }
-    if (useForGalleryBtn) {
-      useForGalleryBtn.addEventListener('click', function () {
-        const url = uploadUrlDisplay && uploadUrlDisplay.value;
-        if (url) {
-          document.getElementById('galleryPosterUrl').value = url;
-          refreshFormPreview();
-        }
-      });
-    }
-    if (addToGalleryPhotosBtn) {
-      addToGalleryPhotosBtn.addEventListener('click', function () {
-        const urls = (uploadUrlsList && uploadUrlsList.value) || '';
-        if (!urls) return;
-        const galleryPhotos = document.getElementById('galleryPhotos');
-        if (!galleryPhotos) return;
-        galleryPhotos.value = (galleryPhotos.value ? galleryPhotos.value.trim() + '\n' : '') + urls;
-        refreshFormPreview();
-      });
-    }
-
-    [galleryPosterInput, galleryEventNameInput, galleryPhotosInput, featuredPosterInput, featuredTextInput].forEach(function (el) {
+    [galleryPosterInput, galleryEventNameInput, galleryInfoInput, galleryPhotosInput].forEach(function (el) {
       if (!el) return;
       el.addEventListener('input', refreshFormPreview);
       el.addEventListener('change', refreshFormPreview);
     });
     refreshFormPreview();
+    loadGalleryLibrary();
 
-    const featuredApplyBtn = document.getElementById('featuredApplyBtn');
-    if (featuredApplyBtn) {
-      featuredApplyBtn.addEventListener('click', function () {
-        const featuredText = (document.getElementById('featuredText')?.value || '').trim();
-        const payload = {
-          title: featuredText,
-          poster: (document.getElementById('featuredPosterUrl')?.value || '').trim(),
-          line1: 'Updated from admin panel',
-          line2: featuredText,
-          line3: ''
-        };
-        if (!payload.title || !payload.poster) {
-          addMessage('Featured section needs 2 things: poster URL and text.', 'assistant', true);
-          return;
-        }
-        sendChat(`Set featured event ${JSON.stringify(payload)}`);
-      });
-    }
-
-    const galleryApplyBtn = document.getElementById('galleryApplyBtn');
     if (galleryApplyBtn) {
-      galleryApplyBtn.addEventListener('click', function () {
+      galleryApplyBtn.addEventListener('click', async function () {
         const title = (document.getElementById('galleryEventName')?.value || '').trim();
         const poster = (document.getElementById('galleryPosterUrl')?.value || '').trim();
         const photos = splitUrls(document.getElementById('galleryPhotos')?.value || '');
-        const slug = slugify(title);
+        const selectedSlug = (galleryEventSelect && galleryEventSelect.value) || '';
+        const slug = selectedSlug || slugify(title);
+        const infoText = (document.getElementById('galleryInfoText')?.value || '').trim();
         if (!title || !poster || photos.length === 0) {
-          addMessage('Gallery needs exactly 3 things: poster, text, and photos.', 'assistant', true);
+          addMessage('Gallery event needs poster, event name, and at least one photo.', 'assistant', true);
           return;
         }
+        const restore = setButtonBusy(galleryApplyBtn, 'Saving...');
         const payload = {
           slug,
           title,
           poster,
-          semester: 'spring-2026',
-          subtitle: `${photos.length} photos • Brothers & Sisters`,
+          semester: currentSemester || 'spring-2026',
+          subtitle: infoText || `${photos.length} photos • Brothers & Sisters`,
           brothersPhotos: photos,
           sistersPhotos: []
         };
-        sendChat(`Add gallery event ${JSON.stringify(payload)}`);
+        try {
+          await sendChat(`Add gallery event ${JSON.stringify(payload)}`);
+          await loadGalleryLibrary();
+        } finally {
+          restore('Save Gallery Event');
+        }
       });
     }
   }
