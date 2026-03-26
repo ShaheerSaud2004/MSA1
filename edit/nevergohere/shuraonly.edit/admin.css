@@ -405,6 +405,25 @@ body {
     font-size: 0.95rem;
 }
 
+.manager-col input,
+.manager-col textarea,
+.manager-col select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.manager-col .upload-btn,
+.manager-col .apply-btn {
+    width: 100%;
+}
+
+.upload-progress {
+    min-height: 18px;
+    color: #4f6175;
+    font-size: 0.82rem;
+    margin-top: 6px;
+}
+
 .live-preview-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -454,6 +473,7 @@ body {
 .mini-featured-content strong {
     color: #fff;
     font-size: 1.05rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35);
 }
 
 .mini-gallery-content span,

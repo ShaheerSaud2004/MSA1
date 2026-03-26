@@ -41,8 +41,23 @@
       const msg = res.status === 404 ? 'Not found. Restart the dev server (stop it, then run: npm run dev) and try again.' : (res.status === 401 ? 'Invalid or missing admin secret.' : text || res.statusText);
       throw new Error(msg);
     }
-    if (!res.ok) throw new Error(json?.error || json?.message || res.statusText);
+    if (!res.ok) {
+      if (res.status === 401) throw new Error('Unauthorized');
+      throw new Error(json?.error || json?.message || res.statusText);
+    }
     return json;
+  }
+
+  function isUnauthorizedError(err) {
+    const msg = String(err && err.message || '').toLowerCase();
+    return msg.includes('unauthorized') || msg.includes('401');
+  }
+
+  function handleUnauthorized() {
+    setSecret('');
+    showAuth();
+    const authError = document.getElementById('authError');
+    if (authError) authError.textContent = 'Session expired. Enter admin secret again.';
   }
 
   function showAuth() {
@@ -74,6 +89,7 @@
       document.getElementById('approveBtn').disabled = !hasStaging;
       return state;
     } catch (e) {
+      if (isUnauthorizedError(e)) handleUnauthorized();
       setStatus('Error: ' + (e.message || 'Unknown'), false);
       return null;
     }
@@ -131,7 +147,8 @@
     } catch (e) {
       hideTyping();
       addMessage('Error: ' + (e.message || 'Request failed'), 'assistant', true);
-      if (e.message && e.message.indexOf('401') !== -1) showAuth();
+      if (isUnauthorizedError(e)) handleUnauthorized();
+      throw e;
     }
   }
 
@@ -171,6 +188,10 @@
 
   function openPreview() {
     const secret = getSecret();
+    if (!secret) {
+      handleUnauthorized();
+      return;
+    }
     const url = API_BASE + '/admin/preview?token=' + encodeURIComponent(secret);
     const frame = document.getElementById('previewFrame');
     if (frame) frame.src = url;
@@ -186,6 +207,7 @@
       document.getElementById('previewPanel').style.display = 'none';
     } catch (e) {
       addMessage('Error: ' + (e.message || 'Approve failed'), 'assistant', true);
+      if (isUnauthorizedError(e)) handleUnauthorized();
     }
   }
 
@@ -230,6 +252,7 @@
       document.getElementById('versionsPanel').style.display = 'block';
     } catch (e) {
       addMessage('Error loading versions: ' + (e.message || ''), 'assistant', true);
+      if (isUnauthorizedError(e)) handleUnauthorized();
     }
   }
 
@@ -243,6 +266,7 @@
       openVersions();
     } catch (e) {
       addMessage('Rollback failed: ' + (e.message || ''), 'assistant', true);
+      if (isUnauthorizedError(e)) handleUnauthorized();
     }
   }
 
@@ -262,6 +286,7 @@
       document.getElementById('changelogPanel').style.display = 'block';
     } catch (e) {
       addMessage('Error loading changelog: ' + (e.message || ''), 'assistant', true);
+      if (isUnauthorizedError(e)) handleUnauthorized();
     }
   }
 
@@ -340,6 +365,9 @@
     const posterUploadBtn = document.getElementById('posterUploadBtn');
     const galleryUploadInput = document.getElementById('galleryUploadInput');
     const galleryUploadBtn = document.getElementById('galleryUploadBtn');
+    const posterUploadStatus = document.getElementById('posterUploadStatus');
+    const galleryUploadStatus = document.getElementById('galleryUploadStatus');
+    const gallerySaveStatus = document.getElementById('gallerySaveStatus');
     const uploadResult = document.getElementById('uploadResult');
     const uploadUrlDisplay = document.getElementById('uploadUrlDisplay');
     const uploadUrlsList = document.getElementById('uploadUrlsList');
@@ -387,7 +415,13 @@
     async function loadGalleryLibrary() {
       if (!galleryEventSelect) return;
       try {
-        const html = await fetch(API_BASE + '/admin/preview?token=' + encodeURIComponent(getSecret())).then(function (r) { return r.text(); });
+        if (refreshLibraryBtn) {
+          refreshLibraryBtn.disabled = true;
+          refreshLibraryBtn.textContent = 'Refreshing...';
+        }
+        const htmlRes = await fetch(API_BASE + '/admin/preview', { method: 'GET', headers: headers() });
+        if (htmlRes.status === 401) throw new Error('Unauthorized');
+        const html = await htmlRes.text();
         const doc = new DOMParser().parseFromString(html, 'text/html');
         const tiles = Array.from(doc.querySelectorAll('.event-tile[data-event]'));
         galleryLibrary = tiles.map(function (tile) {
@@ -405,7 +439,16 @@
           return '<option value="' + event.slug + '">' + event.title + ' (' + event.slug + ')</option>';
         }).join('');
       } catch (e) {
-        addMessage('Could not load gallery library yet. Seed and refresh.', 'assistant', true);
+        if (isUnauthorizedError(e)) {
+          handleUnauthorized();
+        } else {
+          addMessage('Could not load gallery library yet. Seed and refresh.', 'assistant', true);
+        }
+      } finally {
+        if (refreshLibraryBtn) {
+          refreshLibraryBtn.disabled = false;
+          refreshLibraryBtn.textContent = 'Refresh Library';
+        }
       }
     }
 
@@ -442,12 +485,15 @@
 
     async function uploadPoster() {
       const restore = setButtonBusy(posterUploadBtn, 'Uploading...');
+      if (posterUploadStatus) posterUploadStatus.textContent = 'Uploading...';
       try {
         const result = await uploadFiles(posterUploadInput && posterUploadInput.files, 'posters', function (i, total) {
           if (posterUploadBtn) posterUploadBtn.textContent = 'Uploading ' + i + '/' + total + '...';
+          if (posterUploadStatus) posterUploadStatus.textContent = 'Uploading ' + i + ' of ' + total;
         });
         if (!result.urls.length) {
           addMessage('Poster upload failed: ' + result.failed.join(', '), 'assistant', true);
+          if (posterUploadStatus) posterUploadStatus.textContent = 'Upload failed.';
           restore('Upload Poster');
           return;
         }
@@ -457,21 +503,27 @@
         uploadUrlsList.value = result.urls.join('\n');
         refreshFormPreview();
         addMessage('Poster uploaded and applied.', 'assistant', true);
+        if (posterUploadStatus) posterUploadStatus.textContent = 'Done. Poster applied.';
         restore('Upload Poster');
       } catch (e) {
         addMessage('Poster upload failed: ' + (e.message || 'unknown error'), 'assistant', true);
+        if (posterUploadStatus) posterUploadStatus.textContent = 'Upload failed.';
+        if (isUnauthorizedError(e)) handleUnauthorized();
         restore('Upload Poster');
       }
     }
 
     async function uploadGalleryPhotos() {
       const restore = setButtonBusy(galleryUploadBtn, 'Uploading...');
+      if (galleryUploadStatus) galleryUploadStatus.textContent = 'Uploading...';
       try {
         const result = await uploadFiles(galleryUploadInput && galleryUploadInput.files, 'gallery', function (i, total) {
           if (galleryUploadBtn) galleryUploadBtn.textContent = 'Uploading ' + i + '/' + total + '...';
+          if (galleryUploadStatus) galleryUploadStatus.textContent = 'Uploading ' + i + ' of ' + total;
         });
         if (!result.urls.length) {
           addMessage('Photo upload failed: ' + result.failed.join(', '), 'assistant', true);
+          if (galleryUploadStatus) galleryUploadStatus.textContent = 'Upload failed.';
           restore('Upload Photos/Folder');
           return;
         }
@@ -481,9 +533,12 @@
         uploadUrlsList.value = result.urls.join('\n');
         refreshFormPreview();
         addMessage('Uploaded and added ' + result.urls.length + ' photo URL(s).', 'assistant', true);
+        if (galleryUploadStatus) galleryUploadStatus.textContent = 'Done. Added ' + result.urls.length + ' photo URL(s).';
         restore('Upload Photos/Folder');
       } catch (e) {
         addMessage('Photo upload failed: ' + (e.message || 'unknown error'), 'assistant', true);
+        if (galleryUploadStatus) galleryUploadStatus.textContent = 'Upload failed.';
+        if (isUnauthorizedError(e)) handleUnauthorized();
         restore('Upload Photos/Folder');
       }
     }
@@ -524,6 +579,7 @@
           return;
         }
         const restore = setButtonBusy(galleryApplyBtn, 'Saving...');
+        if (gallerySaveStatus) gallerySaveStatus.textContent = 'Saving...';
         const payload = {
           slug,
           title,
@@ -536,6 +592,7 @@
         try {
           await sendChat(`Add gallery event ${JSON.stringify(payload)}`);
           await loadGalleryLibrary();
+          if (gallerySaveStatus) gallerySaveStatus.textContent = 'Saved to staging. Click Preview then Approve to publish.';
         } finally {
           restore('Save Gallery Event');
         }

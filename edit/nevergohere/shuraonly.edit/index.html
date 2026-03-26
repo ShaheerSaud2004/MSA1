@@ -70,6 +70,7 @@
                                 <input type="file" id="posterUploadInput" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
                                 <button type="button" id="posterUploadBtn" class="upload-btn">Upload Poster</button>
                             </div>
+                            <p class="upload-progress" id="posterUploadStatus"></p>
                         </div>
                     </div>
 
@@ -82,20 +83,20 @@
                                 <input type="file" id="galleryUploadInput" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp" multiple webkitdirectory directory>
                                 <button type="button" id="galleryUploadBtn" class="upload-btn">Upload Photos/Folder</button>
                             </div>
+                            <p class="upload-progress" id="galleryUploadStatus"></p>
                         </div>
                     </div>
 
                     <div class="manager-col">
                         <h5>Event Info</h5>
-                        <div class="upload-controls">
-                            <select id="galleryEventSelect">
-                                <option value="">New event</option>
-                            </select>
-                            <button type="button" id="refreshLibraryBtn" class="upload-btn">Refresh Library</button>
-                        </div>
+                        <select id="galleryEventSelect">
+                            <option value="">New event</option>
+                        </select>
+                        <button type="button" id="refreshLibraryBtn" class="upload-btn">Refresh Library</button>
                         <input id="galleryEventName" placeholder="Event name / text">
                         <input id="galleryInfoText" placeholder="Photo info text (optional)">
                         <button type="button" id="galleryApplyBtn" class="apply-btn">Save Gallery Event</button>
+                        <p class="upload-progress" id="gallerySaveStatus"></p>
                     </div>
                 </div>
                 
