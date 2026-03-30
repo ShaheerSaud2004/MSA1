@@ -272,6 +272,14 @@
     <script>
         // Register Service Worker
         if ('serviceWorker' in navigator) {
+            let updatePromptShown = false;
+            const promptForUpdate = () => {
+                if (updatePromptShown) return;
+                updatePromptShown = true;
+                const shouldRefresh = window.confirm('A new version of the website is available. Refresh now?');
+                if (shouldRefresh) window.location.reload();
+            };
+
             window.addEventListener('load', () => {
                 // Try multiple paths for service worker
                 const swPaths = ['/service-worker.js', '../service-worker.js', 'service-worker.js'];
@@ -287,6 +295,7 @@
                                 newWorker.addEventListener('statechange', () => {
                                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                         console.log('New service worker available');
+                                        promptForUpdate();
                                     }
                                 });
                             });
@@ -302,6 +311,12 @@
                 };
                 
                 registerSW(swPaths[0]);
+            });
+
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'SW_UPDATED') {
+                    promptForUpdate();
+                }
             });
         }
         

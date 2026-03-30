@@ -1,5 +1,6 @@
 // Service Worker for MSA Community PWA
-const CACHE_NAME = 'msa-community-v1';
+const CACHE_VERSION = 'v2';
+const CACHE_NAME = 'msa-community-' + CACHE_VERSION;
 const urlsToCache = [
   '/',
   '/index.html',
@@ -60,18 +61,26 @@ self.addEventListener('install', (event) => {
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
+    (async () => {
+      const cacheNames = await caches.keys();
+      await Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
             console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
+          return Promise.resolve();
         })
       );
-    })
+      await self.clients.claim();
+
+      // Notify open tabs that a fresh service worker is active.
+      const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+      clients.forEach((client) => {
+        client.postMessage({ type: 'SW_UPDATED', version: CACHE_VERSION });
+      });
+    })()
   );
-  return self.clients.claim();
 });
 
 // Fetch event - serve from cache, fallback to network
