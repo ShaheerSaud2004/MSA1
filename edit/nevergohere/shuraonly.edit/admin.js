@@ -153,10 +153,19 @@
   }
 
   function splitUrls(text) {
+    function isLikelyAssetPath(value) {
+      if (!value) return false;
+      if (/^https?:\/\//i.test(value)) return true;
+      if (value.startsWith('/') || value.startsWith('./') || value.startsWith('../')) return true;
+      if (/[<>"'`]/.test(value)) return false;
+      if (/\.(png|jpe?g|gif|webp|svg|avif|bmp|heic|mp4|mov)$/i.test(value)) return true;
+      return value.includes('/');
+    }
+
     return String(text || '')
       .split(/\n|,/)
       .map((x) => x.trim())
-      .filter((x) => /^https?:\/\//i.test(x) || x.startsWith('/'));
+      .filter(isLikelyAssetPath);
   }
 
   function slugify(value) {
@@ -180,10 +189,19 @@
   function setPreviewBackground(el, url) {
     if (!el) return;
     if (url) {
-      el.style.backgroundImage = 'url("' + url.replace(/"/g, '\\"') + '")';
+      const normalized = normalizeAssetUrl(url);
+      el.style.backgroundImage = 'url("' + normalized.replace(/"/g, '\\"') + '")';
     } else {
       el.style.backgroundImage = 'linear-gradient(135deg, #dfe9f3, #f4f7fb)';
     }
+  }
+
+  function normalizeAssetUrl(url) {
+    const value = String(url || '').trim();
+    if (!value) return '';
+    if (/^(https?:|data:|blob:)/i.test(value)) return value;
+    if (value.startsWith('/')) return window.location.origin + value;
+    return window.location.origin + '/' + value.replace(/^\.?\//, '');
   }
 
   function openPreview() {
@@ -215,9 +233,15 @@
     if (!confirm('Seed will save the current homepage HTML as the live version. Continue?')) return;
     setStatus('Fetching current site…', true);
     try {
-      const homeUrl = window.location.origin + '/';
-      const res = await fetch(homeUrl);
-      const html = await res.text();
+      // Prefer /index.html to avoid rewrite/live-CMS loops and preserve full source events.
+      let html = '';
+      const primaryRes = await fetch(window.location.origin + '/index.html');
+      if (primaryRes.ok) {
+        html = await primaryRes.text();
+      } else {
+        const fallbackRes = await fetch(window.location.origin + '/');
+        html = await fallbackRes.text();
+      }
       if (!html || html.length < 100) throw new Error('Could not load current site.');
       setStatus('Saving to CMS…', true);
       await api('POST', '/admin/state', { html: html });
@@ -376,6 +400,9 @@
     const galleryPreviewTitle = document.getElementById('galleryPreviewTitle');
     const galleryPreviewSubtitle = document.getElementById('galleryPreviewSubtitle');
     const galleryApplyBtn = document.getElementById('galleryApplyBtn');
+    const saveFromPreviewBtn = document.getElementById('saveFromPreviewBtn');
+    const doubleCheckBtn = document.getElementById('doubleCheckBtn');
+    const publishFromPreviewBtn = document.getElementById('publishFromPreviewBtn');
     let galleryLibrary = [];
     let currentSemester = 'spring-2026';
 
@@ -412,6 +439,32 @@
       refreshFormPreview();
     }
 
+    function parseGalleryLibraryFromHtml(html) {
+      const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+      const tiles = Array.from(doc.querySelectorAll('.event-tile[data-event]'));
+      return tiles.map(function (tile) {
+        const slug = tile.getAttribute('data-event') || '';
+        const title = tile.querySelector('.event-info h3')?.textContent?.trim() || slug;
+        const subtitle = tile.querySelector('.event-info p')?.textContent?.trim() || '';
+        const poster = tile.querySelector('.event-poster img')?.getAttribute('src') || '';
+        const semester = tile.getAttribute('data-semester') || 'spring-2026';
+        const brothers = splitUrls((tile.getAttribute('data-brothers-photos') || '').split('||').join('\n'));
+        const sisters = splitUrls((tile.getAttribute('data-sisters-photos') || '').split('||').join('\n'));
+        return { slug, title, subtitle, poster, semester, photos: brothers.concat(sisters) };
+      }).filter(function (x) { return x.slug; });
+    }
+
+    function mergeGalleryEvents(primaryEvents, fallbackEvents) {
+      const bySlug = new Map();
+      primaryEvents.forEach(function (event) {
+        bySlug.set(event.slug, event);
+      });
+      fallbackEvents.forEach(function (event) {
+        if (!bySlug.has(event.slug)) bySlug.set(event.slug, event);
+      });
+      return Array.from(bySlug.values());
+    }
+
     async function loadGalleryLibrary() {
       if (!galleryEventSelect) return;
       try {
@@ -419,25 +472,50 @@
           refreshLibraryBtn.disabled = true;
           refreshLibraryBtn.textContent = 'Refreshing...';
         }
-        const htmlRes = await fetch(API_BASE + '/admin/preview', { method: 'GET', headers: headers() });
-        if (htmlRes.status === 401) throw new Error('Unauthorized');
-        const html = await htmlRes.text();
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const tiles = Array.from(doc.querySelectorAll('.event-tile[data-event]'));
-        galleryLibrary = tiles.map(function (tile) {
-          const slug = tile.getAttribute('data-event') || '';
-          const title = tile.querySelector('.event-info h3')?.textContent?.trim() || slug;
-          const subtitle = tile.querySelector('.event-info p')?.textContent?.trim() || '';
-          const poster = tile.querySelector('.event-poster img')?.getAttribute('src') || '';
-          const semester = tile.getAttribute('data-semester') || 'spring-2026';
-          const brothers = splitUrls((tile.getAttribute('data-brothers-photos') || '').split('||').join('\n'));
-          const sisters = splitUrls((tile.getAttribute('data-sisters-photos') || '').split('||').join('\n'));
-          return { slug, title, subtitle, poster, semester, photos: brothers.concat(sisters) };
-        }).filter(function (x) { return x.slug; });
+
+        let previewEvents = [];
+        let currentPageEvents = [];
+        let baseFileEvents = [];
+
+        try {
+          const previewUrl = API_BASE + '/admin/preview?token=' + encodeURIComponent(getSecret());
+          const htmlRes = await fetch(previewUrl, { method: 'GET' });
+          if (htmlRes.status === 401) throw new Error('Unauthorized');
+          if (htmlRes.ok) {
+            const html = await htmlRes.text();
+            previewEvents = parseGalleryLibraryFromHtml(html);
+          }
+        } catch (e) {
+          if (isUnauthorizedError(e)) throw e;
+        }
+
+        try {
+          const liveRes = await fetch(window.location.origin + '/');
+          if (liveRes.ok) {
+            const liveHtml = await liveRes.text();
+            currentPageEvents = parseGalleryLibraryFromHtml(liveHtml);
+          }
+        } catch (_) {}
+
+        try {
+          const baseRes = await fetch(window.location.origin + '/index.html');
+          if (baseRes.ok) {
+            const baseHtml = await baseRes.text();
+            baseFileEvents = parseGalleryLibraryFromHtml(baseHtml);
+          }
+        } catch (_) {}
+
+        galleryLibrary = mergeGalleryEvents(previewEvents, mergeGalleryEvents(baseFileEvents, currentPageEvents));
 
         galleryEventSelect.innerHTML = '<option value="">New event</option>' + galleryLibrary.map(function (event) {
           return '<option value="' + event.slug + '">' + event.title + ' (' + event.slug + ')</option>';
         }).join('');
+
+        if (gallerySaveStatus) {
+          gallerySaveStatus.textContent = galleryLibrary.length
+            ? ('Loaded ' + galleryLibrary.length + ' event(s).')
+            : 'No events found yet. Seed, then refresh.';
+        }
       } catch (e) {
         if (isUnauthorizedError(e)) {
           handleUnauthorized();
@@ -557,6 +635,8 @@
         if (value && navigator.clipboard) navigator.clipboard.writeText(value);
       });
     }
+    if (doubleCheckBtn) doubleCheckBtn.addEventListener('click', openPreview);
+    if (publishFromPreviewBtn) publishFromPreviewBtn.addEventListener('click', approve);
 
     [galleryPosterInput, galleryEventNameInput, galleryInfoInput, galleryPhotosInput].forEach(function (el) {
       if (!el) return;
@@ -596,6 +676,11 @@
         } finally {
           restore('Save Gallery Event');
         }
+      });
+    }
+    if (saveFromPreviewBtn && galleryApplyBtn) {
+      saveFromPreviewBtn.addEventListener('click', function () {
+        galleryApplyBtn.click();
       });
     }
   }

@@ -424,6 +424,19 @@ body {
     margin-top: 6px;
 }
 
+.publish-flow {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.publish-flow .apply-btn,
+.publish-flow .upload-btn,
+.publish-flow .toolbar-btn {
+    width: 100%;
+}
+
 .live-preview-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1238,4 +1251,53 @@ body {
     min-height: 70vh;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
+}
+
+/* Consistent professional action buttons in gallery manager */
+.manager-col .upload-btn,
+.manager-col .apply-btn,
+.publish-flow .upload-btn,
+.publish-flow .apply-btn,
+.publish-flow .toolbar-btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.manager-col .upload-btn,
+.publish-flow .upload-btn,
+.manager-col .apply-btn,
+.publish-flow .apply-btn {
+    border: none;
+    color: #fff;
+    background: linear-gradient(135deg, #2f6a44, #3f7e56);
+    box-shadow: 0 6px 16px rgba(47, 106, 68, 0.22);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+}
+
+.manager-col .upload-btn:hover,
+.publish-flow .upload-btn:hover,
+.manager-col .apply-btn:hover,
+.publish-flow .apply-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 18px rgba(47, 106, 68, 0.28);
+    opacity: 0.97;
+}
+
+.publish-flow .toolbar-btn.success {
+    border: none;
+    color: #fff;
+    background: linear-gradient(135deg, #1f7d45, #2f9b59);
+    box-shadow: 0 6px 16px rgba(31, 125, 69, 0.24);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+}
+
+.publish-flow .toolbar-btn.success:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 18px rgba(31, 125, 69, 0.3);
+    opacity: 0.97;
 }
